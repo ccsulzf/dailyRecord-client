@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #efefef 0%, #9599E2 100%);
+}

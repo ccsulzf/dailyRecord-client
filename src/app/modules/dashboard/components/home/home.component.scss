@@ -1,0 +1,28 @@
+.home-content {
+  height: 100%;
+  border: 1px solid;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  padding: 10px;
+  box-sizing: border-box;
+  grid-row-gap: 10px;
+}
+
+.total-money {
+  grid-column: span 12;
+  grid-row: span 1;
+  background: #ccc;
+}
+
+.calendar-wish {
+  grid-column: span 12;
+  grid-row: span 2;
+  background: #00796B;
+}
+
+.current-month {
+  grid-column: span 12;
+  grid-row: span 3;
+  background: #AFB42B;
+}
