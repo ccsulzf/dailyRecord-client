@@ -12,4 +12,7 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
+  test() {
+      console.log('123');
+  }
 }

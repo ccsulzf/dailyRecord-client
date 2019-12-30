@@ -1,0 +1,57 @@
+@import 'color';
+
+.bookLits-content {
+  width: 80px;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  display: flex;
+  border: 2px solid #673ab7;
+  border-right: none;
+  z-index: 100;
+  background: #fff;
+  position: relative;
+  right: -2px;
+  flex-direction: column;
+  background: #673ab7;
+  color: #fff;
+  max-height: calc(100% - 80px);
+  /* height: auto; */
+  box-sizing: border-box;
+  overflow: auto;
+
+  li {
+    width: 100%;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #fff;
+
+    &:hover {
+      box-shadow: 0 1px 3px 1px rgba(60, 64, 67, .2), 0 2px 8px 4px rgba(60, 64, 67, .1);
+      font-size: 1.2em;
+      transition: 0.2s;
+    }
+  }
+
+  .selected {
+    background: #fff;
+    font-size: 1.2em;
+    color: $primary;
+    box-shadow: 0 1px 3px 1px rgba(60, 64, 67, .2), 0 2px 8px 4px rgba(60, 64, 67, .1);
+  }
+}
+
+ul::-webkit-scrollbar {
+  display: none;
+}
+
+
+.add-book {
+  height: 80px;
+}

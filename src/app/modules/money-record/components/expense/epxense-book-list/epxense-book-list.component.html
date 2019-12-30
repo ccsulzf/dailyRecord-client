@@ -1,0 +1,10 @@
+<div class="bookLits-content">
+  <ul>
+    <li *ngFor="let item of list;let i= index" [class.selected]="i===0" [ngClass]="{'selected': i===0}">
+      {{item.name}} {{i}}
+    </li>
+  </ul>
+  <div class="add-book">
+
+  </div>
+</div>

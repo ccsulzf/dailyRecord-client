@@ -1,0 +1,69 @@
+@import "color";
+
+.expense-content {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  padding: 10px;
+}
+
+.expense-form {
+  flex: 1;
+  display: flex;
+
+  form {
+    flex: 1;
+    border: 2px solid $primary;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    column-gap: 10px;
+    row-gap: 20px;
+
+    div {
+      background: #efefef;
+    }
+  }
+
+  .item {
+    grid-row: span 1;
+    grid-column: span 3;
+  }
+
+  .content {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
+
+  .moeny {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
+
+  .people {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
+
+  .label {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
+
+  .memo {
+    grid-row: span 2;
+    grid-column: span 6;
+  }
+
+  .btn-group {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
+}
+
+.expense-detail {
+  width: 230px;
+  border: 1px solid $primary;
+  margin-left: 10px;
+}
