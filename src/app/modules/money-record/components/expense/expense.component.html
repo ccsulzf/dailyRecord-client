@@ -3,23 +3,23 @@
     <app-epxense-book-list></app-epxense-book-list>
     <form>
       <div class="calendar item">
-        Calendar
+        <app-date-picker></app-date-picker>
       </div>
 
       <div class="address item">
-        Address
+        <app-address-select></app-address-select>
       </div>
 
       <div class="category item">
-        Category
+        <app-item-select [name]="'Category'"></app-item-select>
       </div>
 
       <div class="store item">
-        Store
+        <app-item-select [name]="'Store'"></app-item-select>
       </div>
 
       <div class="content">
-        Content
+        <!-- Content -->
       </div>
 
       <div class="moeny">

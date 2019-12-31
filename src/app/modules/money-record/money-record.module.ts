@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CoreModule } from '../../core/core.module';
 import { MatSliderModule, MatButtonModule } from '@angular/material';
 
 import { MoneyRecordRoutingModule } from './money-record-routing.module';
@@ -17,7 +18,8 @@ import { EpxenseBookListComponent } from './components/expense/epxense-book-list
     CommonModule,
     MoneyRecordRoutingModule,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    CoreModule
   ]
 })
 export class MoneyRecordModule { }
