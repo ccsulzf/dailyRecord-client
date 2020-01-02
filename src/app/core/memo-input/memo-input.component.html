@@ -1,0 +1,7 @@
+<mat-form-field class="full-width" appearance="outline">
+  <mat-label>please input your memo about this expense</mat-label>
+  <!-- <input matInput #input placeholder="Placeholder"> -->
+  <textarea rows="3" #input matInput placeholder="Leave a comment"></textarea>
+  <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+  <mat-hint align="end">{{input.value?.length || 0}}/500</mat-hint>
+</mat-form-field>

@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import {
   MatDatepickerModule, MatFormFieldModule,
-  MatInputModule, MatAutocompleteModule, MatListModule,
-  MatButtonModule, MatIconModule,
+  MatInputModule, MatAutocompleteModule,
+  MatButtonModule, MatIconModule, MatChipsModule,
   MAT_DATE_LOCALE
 } from '@angular/material';
 
@@ -14,8 +14,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { AddressSelectComponent } from './address-select/address-select.component';
 import { ItemSelectComponent } from './item-select/item-select.component';
+import { MoneyInputComponent } from './money-input/money-input.component';
+import { PeopleSelectComponent } from './people-select/people-select.component';
+import { MemoInputComponent } from './memo-input/memo-input.component';
 @NgModule({
-  declarations: [DatePickerComponent, AddressSelectComponent, ItemSelectComponent],
+  declarations: [
+    DatePickerComponent,
+    AddressSelectComponent,
+    ItemSelectComponent, MoneyInputComponent, PeopleSelectComponent, MemoInputComponent],
   imports: [
     CommonModule,
     MatDatepickerModule,
@@ -25,15 +31,18 @@ import { ItemSelectComponent } from './item-select/item-select.component';
     MatAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
-    MatListModule,
     OverlayModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule
   ],
   exports: [
     DatePickerComponent,
     AddressSelectComponent,
-    ItemSelectComponent
+    ItemSelectComponent,
+    MoneyInputComponent,
+    PeopleSelectComponent,
+    MemoInputComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }

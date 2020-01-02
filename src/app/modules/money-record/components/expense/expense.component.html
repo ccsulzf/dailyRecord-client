@@ -20,14 +20,18 @@
 
       <div class="content">
         <!-- Content -->
+        <mat-form-field floatLabel="always" class="full-width" style="position: absolute;">
+          <input type="text" autocomplete="off" placeholder="Expense Content" matInput>
+        </mat-form-field>
       </div>
 
       <div class="moeny">
-        moeny
+        <app-money-input></app-money-input>
       </div>
 
       <div class="people">
         people
+        <app-people-select></app-people-select>
       </div>
 
       <div class="label">
@@ -35,11 +39,12 @@
       </div>
 
       <div class="memo">
-        memo
+        <app-memo-input></app-memo-input>
       </div>
 
       <div class="btn-group">
-        button group
+        <button mat-raised-button color="primary">Add to Expense</button>
+        <button mat-raised-button color="accent">Reset</button>
       </div>
     </form>
   </div>

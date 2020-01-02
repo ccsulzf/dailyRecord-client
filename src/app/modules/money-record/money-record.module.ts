@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CoreModule } from '../../core/core.module';
-import { MatSliderModule, MatButtonModule } from '@angular/material';
+import { MatSliderModule, MatButtonModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 
 import { MoneyRecordRoutingModule } from './money-record-routing.module';
 import { MoneyRecordComponent } from './money-record.component';
@@ -19,7 +19,9 @@ import { EpxenseBookListComponent } from './components/expense/epxense-book-list
     MoneyRecordRoutingModule,
     MatSliderModule,
     MatButtonModule,
-    CoreModule
+    CoreModule,
+    MatInputModule,
+    MatFormFieldModule
   ]
 })
 export class MoneyRecordModule { }

@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.money-input-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  div{
+    position: relative;
+  }
+}

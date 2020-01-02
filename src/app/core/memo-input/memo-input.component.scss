@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+mat-form-field {
+  height: 100%;
+
+  textarea {
+    height: 100%;
+  }
+}
