@@ -1,7 +1,7 @@
 :host {
   height: 100%;
   width: 100%;
-  position: absolute;
+  // position: absolute;
 }
 
 mat-form-field {
@@ -10,4 +10,14 @@ mat-form-field {
   textarea {
     height: 100%;
   }
+}
+
+
+textarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .26);
+}
+
+textarea::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
 }

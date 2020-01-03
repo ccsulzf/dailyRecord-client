@@ -11,59 +11,70 @@
   flex: 1;
   display: flex;
 
+}
+
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #673ab7;
+  padding: 10px;
+  flex: 1;
+
   form {
     flex: 1;
-    border: 2px solid $primary;
-    padding: 10px;
+    height: 200px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(9, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    overflow-x: hidden;
+    overflow-y: auto;
     column-gap: 10px;
-    row-gap: 20px;
+    // row-gap: 20px;
 
     div {
       // background: #efefef;
       position: relative;
     }
-  }
 
-  .item {
-    grid-row: span 1;
-    grid-column: span 3;
-  }
+    .item {
+      grid-row: span 1;
+      grid-column: span 3;
+    }
 
-  .content {
-    grid-row: span 1;
-    grid-column: span 6;
-  }
+    .content {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
 
-  .moeny {
-    grid-row: span 1;
-    grid-column: span 6;
-  }
+    .moeny {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
 
-  .people {
-    grid-row: span 1;
-    grid-column: span 6;
-  }
+    .people {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
 
-  .label {
-    grid-row: span 1;
-    grid-column: span 6;
-  }
+    .label {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
 
-  .memo {
-    grid-row: span 2;
-    grid-column: span 6;
+    .memo {
+      grid-row: span 2;
+      grid-column: span 6;
+    }
+
   }
 
   .btn-group {
     background: #efefef;
-    grid-row: span 1;
-    grid-column: span 6;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 0;
 
     button {
       margin: 0 15px;
@@ -75,4 +86,13 @@
   width: 230px;
   border: 2px solid $primary;
   margin-left: 10px;
+}
+
+form::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .26);
+}
+
+form::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
 }
