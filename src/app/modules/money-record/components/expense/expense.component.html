@@ -1,7 +1,7 @@
 <div class="expense-content">
   <div class="expense-form">
-    <app-epxense-book-list></app-epxense-book-list>
-    <div class="form-content">
+    <app-epxense-book-list style="display: none;"></app-epxense-book-list>
+    <div class="form-content" style="display: none;">
       <form>
         <div class="calendar item">
           <app-date-picker></app-date-picker>
@@ -21,7 +21,7 @@
 
         <div class="content">
           <!-- Content -->
-          <mat-form-field floatLabel="always" class="full-width" >
+          <mat-form-field floatLabel="always" class="full-width">
             <input type="text" autocomplete="off" placeholder="Expense Content" matInput>
           </mat-form-field>
         </div>

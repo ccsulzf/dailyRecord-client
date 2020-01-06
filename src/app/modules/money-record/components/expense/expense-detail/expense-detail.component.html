@@ -1,7 +1,9 @@
 <div class="detail-content">
-  <!-- date & total amount -->
+  <!-- date & total amount-->
   <div class="detail-header">
-
+    <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
+    <input matInput [matDatepicker]="picker" disabled [value]="'2019-12-01'">
+    <mat-datepicker #picker disabled="false"></mat-datepicker>
   </div>
 
   <!--expense list -->
@@ -9,25 +11,76 @@
     <mat-accordion multi="false">
       <mat-expansion-panel hideToggle="true">
         <mat-expansion-panel-header>
-          <mat-panel-title>
-            收件夾
+          <mat-panel-title class="text-ellipsis">
+            test1
           </mat-panel-title>
           <mat-panel-description>
-            3 封未讀
+            -333.33RMB
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <!-- 收件夾內容 -->
-        ...
+        <!-- 内容 -->
+
+        <ul class="detail-ul">
+          <li>
+            <div class="category-name">
+              test123
+            </div>
+            <div class="detail-item">
+              <ul>
+                <li>
+                  <div>
+                    <span class="text-ellipsis">content1</span>
+                    <span class="text-ellipsis">store1</span>
+                  </div>
+                  <div>
+                    <span class="text-ellipsis">-amountRMB1</span>
+                    <span class="text-ellipsis">payChannel1</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="text-ellipsis">content2</span>
+                    <span class="text-ellipsis">store2</span>
+                  </div>
+                  <div>
+                    <span class="text-ellipsis">-amountRMB2</span>
+                    <span class="text-ellipsis">payChannel2</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="category-name">
+              test123
+            </div>
+            <div class="detail-item">
+              <ul>
+                <li>
+                  <div>
+                    <span class="text-ellipsis">content2</span>
+                    <span class="text-ellipsis">store2</span>
+                  </div>
+                  <div>
+                    <span class="text-ellipsis">-amountRMB2</span>
+                    <span class="text-ellipsis">payChannel2</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
       </mat-expansion-panel>
 
       <mat-expansion-panel hideToggle="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <!-- <mat-icon>inbox</mat-icon> -->
-            收件夾
+            test2
           </mat-panel-title>
           <mat-panel-description>
-            3 封未讀
+            -2222.22RMB
           </mat-panel-description>
         </mat-expansion-panel-header>
         <!-- 收件夾內容 -->
@@ -35,5 +88,12 @@
       </mat-expansion-panel>
     </mat-accordion>
 
+  </div>
+  <mat-divider></mat-divider>
+  <div class="day-expense">
+    <span>Day of the expense:</span>
+    <p>
+      -222.22RMB
+    </p>
   </div>
 </div>

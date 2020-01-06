@@ -4,8 +4,19 @@ body {
   height: 100vh;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 .full-width {
   width: 100%;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: keep-all;
 }
 
 ul {
