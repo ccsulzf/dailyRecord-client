@@ -1,30 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit, forwardRef } from '@angular/core';
+import { FormControl, FormGroupDirective, NgForm, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import * as moment from 'moment';
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+export class DateErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return false;
-    // return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
+export const DATEPICKER_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DatePickerComponent),
+  multi: true
+};
+
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss']
+  styleUrls: ['./date-picker.component.scss'],
+  providers: [DATEPICKER_ACCESSOR]
 })
-export class DatePickerComponent implements OnInit {
-  dateFormControl = new FormControl('2019-01-01', [
-    Validators.required,
-  ]);
+export class DatePickerComponent implements OnInit, ControlValueAccessor {
+  dateFormControl = new FormControl();
 
-  matcher = new MyErrorStateMatcher();
-  constructor() { }
+  matcher = new DateErrorStateMatcher();
+  constructor(
+  ) { }
 
   ngOnInit() {
 
   }
 
+  propagateChange = (temp: any) => { };
+
+  writeValue(data: any): void {
+    this.dateFormControl.setValidators(Validators.required);
+    this.dateFormControl.setValue(data);
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+
+  }
+  setDisabledState?(isDisabled: boolean): void {
+
+  }
 }

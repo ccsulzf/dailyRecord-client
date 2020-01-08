@@ -1,11 +1,8 @@
   <mat-form-field class="full-width">
-    <input matInput [formControl]="dateFormControl" [errorStateMatcher]="matcher" [matDatepicker]="picker"
-      placeholder="Choose a date" >
+    <input matInput [formControl]="dateFormControl" autocomplete="off" [errorStateMatcher]="matcher"
+      [matDatepicker]="picker" placeholder="Choose a date">
     <mat-datepicker-toggle tabindex="-1" matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="dateFormControl.hasError('email') && !dateFormControl.hasError('required')">
-      Please enter or select a valid date
-    </mat-error>
     <mat-error *ngIf="dateFormControl.hasError('required')">
       Date is <strong>required</strong>
     </mat-error>

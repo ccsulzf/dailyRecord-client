@@ -1,31 +1,35 @@
 <div class="expense-content">
   <div class="expense-form">
     <app-epxense-book-list></app-epxense-book-list>
-    <div class="form-content">
-      <form>
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+      <div class="form-content">
         <div class="calendar item">
-          <app-date-picker></app-date-picker>
+          <app-date-picker formControlName="date" name="date"></app-date-picker>
         </div>
 
         <div class="address item">
-          <app-address-select></app-address-select>
+          <app-address-select formControlName="address" name="address"></app-address-select>
         </div>
 
         <div class="category item">
-          <app-item-select [name]="'Category'"></app-item-select>
+          <app-item-select [name]="'Category'" formControlName="category"></app-item-select>
         </div>
 
         <div class="store item">
-          <app-item-select [name]="'Store'"></app-item-select>
+          <app-item-select [name]="'Store'" formControlName="store"></app-item-select>
         </div>
 
         <div class="content">
-          <!-- Content -->
-          <app-content-input></app-content-input>
+          <app-content-input formControlName='content'></app-content-input>
         </div>
 
         <div class="moeny">
-          <app-money-input></app-money-input>
+          <div class="money-select">
+            <app-item-select [name]="'Pay Channel'" formControlName='payChannel'></app-item-select>
+          </div>
+          <div class="moent-input">
+            <app-money-input formControlName='money'></app-money-input>
+          </div>
         </div>
 
         <div class="people">
@@ -39,13 +43,14 @@
         <div class="memo">
           <app-memo-input></app-memo-input>
         </div>
-      </form>
+      </div>
       <div class="btn-group">
-        <button mat-raised-button color="primary">Add to Expense</button>
+        <button mat-raised-button type="submit" color="primary">Add to Expense</button>
         <button mat-raised-button color="accent">Reset</button>
       </div>
-    </div>
+    </form>
   </div>
+  <!-- style="display: none;" -->
   <div class="expense-detail" style="display: none;">
     <app-expense-detail></app-expense-detail>
   </div>

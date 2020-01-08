@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../../core/core.module';
 import {
   MatSliderModule, MatButtonModule, MatInputModule,
@@ -20,6 +20,8 @@ import { EpxenseBookListComponent } from './components/expense/epxense-book-list
   declarations: [ExpenseComponent, IncomeComponent, MoneyRecordComponent, ExpenseDetailComponent, EpxenseBookListComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MoneyRecordRoutingModule,
     MatSliderModule,
     MatButtonModule,

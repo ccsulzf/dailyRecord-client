@@ -4,24 +4,22 @@
   box-sizing: border-box;
   height: 100%;
   display: flex;
-  padding: 10px;
+  padding: 5px;
 }
 
 .expense-form {
   flex: 1;
   display: flex;
-
 }
 
-
-.form-content {
+form {
   display: flex;
   flex-direction: column;
-  border: 2px solid #673ab7;
+  border: 2px solid $primary;
   padding: 10px;
   flex: 1;
 
-  form {
+  .form-content {
     flex: 1;
     height: 200px;
     display: grid;
@@ -50,6 +48,12 @@
     .moeny {
       grid-row: span 1;
       grid-column: span 6;
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      div {
+        position: relative;
+      }
     }
 
     .people {
@@ -88,11 +92,11 @@
   margin-left: 5px;
 }
 
-form::-webkit-scrollbar-thumb {
+.form-content::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, .26);
 }
 
-form::-webkit-scrollbar {
+.form-content::-webkit-scrollbar {
   height: 4px;
   width: 4px;
 }

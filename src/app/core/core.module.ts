@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import {
   MatDatepickerModule, MatFormFieldModule,
   MatInputModule, MatAutocompleteModule,
-  MatButtonModule, MatIconModule, MatChipsModule,
+  MatButtonModule, MatIconModule, MatChipsModule, MatProgressSpinnerModule,
   MAT_DATE_LOCALE
 } from '@angular/material';
 
@@ -24,6 +25,7 @@ import { ContentInputComponent } from './content-input/content-input.component';
     AddressSelectComponent,
     ItemSelectComponent, MoneyInputComponent, PeopleSelectComponent, MemoInputComponent, ContentInputComponent],
   imports: [
+    HttpClientModule,
     CommonModule,
     MatDatepickerModule,
     MatFormFieldModule,
@@ -35,7 +37,8 @@ import { ContentInputComponent } from './content-input/content-input.component';
     OverlayModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     DatePickerComponent,
@@ -44,7 +47,7 @@ import { ContentInputComponent } from './content-input/content-input.component';
     MoneyInputComponent,
     PeopleSelectComponent,
     MemoInputComponent,
-    ContentInputComponent
+    ContentInputComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-expense',
@@ -6,10 +7,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./expense.component.scss']
 })
 export class ExpenseComponent implements OnInit {
+  date = '2019-12-01';
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
-  constructor() { }
+  expenseForm = this.fb.group({
+    date: [new Date()],
+    address: [''],
+    category: [''],
+    store: [''],
+    content: [''],
+    payChannel: [''],
+    money: ['']
+  });
+
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    console.log(this.expenseForm);
   }
 
 }
