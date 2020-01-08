@@ -1,7 +1,9 @@
 <mat-form-field class="full-width">
-  <mat-label>Pick expense people <mat-icon>face</mat-icon></mat-label>
+  <mat-label>Pick expense {{name}}</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+      <!-- <mat-icon>label_outline</mat-icon> -->
+    <mat-icon>{{icon}}_outline</mat-icon>
       {{fruit}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>

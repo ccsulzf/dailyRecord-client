@@ -16,14 +16,14 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { AddressSelectComponent } from './address-select/address-select.component';
 import { ItemSelectComponent } from './item-select/item-select.component';
 import { MoneyInputComponent } from './money-input/money-input.component';
-import { PeopleSelectComponent } from './people-select/people-select.component';
+import { PeopLabelleSelectComponent } from './people-label-select/people-label-select.component';
 import { MemoInputComponent } from './memo-input/memo-input.component';
 import { ContentInputComponent } from './content-input/content-input.component';
 @NgModule({
   declarations: [
     DatePickerComponent,
     AddressSelectComponent,
-    ItemSelectComponent, MoneyInputComponent, PeopleSelectComponent, MemoInputComponent, ContentInputComponent],
+    ItemSelectComponent, MoneyInputComponent, PeopLabelleSelectComponent, MemoInputComponent, ContentInputComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -45,7 +45,7 @@ import { ContentInputComponent } from './content-input/content-input.component';
     AddressSelectComponent,
     ItemSelectComponent,
     MoneyInputComponent,
-    PeopleSelectComponent,
+    PeopLabelleSelectComponent,
     MemoInputComponent,
     ContentInputComponent,
   ],

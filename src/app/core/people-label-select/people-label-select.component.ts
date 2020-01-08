@@ -1,18 +1,20 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 @Component({
-  selector: 'app-people-select',
-  templateUrl: './people-select.component.html',
-  styleUrls: ['./people-select.component.scss']
+  // tslint:disable-next-line: component-selector
+  selector: 'people-label-select',
+  templateUrl: './people-label-select.component.html',
+  styleUrls: ['./people-label-select.component.scss']
 })
 
-export class PeopleSelectComponent {
-
+export class PeopLabelleSelectComponent {
+  @Input() name;
+  @Input() icon;
   visible = true;
   selectable = true;
   removable = true;
