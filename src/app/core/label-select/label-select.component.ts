@@ -1,20 +1,25 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ElementRef, ViewChild, Input, OnInit, forwardRef } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-@Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'people-label-select',
-  templateUrl: './people-label-select.component.html',
-  styleUrls: ['./people-label-select.component.scss']
-})
 
-export class PeopLabelleSelectComponent {
-  @Input() name;
-  @Input() icon;
+export const LABEL_SELECT_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => LabelSelectComponent),
+  multi: true
+};
+
+@Component({
+  selector: 'app-label-select',
+  templateUrl: './label-select.component.html',
+  styleUrls: ['./label-select.component.scss'],
+  providers: [LABEL_SELECT_ACCESSOR]
+})
+export class LabelSelectComponent implements OnInit, ControlValueAccessor {
+
   visible = true;
   selectable = true;
   removable = true;
@@ -33,6 +38,24 @@ export class PeopLabelleSelectComponent {
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
+
+
+  ngOnInit() {
+  }
+
+  propagateChange = (temp: any) => { };
+
+  writeValue(data: any): void {
+    this.fruits = data;
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+
+  }
+
 
   add(event: MatChipInputEvent): void {
     // Add fruit only when MatAutocomplete is not open
@@ -71,7 +94,7 @@ export class PeopLabelleSelectComponent {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
+
 }

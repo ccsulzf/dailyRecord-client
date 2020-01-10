@@ -51,20 +51,19 @@ form {
 
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+
       div {
         position: relative;
       }
     }
 
-    .people {
-      grid-row: span 1;
-      grid-column: span 6;
-    }
-
+    .person,
     .label {
       grid-row: span 1;
       grid-column: span 6;
     }
+
+
 
     .memo {
       grid-row: span 2;

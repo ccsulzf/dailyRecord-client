@@ -19,7 +19,10 @@ export class ExpenseComponent implements OnInit {
     store: [''],
     content: [''],
     payChannel: [''],
-    money: ['']
+    money: [''],
+    person: [[]],
+    label: [[]],
+    memo: ['']
   });
 
 

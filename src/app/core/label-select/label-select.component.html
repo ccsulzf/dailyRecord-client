@@ -1,17 +1,16 @@
 <mat-form-field class="full-width">
-  <mat-label>Pick expense {{name}}</mat-label>
+  <mat-label>Pick expense label</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-      <!-- <mat-icon>label_outline</mat-icon> -->
-    <mat-icon>{{icon}}_outline</mat-icon>
+      <mat-icon>label_outline</mat-icon>
       {{fruit}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
-    <input #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
-      [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+    <input #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-hint align="end">total 5 items selected</mat-hint>
+  <mat-hint align="end">total 5 label selected</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">

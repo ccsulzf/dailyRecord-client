@@ -45,4 +45,8 @@ export class ContentInputComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void {
 
   }
+
+  clear(){
+    this.contentInputControl.setValue('');
+  }
 }

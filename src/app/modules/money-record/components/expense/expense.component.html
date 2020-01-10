@@ -20,28 +20,28 @@
         </div>
 
         <div class="content">
-          <app-content-input formControlName='content'></app-content-input>
+          <app-content-input formControlName="content"></app-content-input>
         </div>
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Pay Channel'" formControlName='payChannel'></app-item-select>
+            <app-item-select [name]="'Pay Channel'" formControlName="payChannel"></app-item-select>
           </div>
           <div class="moent-input">
-            <app-money-input formControlName='money'></app-money-input>
+            <app-money-input formControlName="money"></app-money-input>
           </div>
         </div>
 
-        <div class="people">
-          <people-label-select name="people" icon="person"></people-label-select>
+        <div class="person">
+          <app-person-select formControlName="person"></app-person-select>
         </div>
 
         <div class="label">
-          <people-label-select name="label" icon="label"></people-label-select>
+          <app-label-select formControlName="label"></app-label-select>
         </div>
 
         <div class="memo">
-          <app-memo-input></app-memo-input>
+          <app-memo-input formControlName="memo"></app-memo-input>
         </div>
       </div>
       <div class="btn-group">

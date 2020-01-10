@@ -1,5 +1,8 @@
 <mat-form-field class="full-width">
   <input type="number" autocomplete="off" required matInput placeholder="how much you spend" required matInput
-  [formControl]="moenyInputControl" [errorStateMatcher]="matcher">
+    [formControl]="moenyInputControl" [errorStateMatcher]="matcher">
   <span matSuffix>RMB</span>
+  <mat-error *ngIf="moenyInputControl.hasError('required')">
+    Moeny is <strong>required</strong>
+  </mat-error>
 </mat-form-field>
