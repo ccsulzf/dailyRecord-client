@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 interface FoodNode {
@@ -49,6 +49,8 @@ interface ExampleFlatNode {
 })
 
 export class NavComponent implements OnInit, AfterViewInit {
+  currenNodeName = '123';
+
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -67,12 +69,28 @@ export class NavComponent implements OnInit, AfterViewInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private router: Router
+    private router: Router,
   ) {
     this.dataSource.data = TREE_DATA;
   }
 
   ngOnInit() {
+    const find = function (arr: Array<any>, path) {
+      arr.forEach(element => {
+        if (element.path && (element.path === path)) {
+          this.currenNodeName = element.name;
+          return;
+        } else if (element.children && element.children.length) {
+          find(element.children, path);
+        }
+      });
+    }.bind(this);
+
+    this.router.events.subscribe((data) => {
+      if (data instanceof NavigationEnd) {
+        find(TREE_DATA, data.url);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -83,6 +101,7 @@ export class NavComponent implements OnInit, AfterViewInit {
 
   navigateTo(node) {
     if (node.path) {
+      this.currenNodeName = node.name;
       this.router.navigateByUrl(node.path);
     }
   }

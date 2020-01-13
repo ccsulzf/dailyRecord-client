@@ -1,9 +1,10 @@
+@import 'color';
+
 .home-content {
   height: 100%;
-  border: 1px solid;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: 130px repeat(6, 1fr);
   padding: 10px;
   box-sizing: border-box;
   grid-row-gap: 10px;
@@ -12,10 +13,63 @@
 .total-money {
   grid-column: span 12;
   grid-row: span 1;
-  background: #ccc;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  display: grid;
+
+  .total-item {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    border-radius: 6px 6px 0 0;
+    border-top-width: 6px;
+    border-top-style: solid;
+  }
 }
 
-.calendar-wish {
+
+.total-expense,
+.total-income,
+.number-days {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    // flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+
+    &:last-of-type {
+      font-size: 1.4em;
+      font-weight: 500;
+    }
+  }
+
+
+}
+
+.total-expense {
+  border-top-color: $expense;
+
+  p {
+    &:last-of-type {
+      color: $expense;
+    }
+  }
+}
+
+.total-income {
+  border-top-color: $income;
+
+  p {
+    &:last-of-type {
+      color: $income;
+    }
+  }
+}
+
+.record-calendar {
   grid-column: span 12;
   grid-row: span 2;
   background: #00796B;
@@ -23,6 +77,6 @@
 
 .current-month {
   grid-column: span 12;
-  grid-row: span 3;
+  grid-row: span 4;
   background: #AFB42B;
 }
