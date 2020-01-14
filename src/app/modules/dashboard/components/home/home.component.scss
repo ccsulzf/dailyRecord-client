@@ -4,7 +4,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 130px repeat(6, 1fr);
+  grid-template-rows: 130px 180px auto;
   padding: 10px;
   box-sizing: border-box;
   grid-row-gap: 10px;
@@ -71,12 +71,11 @@
 
 .record-calendar {
   grid-column: span 12;
-  grid-row: span 2;
-  background: #00796B;
+  grid-row: span 1;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .current-month {
   grid-column: span 12;
-  grid-row: span 4;
-  background: #AFB42B;
+  grid-row: span 1;
 }

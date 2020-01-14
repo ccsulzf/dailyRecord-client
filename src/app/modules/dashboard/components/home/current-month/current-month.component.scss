@@ -1,0 +1,18 @@
+:host {
+  width: 100%;
+  height: 100%;
+
+}
+
+.month-content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 200px;
+  column-gap: 10px;
+
+  div {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+
+}
