@@ -4,7 +4,9 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import {
-  MatTabsModule
+  MatTabsModule,
+  MatDividerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { DashboardComponent } from './dashboard.component';
@@ -19,7 +21,9 @@ import { CurrentMonthComponent } from './components/home/current-month/current-m
     CommonModule,
     DashboardRoutingModule,
     MatTabsModule,
-    NgxEchartsModule
+    MatDividerModule,
+    NgxEchartsModule,
+    MatProgressSpinnerModule
   ]
 })
 export class DashboardModule { }

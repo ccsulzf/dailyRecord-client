@@ -1,0 +1,36 @@
+<div class="detail-content">
+  <div class="detail-header">
+    <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
+    <input matInput [matDatepicker]="picker" disabled [formControl]="date">
+    <mat-datepicker #picker startView="year" disabled="false" (monthSelected)="chosenMonthHandler($event, picker)">
+    </mat-datepicker>
+  </div>
+
+  <div class="detail-list">
+    <mat-list>
+      <h3 mat-subheader>2020-01-02</h3>
+      <mat-list-item *ngFor="let folder of folders">
+        <div class="detail-item" mat-line>
+          <!-- 123 -->
+          <span class="text-ellipsis">{{folder.name}}</span>
+          <span class="detail-number">+2000 RMB</span>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <h3 mat-subheader>2020-01-03</h3>
+      <mat-list-item *ngFor="let note of notes">
+        <div class="detail-item" mat-line>
+          <span class="text-ellipsis">{{note.name}}</span>
+          <span class="detail-number">+2000 RMB</span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-divider></mat-divider>
+    <div class="month-income">
+      <span>Month of the income:</span>
+      <p>
+        +5200.22RMB
+      </p>
+    </div>
+  </div>

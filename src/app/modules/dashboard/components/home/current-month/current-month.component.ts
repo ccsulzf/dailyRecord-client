@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './current-month.component.html',
   styleUrls: ['./current-month.component.scss']
 })
+
 export class CurrentMonthComponent implements OnInit {
   private data = [
     ['2000-06-04', 100],
@@ -62,7 +63,7 @@ export class CurrentMonthComponent implements OnInit {
         type: 'line',
         showSymbol: false,
         data: this.data.map((item) => {
-          return Math.floor(Math.random() * 100);
+          return Math.floor(Math.random() * 10000);
         }),
         lineStyle: {
           color: '#f44336'

@@ -1,0 +1,99 @@
+@import "color";
+
+.income-content {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  padding: 5px;
+}
+
+.income-form {
+  flex: 1;
+  display: flex;
+
+  .form-content {
+    flex: 1;
+    height: 200px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    overflow-x: hidden;
+    overflow-y: auto;
+    column-gap: 10px;
+    // row-gap: 20px;
+
+    div {
+      // background: #efefef;
+      position: relative;
+    }
+
+    .item {
+      grid-row: span 1;
+      grid-column: span 3;
+    }
+
+    .content {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
+
+    .moeny {
+      grid-row: span 1;
+      grid-column: span 6;
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      div {
+        position: relative;
+      }
+    }
+
+    .person,
+    .label {
+      grid-row: span 1;
+      grid-column: span 6;
+    }
+
+    .memo {
+      grid-row: span 2;
+      grid-column: span 6;
+    }
+
+  }
+
+  .btn-group {
+    background: #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+
+    button {
+      margin: 0 15px;
+    }
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid $primary;
+  padding: 10px;
+  flex: 1;
+}
+
+.income-detail {
+  width: 240px;
+  // border: 2px solid $primary;
+  margin-left: 5px;
+}
+
+.form-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .26);
+}
+
+.form-content::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}

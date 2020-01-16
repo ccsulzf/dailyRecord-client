@@ -7,6 +7,13 @@ import * as moment from 'moment';
   styleUrls: ['./year-calendar.component.scss']
 })
 export class YearCalendarComponent implements OnInit {
+  echartsInstance: any;
+  // initOpts = {
+  //   renderer: 'canvas',
+  //   width: 780,
+  //   height: 200
+  // };
+
   private options = {
     title: {
       top: 5,
@@ -56,7 +63,6 @@ export class YearCalendarComponent implements OnInit {
       type: 'heatmap',
       coordinateSystem: 'calendar',
       data: this.getVirtulData(2019),
-      backgroundColor: 'red'
     }
   };
 
@@ -64,6 +70,12 @@ export class YearCalendarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onChartInit(e) {
+    this.echartsInstance = e;
+    console.log(this.echartsInstance.getHeight());
+    // console.log(this.echartsInstance);
   }
 
   getVirtulData(year) {

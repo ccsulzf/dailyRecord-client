@@ -1,1 +1,56 @@
-<p>income works!</p>
+<div class="income-content">
+  <div class="income-form">
+    <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
+      <div class="form-content">
+        <div class="calendar item">
+          <app-date-picker formControlName="date" name="date"></app-date-picker>
+        </div>
+
+        <div class="address item">
+          <app-address-select formControlName="address" name="address"></app-address-select>
+        </div>
+
+        <div class="category item">
+          <app-item-select [name]="'Category'" formControlName="category"></app-item-select>
+        </div>
+
+        <div class="store item">
+          <app-item-select [name]="'Store'" formControlName="store"></app-item-select>
+        </div>
+
+        <div class="content">
+          <app-content-input formControlName="content"></app-content-input>
+        </div>
+
+        <div class="moeny">
+          <div class="money-select">
+            <app-item-select [name]="'Pay Channel'" formControlName="payChannel"></app-item-select>
+          </div>
+          <div class="moent-input">
+            <app-money-input formControlName="money"></app-money-input>
+          </div>
+        </div>
+
+        <div class="person">
+          <app-person-select formControlName="person"></app-person-select>
+        </div>
+
+        <div class="label">
+          <app-label-select formControlName="label"></app-label-select>
+        </div>
+
+        <div class="memo">
+          <app-memo-input formControlName="memo"></app-memo-input>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button mat-raised-button type="submit" color="primary">Add to Income</button>
+        <button mat-raised-button color="accent">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="income-detail">
+    <app-income-detail></app-income-detail>
+  </div>
+</div>
