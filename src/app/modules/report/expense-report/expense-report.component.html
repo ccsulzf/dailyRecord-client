@@ -1,0 +1,33 @@
+<mat-drawer-container class="example-container" hasBackdrop="true">
+  <mat-drawer #drawer mode="over">
+    <app-report-filter></app-report-filter>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="report-tools">
+      <div class="btn-filter">
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <!-- if has filter condition -->
+        <span class="dot shadow"></span>
+      </div>
+      <div class="btn-group">
+        <button mat-raised-button color="primary">
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+        <button mat-raised-button>
+          <mat-icon>library_books</mat-icon>
+          Export
+        </button>
+      </div>
+    </div>
+    <div class="report-content shadow">
+      <ag-grid-angular style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
+        [gridOptions]="gridOptions">
+      </ag-grid-angular>
+      <mat-paginator [length]="1000" [pageSize]="100" [pageSizeOptions]="[100, 200, 500, 1000]">
+      </mat-paginator>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

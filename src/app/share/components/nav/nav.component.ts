@@ -21,7 +21,7 @@ const TREE_DATA: FoodNode[] = [
   }, {
     name: 'Report',
     children: [
-      { name: 'Expense Report' },
+      { name: 'Expense Report', path: '/report/expense' },
       { name: 'Income Report' },
       { name: 'Money Report' }
     ]

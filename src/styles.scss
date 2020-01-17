@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+// @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+
 html,
 body {
   height: 100vh;
@@ -45,4 +49,19 @@ body {
 
 .shadow {
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+}
+
+body:not(.dark) ::-webkit-scrollbar {
+  width: 5px;
+  height: 15px;
+}
+
+body:not(.dark) ::-webkit-scrollbar-corner {
+  background-color: #fafafa;
+}
+
+body:not(.dark) ::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  border-radius: 10px;
+  background-clip: content-box;
 }
