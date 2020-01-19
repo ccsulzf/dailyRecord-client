@@ -1,22 +1,35 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {
   MatIconModule,
   MatSidenavModule,
   MatButtonModule,
   MatBadgeModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatDividerModule,
+  MatChipsModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
 import { ReportComponent } from './report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { ReportFilterComponent } from './report-filter/report-filter.component';
+import { DateComponent } from './report-filter/filter-items/date/date.component';
+import { SelectComponent } from './report-filter/filter-items/select/select.component';
+import { InputComponent } from './report-filter/filter-items/input/input.component';
+import { RangeComponent } from './report-filter/filter-items/range/range.component';
 
 @NgModule({
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     ReportRoutingModule,
     RouterModule,
@@ -25,12 +38,25 @@ import { ReportFilterComponent } from './report-filter/report-filter.component';
     MatButtonModule,
     MatBadgeModule,
     MatPaginatorModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatDividerModule,
+    MatChipsModule
   ],
   declarations: [
     ReportComponent,
     ExpenseReportComponent,
-    ReportFilterComponent
+    ReportFilterComponent,
+    DateComponent,
+    SelectComponent,
+    InputComponent,
+    RangeComponent
+  ],
+  providers: [
+    // { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }
   ]
 })
 export class ReportModule { }

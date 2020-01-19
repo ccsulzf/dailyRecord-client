@@ -1,0 +1,33 @@
+p {
+  font-size: 0.9em;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 5px 0 5px 5px;
+}
+
+
+form {
+  width: 320px;
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .filter-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .btn-group {
+    background: #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+
+    button {
+      margin: 0 15px;
+    }
+  }
+}

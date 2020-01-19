@@ -61,3 +61,7 @@ mat-paginator {
 ::ng-deep .mat-paginator-page-size {
   align-items: center;
 }
+
+::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden;
+}

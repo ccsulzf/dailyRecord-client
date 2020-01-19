@@ -1,0 +1,32 @@
+.report-select {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1.25em;
+
+  p {
+    font-size: 0.8em;
+    font-weight: 500;
+    padding-bottom: .4375em;
+  }
+
+  .select-content {
+    padding: .4375em 0;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    button {
+      margin-right: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, .26);
+    }
+
+    &::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+
+  }
+}
