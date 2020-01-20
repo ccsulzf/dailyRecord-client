@@ -51,11 +51,11 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('window:resize')
-  private resizeEvent() {
+  public resizeEvent() {
     this.resize();
   }
 
-  private resize() {
+  public resize() {
     this.gridOptions.api.sizeColumnsToFit();
     this.gridOptions.columnApi.autoSizeColumns(this.gridOptions.columnApi.getAllDisplayedColumns());
   }

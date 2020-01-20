@@ -29,7 +29,7 @@ const TREE_DATA: FoodNode[] = [
   {
     name: 'Setting',
     children: [
-      { name: 'Person Info' },
+      // { name: 'Person Info' },
       { name: 'Record Info' }
     ]
   }

@@ -20,7 +20,7 @@ export class CurrentMonthComponent implements OnInit {
     ['2000-06-29', 85], ['2000-06-30', 73]
   ];
 
-  private options = {
+  public options = {
     visualMap: [{
       show: false,
       type: 'continuous',

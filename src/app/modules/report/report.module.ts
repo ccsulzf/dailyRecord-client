@@ -14,7 +14,8 @@ import {
   MatInputModule,
   MatDatepickerModule,
   MatDividerModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSliderModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -44,7 +45,8 @@ import { RangeComponent } from './report-filter/filter-items/range/range.compone
     MatDatepickerModule,
     MatMomentDateModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSliderModule
   ],
   declarations: [
     ReportComponent,

@@ -14,7 +14,7 @@ export class YearCalendarComponent implements OnInit {
   //   height: 200
   // };
 
-  private options = {
+  public options = {
     title: {
       top: 5,
       left: 'center',
