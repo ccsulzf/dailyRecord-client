@@ -15,7 +15,8 @@ import {
   MatDatepickerModule,
   MatDividerModule,
   MatChipsModule,
-  MatSliderModule
+  MatSliderModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -26,7 +27,7 @@ import { DateComponent } from './report-filter/filter-items/date/date.component'
 import { SelectComponent } from './report-filter/filter-items/select/select.component';
 import { InputComponent } from './report-filter/filter-items/input/input.component';
 import { RangeComponent } from './report-filter/filter-items/range/range.component';
-
+import { GroupComponent } from './report-filter/filter-items/group/group.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -46,7 +47,8 @@ import { RangeComponent } from './report-filter/filter-items/range/range.compone
     MatMomentDateModule,
     MatDividerModule,
     MatChipsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatCheckboxModule
   ],
   declarations: [
     ReportComponent,
@@ -55,7 +57,8 @@ import { RangeComponent } from './report-filter/filter-items/range/range.compone
     DateComponent,
     SelectComponent,
     InputComponent,
-    RangeComponent
+    RangeComponent,
+    GroupComponent
   ],
   providers: [
     // { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }

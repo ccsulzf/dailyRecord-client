@@ -29,7 +29,7 @@ export class AddressSelectComponent implements OnInit, ControlValueAccessor {
 
   matcher = new AddressErrorStateMatcher();
   addressControl = new FormControl();
-  filteredOptions: Observable<string[]>;
+  filteredOptions: Observable<any[]>;
   filterData = [];
 
   addressList = <any>[];

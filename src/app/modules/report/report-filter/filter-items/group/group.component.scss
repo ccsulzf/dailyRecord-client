@@ -1,0 +1,14 @@
+.report-group{
+    display: flex;
+    flex-direction: column;
+  
+    p {
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+  
+    .range-content {
+      padding: .4375em 0;
+    }
+  }
+  
