@@ -8,7 +8,8 @@
         </div>
 
         <div class="address item">
-          <app-address-select formControlName="address" name="address"></app-address-select>
+          <!-- <app-address-select formControlName="address" name="address"></app-address-select> -->
+          <app-item-select [name]="'Address'" formControlName="address"></app-item-select>
         </div>
 
         <div class="category item">
@@ -53,5 +54,6 @@
 
   <div class="expense-detail">
     <app-expense-detail></app-expense-detail>
+    <!-- <router-outlet></router-outlet> -->
   </div>
 </div>

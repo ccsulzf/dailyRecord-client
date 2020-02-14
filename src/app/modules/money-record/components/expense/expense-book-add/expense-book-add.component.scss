@@ -1,0 +1,17 @@
+@import 'color';
+
+.book-add {
+  div {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-left: 5px;
+    }
+
+    mat-icon {
+      color: $primary;
+    }
+
+  }
+}

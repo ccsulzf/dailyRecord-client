@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { ExpenseBookAddComponent } from '../expense-book-add/expense-book-add.component';
 @Component({
   selector: 'app-epxense-book-list',
   templateUrl: './epxense-book-list.component.html',
@@ -24,10 +26,22 @@ export class EpxenseBookListComponent implements OnInit {
   }, {
     name: 'Test3'
   }];
-  constructor() { }
+
+  showAddExpenseBook = false;
+  constructor(private _bottomSheet: MatBottomSheet) { }
+
 
   ngOnInit() {
 
+  }
+
+  openAddBook() {
+    this.showAddExpenseBook = !this.showAddExpenseBook;
+    // this._bottomSheet.open(ExpenseBookAddComponent);
+  }
+
+  addBook(value){
+    console.log(value);
   }
 
 }

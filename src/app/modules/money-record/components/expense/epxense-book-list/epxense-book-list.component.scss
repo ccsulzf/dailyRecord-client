@@ -6,6 +6,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 ul {
@@ -52,7 +53,7 @@ ul::-webkit-scrollbar {
 }
 
 
-.add-book {
+.add-book-item {
   height: 80px;
   margin: 5px;
   display: flex;
@@ -66,6 +67,7 @@ ul::-webkit-scrollbar {
     p {
       font-size: 1.2em;
     }
+
     transition: 0.2s;
   }
 
@@ -77,5 +79,24 @@ ul::-webkit-scrollbar {
     white-space: pre-wrap;
     font-size: 1em;
     cursor: pointer;
+  }
+}
+
+.add-book-content {
+  position: absolute;
+  bottom: 5px;
+  width: 455px;
+  left: 75px;
+  height: 70px;
+  background: #fff;
+  z-index: 1000;
+  box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .2), 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12);
+  background: #fff;
+  color: rgba(0, 0, 0, .87);
+
+  form {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
   }
 }

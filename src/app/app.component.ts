@@ -1,12 +1,12 @@
-import { Component, HostListener } from '@angular/core';
-
+import { Component, HostListener, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-
+export class AppComponent implements OnInit {
+  constructor(private http: HttpClient) { }
   @HostListener('body:keydown', ['$event'])
   /**
    * ArrowDown 40
@@ -21,5 +21,22 @@ export class AppComponent {
     // switch (e.keyCode) {
 
     // }
+  }
+
+  ngOnInit() {
+    const url = 'http://localhost:3000';
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
+      // console.log(data);
+      localStorage.setItem('user', JSON.stringify(data));
+    }, (error) => {
+      console.log(error);
+    });
+
+    // this.http.get(url + '/user').subscribe((data)=>{
+    //   console.log(data);
+    // });
   }
 }

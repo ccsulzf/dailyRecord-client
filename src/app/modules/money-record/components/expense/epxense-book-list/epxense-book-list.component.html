@@ -4,7 +4,17 @@
       {{item.name}} {{i}}
     </li>
   </ul>
-  <div class="add-book">
-    <p>Add Book</p>
+  <div class="add-book-item">
+    <p (click)="openAddBook()">Add Book</p>
+  </div>
+
+  <div class="add-book-content" [hidden]="!showAddExpenseBook">
+    <!-- <app-expense-book-add [hidden]="!showAddExpenseBook"></app-expense-book-add> -->
+    <form >
+      <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Please input expenseBook name</mat-label>
+        <input matInput type="text" #input autocomplete="off" (keyup.enter)="addBook(input.value)">
+      </mat-form-field>
+    </form>
   </div>
 </div>
