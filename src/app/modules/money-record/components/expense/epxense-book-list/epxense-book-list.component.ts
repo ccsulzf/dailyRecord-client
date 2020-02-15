@@ -1,47 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { ExpenseBookAddComponent } from '../expense-book-add/expense-book-add.component';
+import { Component, OnInit,Output } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter } from 'protractor';
 @Component({
   selector: 'app-epxense-book-list',
   templateUrl: './epxense-book-list.component.html',
   styleUrls: ['./epxense-book-list.component.scss']
 })
 export class EpxenseBookListComponent implements OnInit {
-  list = [{
-    name: 'Test1'
-  }, {
-    name: 'Test2'
-  }, {
-    name: 'Test3'
-  }, {
-    name: 'Test1'
-  }, {
-    name: 'Test2'
-  }, {
-    name: 'Test3'
-  }, {
-    name: 'Test1'
-  }, {
-    name: 'Test2'
-  }, {
-    name: 'Test3'
-  }];
+  @Output() selectBook = new EventEmitter();
 
+  list;
+
+  private url = 'http://localhost:3000';
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  private user = JSON.parse(localStorage.getItem('user'));
   showAddExpenseBook = false;
-  constructor(private _bottomSheet: MatBottomSheet) { }
-
 
   ngOnInit() {
-
+    this.getExpenseBookList();
   }
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   openAddBook() {
     this.showAddExpenseBook = !this.showAddExpenseBook;
-    // this._bottomSheet.open(ExpenseBookAddComponent);
   }
 
-  addBook(value){
-    console.log(value);
+  getExpenseBookList() {
+    this.http.get(this.url + '/expenseBooks?userId=' + this.user.id, this.httpOptions).toPromise().then((data: Array<any>) => {
+      if (data && data.length) {
+        this.list = data;
+      }
+    }, (error) => {
+    });
+  }
+
+  addBook(value) {
+    const expenseBook = {
+      userId: this.user.id,
+      name: value
+    }
+    this.http.post(this.url + '/expenseBooks', expenseBook, this.httpOptions).toPromise().then((data) => {
+      this.showAddExpenseBook = false;
+      this.list.push(data);
+    }, (error) => {
+    });
+
   }
 
 }

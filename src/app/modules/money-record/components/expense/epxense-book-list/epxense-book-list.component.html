@@ -1,7 +1,7 @@
 <div class="bookLits-content">
   <ul>
     <li *ngFor="let item of list;let i= index" [class.selected]="i===0" [ngClass]="{'selected': i===0}">
-      {{item.name}} {{i}}
+      {{item.name}}
     </li>
   </ul>
   <div class="add-book-item">

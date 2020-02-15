@@ -28,12 +28,15 @@ export class AppComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
-      // console.log(data);
-      localStorage.setItem('user', JSON.stringify(data));
-    }, (error) => {
-      console.log(error);
-    });
+    if (!localStorage.getItem('user')) {
+      this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
+        // console.log(data);
+        localStorage.setItem('user', JSON.stringify(data));
+      }, (error) => {
+        console.log(error);
+      });
+    }
+
 
     // this.http.get(url + '/user').subscribe((data)=>{
     //   console.log(data);

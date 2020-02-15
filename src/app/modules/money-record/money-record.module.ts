@@ -5,7 +5,7 @@ import { CoreModule } from '../../core/core.module';
 import {
   MatSliderModule, MatButtonModule, MatInputModule,
   MatFormFieldModule, MatExpansionModule, MatDividerModule,
-  MatDatepickerModule, MatListModule, MatIconModule,MatBottomSheetModule
+  MatDatepickerModule, MatListModule, MatIconModule
 } from '@angular/material';
 
 import { MoneyRecordRoutingModule } from './money-record-routing.module';
@@ -34,8 +34,7 @@ import { ExpenseBookAddComponent } from './components/expense/expense-book-add/e
     MatDividerModule,
     MatDatepickerModule,
     MatListModule,
-    MatIconModule,
-    MatBottomSheetModule
+    MatIconModule
   ],
   entryComponents:[
     ExpenseBookAddComponent

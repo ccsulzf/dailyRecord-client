@@ -12,6 +12,8 @@ export class ExpenseComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
+  currenExpenseBook;
+
   expenseForm = this.fb.group({
     date: [new Date()],
     address: [''],
@@ -33,4 +35,7 @@ export class ExpenseComponent implements OnInit {
     console.log(this.expenseForm);
   }
 
+  onSelectBook(item){
+    this.currenExpenseBook = item;
+  }
 }
