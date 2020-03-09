@@ -1,6 +1,5 @@
-import { Component, OnInit,Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter } from 'protractor';
 @Component({
   selector: 'app-epxense-book-list',
   templateUrl: './epxense-book-list.component.html',
@@ -31,9 +30,10 @@ export class EpxenseBookListComponent implements OnInit {
   }
 
   getExpenseBookList() {
-    this.http.get(this.url + '/expenseBooks?userId=' + this.user.id, this.httpOptions).toPromise().then((data: Array<any>) => {
+    this.http.get(this.url + `/expenseBook?s={"userId":${this.user.id}}`, this.httpOptions).toPromise().then((data: Array<any>) => {
       if (data && data.length) {
         this.list = data;
+        this.selectBook.emit(this.list[0]);
       }
     }, (error) => {
     });

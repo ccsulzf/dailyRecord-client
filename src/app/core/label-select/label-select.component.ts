@@ -19,24 +19,34 @@ export const LABEL_SELECT_ACCESSOR: any = {
   providers: [LABEL_SELECT_ACCESSOR]
 })
 export class LabelSelectComponent implements OnInit, ControlValueAccessor {
-
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
-  @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  labelCtrl = new FormControl();
+  filteredLabel: Observable<any[]>;
+  selectedLabels: any[] = [];
+  // allLabels: any[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  allLabels: any[] = [{
+    id: 1,
+    name: 'Apple'
+  }, {
+    id: 2,
+    name: 'Lemon'
+  }, {
+    id: 3,
+    name: 'Lime'
+  }];
+  @ViewChild('labelInput', { static: false }) labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor() {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredLabel = this.labelCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
   }
 
 
@@ -46,7 +56,7 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    this.fruits = data;
+    this.selectedLabels = data;
   }
 
   registerOnChange(fn: any): void {
@@ -66,7 +76,10 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
 
       // Add our fruit
       if ((value || '').trim()) {
-        this.fruits.push(value.trim());
+        this.selectedLabels.push({
+          id: '',
+          name: value.trim()
+        });
       }
 
       // Reset the input value
@@ -74,27 +87,33 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.labelCtrl.setValue(null);
     }
+    this.propagateChange(this.selectedLabels);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(name): void {
+    const index = this.selectedLabels.findIndex(item => item.name === name);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.selectedLabels.splice(index, 1);
     }
+    this.propagateChange(this.selectedLabels);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    // console.log(event);
+    this.selectedLabels.push(event.option.value);
+    this.labelInput.nativeElement.value = '';
+    this.labelCtrl.setValue(null);
+    this.propagateChange(this.selectedLabels);
+    // this.matAutocomplete.showPanel = true;
+    // console.log(this.matAutocomplete.panel.nativeElement);
+    // console.log(this.matAutocomplete.isOpen);
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allLabels.filter(item => item.name.indexOf(value) === 0);
   }
 
 }

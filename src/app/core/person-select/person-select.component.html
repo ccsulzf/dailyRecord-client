@@ -1,20 +1,20 @@
 <mat-form-field class="full-width">
   <mat-label>Pick expense person</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
-    <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+    <mat-chip *ngFor="let people of selectedPeoples" [selectable]="selectable" [removable]="removable" (removed)="remove(people)">
       <mat-icon>person_outline</mat-icon>
-      {{fruit}}
+      {{people.name}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
-    <input #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+    <input #peopleInput [formControl]="peopleCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-hint align="end">total 5 people selected</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-      {{fruit}}
+    <mat-option *ngFor="let people of filteredPeolple | async" [value]="people">
+      {{people.name}}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

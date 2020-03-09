@@ -4,20 +4,19 @@
     <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
       <div class="form-content">
         <div class="calendar item">
-          <app-date-picker formControlName="date" name="date"></app-date-picker>
+          <app-date-picker formControlName="expenseDate" name="date"></app-date-picker>
         </div>
 
         <div class="address item">
-          <!-- <app-address-select formControlName="address" name="address"></app-address-select> -->
-          <app-item-select [name]="'Address'" formControlName="address"></app-item-select>
+          <app-item-select [name]="'Address'" [model]="'address'" formControlName="address"></app-item-select>
         </div>
 
         <div class="category item">
-          <app-item-select [name]="'Category'" formControlName="category"></app-item-select>
+          <app-item-select [name]="'Category'" [model]="'expenseCategory'" formControlName="expenseCategory"></app-item-select>
         </div>
 
         <div class="store item">
-          <app-item-select [name]="'Store'" formControlName="store"></app-item-select>
+          <app-item-select [name]="'Store'" [model]="'expenseStore'" formControlName="expenseStore"></app-item-select>
         </div>
 
         <div class="content">
@@ -26,10 +25,10 @@
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Pay Channel'" formControlName="payChannel"></app-item-select>
+            <app-item-select [name]="'Pay Channel'" [model]="'payChannel'" [type]="1"  formControlName="payChannel"></app-item-select>
           </div>
           <div class="moent-input">
-            <app-money-input formControlName="money"></app-money-input>
+            <app-money-input formControlName="amount"></app-money-input>
           </div>
         </div>
 

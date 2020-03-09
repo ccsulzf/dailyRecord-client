@@ -20,6 +20,8 @@ import { MemoInputComponent } from './memo-input/memo-input.component';
 import { ContentInputComponent } from './content-input/content-input.component';
 import { LabelSelectComponent } from './label-select/label-select.component';
 import { PersonSelectComponent } from './person-select/person-select.component';
+
+import { BaseDataService } from './services';
 @NgModule({
   declarations: [
     DatePickerComponent,
@@ -53,7 +55,8 @@ import { PersonSelectComponent } from './person-select/person-select.component';
     LabelSelectComponent
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
+    BaseDataService
   ]
 })
 export class CoreModule { }

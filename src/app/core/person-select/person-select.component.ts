@@ -24,18 +24,27 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-
-  @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
+  peopleCtrl = new FormControl();
+  filteredPeolple: Observable<any[]>;
+  selectedPeoples: any[] = [];
+  // allPeoples: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  allPeoples: any[] = [{
+    id: 1,
+    name: 'Apple'
+  }, {
+    id: 2,
+    name: 'Lemon'
+  }, {
+    id: 3,
+    name: 'Lime'
+  }];
+  @ViewChild('peopleInput', { static: false }) peopleInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor() {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
   }
 
 
@@ -45,7 +54,7 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    this.fruits = data;
+    this.selectedPeoples = data;
   }
 
   registerOnChange(fn: any): void {
@@ -65,7 +74,10 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
 
       // Add our fruit
       if ((value || '').trim()) {
-        this.fruits.push(value.trim());
+        this.selectedPeoples.push({
+          id: '',
+          name: value.trim()
+        });
       }
 
       // Reset the input value
@@ -73,27 +85,30 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.peopleCtrl.setValue(null);
     }
+    this.propagateChange(this.selectedPeoples);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(name): void {
+    const index = this.selectedPeoples.findIndex(item => item.name === name);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.selectedPeoples.splice(index, 1);
     }
+    this.propagateChange(this.selectedPeoples);
   }
 
+
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.selectedPeoples.push(event.option.value);
+    this.peopleInput.nativeElement.value = '';
+    this.peopleCtrl.setValue(null);
+    this.propagateChange(this.selectedPeoples);
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allPeoples.filter(item => item.name.indexOf(value) === 0);
   }
 
 
