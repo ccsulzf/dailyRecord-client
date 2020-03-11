@@ -16,10 +16,13 @@ import { ExpenseDetailComponent } from './components/expense/expense-detail/expe
 import { EpxenseBookListComponent } from './components/expense/epxense-book-list/epxense-book-list.component';
 import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
 import { ExpenseBookAddComponent } from './components/expense/expense-book-add/expense-book-add.component';
+
+import { expenseReducer } from '../../reducers';
+import { StoreModule } from '@ngrx/store';
 @NgModule({
   declarations: [ExpenseComponent,
     IncomeComponent, MoneyRecordComponent,
-    ExpenseDetailComponent, EpxenseBookListComponent, IncomeDetailComponent,ExpenseBookAddComponent],
+    ExpenseDetailComponent, EpxenseBookListComponent, IncomeDetailComponent, ExpenseBookAddComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -34,9 +37,10 @@ import { ExpenseBookAddComponent } from './components/expense/expense-book-add/e
     MatDividerModule,
     MatDatepickerModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    // StoreModule.forFeature('expense', expenseReducer)
   ],
-  entryComponents:[
+  entryComponents: [
     ExpenseBookAddComponent
   ]
 })

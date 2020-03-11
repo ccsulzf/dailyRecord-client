@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -14,16 +16,24 @@ export class ExpenseComponent implements OnInit {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   private user = JSON.parse(localStorage.getItem('user'));
+
+  expenseBook$: Observable<any>;
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private store: Store<any>
+  ) {
+    this.expenseBook$ = store.select('expense');
+    this.expenseBook$.subscribe((temp) => {
+      this.currenExpenseBook = temp.selectedExpenseBook;
+    });
+   }
 
   currenExpenseBook;
 
   expenseForm = this.fb.group({
     expenseDate: [new Date()],
-    address: [{ id: '', name: '' }],
+    address: [''],
     expenseCategory: [''],
     expenseStore: [''],
     content: [''],

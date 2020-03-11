@@ -1,20 +1,34 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on, createSelector } from '@ngrx/store';
 import * as ExpenseActions from '../actions/expense.action';
 export interface State {
     selectedExpenseBook: object;
+    // addExpenseBaseData: object
 }
 
+export interface ExpenseSate {
+    addBaseData: object;
+}
+
+export const selectFeature = (state: ExpenseSate) => state.addBaseData;
+
+
+export const selectExpenseBaseData = createSelector(
+    selectFeature,
+    (state: ExpenseSate) => state.addBaseData
+);
+
+
 export const initialState: State = {
-    selectedExpenseBook: null
+    selectedExpenseBook: null,
+    // addExpenseBaseData: null
 };
 
-const expenseReducer = createReducer(
+const _expenseReducer = createReducer(
     initialState,
-    on(ExpenseActions.selectExpenseBook, (state) => {
-        return { ...state, selectedExpenseBook: state.selectedExpenseBook }
-    })
+    on(ExpenseActions.selectExpenseBook, (state, value) => ({ selectedExpenseBook: value }))
 )
 
-export function reducer(state: State | undefined, action: Action) {
-    return expenseReducer(state, action);
+
+export function expenseReducer(state: State | undefined, action: Action) {
+    return _expenseReducer(state, action);
 }

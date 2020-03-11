@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material';
 import { BaseDataService } from '../services/baseData.service';
+
+import { Store, select } from '@ngrx/store';
+import { selectExpenseBook } from 'src/app/actions/expense.action';
+
 export class ItemSelectErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -27,20 +31,33 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   @Input() name;
   @Input() model;
   @Input() type;
-  // options: string[] = ['One', 'Two', 'Three'];
-  dataList: object[];
+
+  expenseBook$: Observable<any>;
+
+  originList = new Array();
+  dataList = new Array();
   filteredOptions: Observable<any[]>;
 
   matcher = new ItemSelectErrorStateMatcher();
 
   constructor(
-    private baseDataService: BaseDataService
-  ) { }
+    private baseDataService: BaseDataService,
+    private store: Store<any>
+  ) {
+    this.expenseBook$ = store.select('expense');
+    this.expenseBook$.subscribe((temp) => {
+      console.log(temp);
+      const selectedExpenseBook = temp.selectedExpenseBook;
+      this.filterByExpenseBook(selectedExpenseBook);
+    });
+  }
 
   itemSelectControl = new FormControl();
+
   ngOnInit() {
     this.getList();
   }
+
 
   getList() {
     const strObj: any = {};
@@ -51,12 +68,38 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     }
     this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
       this.dataList = data;
-      this.filteredOptions = this.itemSelectControl.valueChanges
+      if (this.model === 'expenseCategory') {
+        this.originList = data;
+        this.expenseBook$.subscribe((temp) => {
+          console.log(temp);
+          const selectedExpenseBook = temp.selectedExpenseBook;
+          this.filterByExpenseBook(selectedExpenseBook);
+        });
+      } else {
+        this.filteredOptions = this.itemSelectControl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+      }
+
+    });
+  }
+
+  filterByExpenseBook(selectedExpenseBook) {
+    this.dataList = this.originList.filter((item: any) => {
+      return item.expenseBookId === selectedExpenseBook.id;
+    });
+    if(this.dataList && this.dataList.length){
+      this.itemSelectControl.setValue(this.dataList[0].name);
+      this.propagateChange(this.dataList[0]);
+    }
+
+    this.filteredOptions = this.itemSelectControl.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
-    })
   }
 
   propagateChange = (temp: any) => { };
@@ -68,9 +111,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   select(data) {
-    // console.log(data);
     const value = data.option.value;
-    // console.log();
     this.propagateChange(value);
     this.itemSelectControl.setValue(value.name);
   }
@@ -88,9 +129,12 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     if (list && list.length) {
       return list;
     } else {
-      this.propagateChange({
-        id: '',
-        name: (value.name || value)
+      // 这里为啥要用这个，以后怎么解决
+      setTimeout(() => {
+        this.propagateChange({
+          id: '',
+          name: (value.name || value)
+        });
       });
       return [];
     }

@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { expenseReducer } from './reducers/expense.reducer';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,13 +20,14 @@ import { reducers, metaReducers } from './reducers';
     ShareModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true
-      }
-    })
+    StoreModule.forRoot({ expense: expenseReducer })
+    // StoreModule.forRoot(reducers, {
+    //   metaReducers,
+    //   runtimeChecks: {
+    //     strictStateImmutability: true,
+    //     strictActionImmutability: true
+    //   }
+    // })
   ],
   providers: [],
   bootstrap: [AppComponent]
