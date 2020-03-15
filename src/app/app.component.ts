@@ -17,10 +17,7 @@ export class AppComponent implements OnInit {
    * shiftKey true key Tab 9
    */
   hotKeyEvent(e) {
-    // console.log(e);
-    // switch (e.keyCode) {
 
-    // }
   }
 
   ngOnInit() {
@@ -30,16 +27,9 @@ export class AppComponent implements OnInit {
     };
     if (!localStorage.getItem('user')) {
       this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
-        // console.log(data);
         localStorage.setItem('user', JSON.stringify(data));
       }, (error) => {
-        console.log(error);
       });
     }
-
-
-    // this.http.get(url + '/user').subscribe((data)=>{
-    //   console.log(data);
-    // });
   }
 }

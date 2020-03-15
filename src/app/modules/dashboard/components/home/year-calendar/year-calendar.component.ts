@@ -74,8 +74,6 @@ export class YearCalendarComponent implements OnInit {
 
   onChartInit(e) {
     this.echartsInstance = e;
-    console.log(this.echartsInstance.getHeight());
-    // console.log(this.echartsInstance);
   }
 
   getVirtulData(year) {

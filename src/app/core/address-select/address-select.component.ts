@@ -39,47 +39,9 @@ export class AddressSelectComponent implements OnInit, ControlValueAccessor {
     private httpClient: HttpClient
   ) { }
   ngOnInit() {
-    // const firstLetterList = PY('李志锋', {
-    //   style: PY.STYLE_FIRST_LETTER,
-    // });
-    // console.log(firstLetterList);
     this.httpClient.get('/assets/zh-CN-pinyin.json').subscribe((data) => {
       this.addressList = data;
     });
-
-    // const chineseRexp = /[/u4E00-/u9FA5]|[/uFE30-/uFFA0]/gi;
-
-    // this.httpClient.get('/assets/zh-CN.json').subscribe((data: any) => {
-    //   this.originAddressData = data;
-
-    //   for (const item of data) {
-    //     item.pinyinCode = PY(item.name, {
-    //       style: PY.STYLE_FIRST_LETTER,
-    //     }).join('');
-
-    //     for (const cityItem of item.cityList) {
-    //       cityItem.pinyinCode = PY(cityItem.name, {
-    //         style: PY.STYLE_FIRST_LETTER,
-    //       }).join('');
-
-    //       for (const areaItem of cityItem.areaList) {
-    //         areaItem.pinyinCode = PY(areaItem.name, {
-    //           style: PY.STYLE_FIRST_LETTER,
-    //         }).join('');
-
-    //         this.addressList.push({
-    //           provinceName: item.name,
-    //           provincePinyin: item.pinyinCode,
-    //           cityName: cityItem.name,
-    //           cityPinyin: cityItem.pinyinCode,
-    //           areaName: areaItem.name,
-    //           areaPinyin: areaItem.pinyinCode
-    //         });
-    //       }
-    //     }
-    //   }
-    //   console.log(JSON.stringify(this.addressList));
-    // });
     this.filteredOptions = this.addressControl.valueChanges
       .pipe(
         map((value) => {

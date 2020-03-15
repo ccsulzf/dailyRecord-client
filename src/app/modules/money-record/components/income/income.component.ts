@@ -30,7 +30,7 @@ export class IncomeComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.incomeForm);
+    // console.log(this.incomeForm);
   }
 
 }

@@ -27,11 +27,6 @@ export class EpxenseBookListComponent implements OnInit {
     private http: HttpClient,
     private store: Store<any>
   ) {
-    // console.log(this.store);
-    // this.expenseBook$ = store.select('expense');
-    // this.expenseBook$.subscribe((data) => {
-    //   console.log(data);
-    // })
   }
 
   openAddBook() {

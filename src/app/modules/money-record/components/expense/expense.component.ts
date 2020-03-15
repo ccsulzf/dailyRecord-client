@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import * as expense from 'src/app/reducers/expense.reducer';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -23,9 +24,9 @@ export class ExpenseComponent implements OnInit {
     private http: HttpClient,
     private store: Store<any>
   ) {
-    this.expenseBook$ = store.select('expense');
+    this.expenseBook$ = store.select(expense.getSelectedExpenseBook);
     this.expenseBook$.subscribe((temp) => {
-      this.currenExpenseBook = temp.selectedExpenseBook;
+      this.currenExpenseBook = temp;
     });
    }
 
@@ -55,7 +56,7 @@ export class ExpenseComponent implements OnInit {
     body.payChannel.type = 1;
     // body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
     // body.expenseBookId = this.currenExpenseBook.id;
-    console.log(body);
+    // console.log(body);
     // this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data) => {
 
     // });

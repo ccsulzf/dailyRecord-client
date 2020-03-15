@@ -6,7 +6,7 @@ import { ErrorStateMatcher } from '@angular/material';
 import { BaseDataService } from '../services/baseData.service';
 
 import { Store, select } from '@ngrx/store';
-import { selectExpenseBook } from 'src/app/actions/expense.action';
+import * as expense from 'src/app/reducers/expense.reducer';
 
 export class ItemSelectErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -44,11 +44,10 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     private baseDataService: BaseDataService,
     private store: Store<any>
   ) {
-    this.expenseBook$ = store.select('expense');
+    this.expenseBook$ = store.select(expense.getSelectedExpenseBook);
+
     this.expenseBook$.subscribe((temp) => {
-      console.log(temp);
-      const selectedExpenseBook = temp.selectedExpenseBook;
-      this.filterByExpenseBook(selectedExpenseBook);
+        this.filterByExpenseBook(temp);
     });
   }
 
@@ -71,9 +70,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
       if (this.model === 'expenseCategory') {
         this.originList = data;
         this.expenseBook$.subscribe((temp) => {
-          console.log(temp);
-          const selectedExpenseBook = temp.selectedExpenseBook;
-          this.filterByExpenseBook(selectedExpenseBook);
+          this.filterByExpenseBook(temp);
         });
       } else {
         this.filteredOptions = this.itemSelectControl.valueChanges
@@ -87,19 +84,21 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   filterByExpenseBook(selectedExpenseBook) {
-    this.dataList = this.originList.filter((item: any) => {
-      return item.expenseBookId === selectedExpenseBook.id;
-    });
-    if(this.dataList && this.dataList.length){
-      this.itemSelectControl.setValue(this.dataList[0].name);
-      this.propagateChange(this.dataList[0]);
+    if(selectedExpenseBook){
+      this.dataList = this.originList.filter((item: any) => {
+        return item.expenseBookId === selectedExpenseBook.id;
+      });
+      if(this.dataList && this.dataList.length){
+        this.itemSelectControl.setValue(this.dataList[0].name);
+        this.propagateChange(this.dataList[0]);
+      }
+      this.filteredOptions = this.itemSelectControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
     }
-
-    this.filteredOptions = this.itemSelectControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+   
   }
 
   propagateChange = (temp: any) => { };

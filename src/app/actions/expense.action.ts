@@ -3,10 +3,11 @@ import { createAction, props } from '@ngrx/store';
 // props<Object>());
 export const selectExpenseBook = createAction(
     '[ExpenseBook Page] Select ExpenseBook',
-    props<Object>()
+    props<object>()
   );
 
 export const addExpenseBaseData = createAction(
   '[Expense Page] Add ExpenseBaseData',
   props<object>()
-)
+);
+

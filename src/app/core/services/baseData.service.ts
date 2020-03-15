@@ -12,8 +12,6 @@ export class BaseDataService {
     ) { }
 
     getBaseData(model, searchStr) {
-        // this.httpOptions.params = params;
-        // console.log(this.url + `/${model}?s=${searchStr}`);
         return this.http.get(this.url + `/${model}?s=${searchStr}`, this.httpOptions).toPromise();
     }
 }

@@ -5,6 +5,7 @@ import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { BaseDataService } from '../services/baseData.service';
 
 export const LABEL_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -28,22 +29,14 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
   labelCtrl = new FormControl();
   filteredLabel: Observable<any[]>;
   selectedLabels: any[] = [];
-  // allLabels: any[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
-  allLabels: any[] = [{
-    id: 1,
-    name: 'Apple'
-  }, {
-    id: 2,
-    name: 'Lemon'
-  }, {
-    id: 3,
-    name: 'Lime'
-  }];
+  allLabels: any[] = [];
   @ViewChild('labelInput', { static: false }) labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
-  constructor() {
+  constructor(
+   private baseDataService: BaseDataService
+  ) {
     this.filteredLabel = this.labelCtrl.valueChanges.pipe(
       startWith(null),
       map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
@@ -51,6 +44,20 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
 
 
   ngOnInit() {
+    this.getList();
+  }
+
+  getList() {
+    const strObj: any = {};
+    const user = JSON.parse(localStorage.getItem('user'));
+    strObj.userId = user.id;
+    
+    this.baseDataService.getBaseData('label', JSON.stringify(strObj)).then((data: any) => {
+      this.allLabels = data;
+      this.filteredLabel = this.labelCtrl.valueChanges.pipe(
+        startWith(null),
+        map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+    })
   }
 
   propagateChange = (temp: any) => { };
@@ -102,14 +109,10 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    // console.log(event);
     this.selectedLabels.push(event.option.value);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
     this.propagateChange(this.selectedLabels);
-    // this.matAutocomplete.showPanel = true;
-    // console.log(this.matAutocomplete.panel.nativeElement);
-    // console.log(this.matAutocomplete.isOpen);
   }
 
   private _filter(value: string): string[] {
