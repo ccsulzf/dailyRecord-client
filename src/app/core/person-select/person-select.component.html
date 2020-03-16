@@ -10,7 +10,7 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-hint align="end">total 5 people selected</mat-hint>
+  <mat-hint *ngIf="selectedPeoples && selectedPeoples.length" align="end">total {{selectedPeoples?.length}} people selected</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let people of filteredPeolple | async" [value]="people">

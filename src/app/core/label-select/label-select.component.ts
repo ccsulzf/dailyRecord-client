@@ -35,7 +35,7 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor(
-   private baseDataService: BaseDataService
+    private baseDataService: BaseDataService
   ) {
     this.filteredLabel = this.labelCtrl.valueChanges.pipe(
       startWith(null),
@@ -51,13 +51,13 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
-    
+
     this.baseDataService.getBaseData('label', JSON.stringify(strObj)).then((data: any) => {
       this.allLabels = data;
       this.filteredLabel = this.labelCtrl.valueChanges.pipe(
         startWith(null),
         map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
-    })
+    });
   }
 
   propagateChange = (temp: any) => { };

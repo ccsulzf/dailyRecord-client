@@ -28,7 +28,7 @@ export class ExpenseComponent implements OnInit {
     this.expenseBook$.subscribe((temp) => {
       this.currenExpenseBook = temp;
     });
-   }
+  }
 
   currenExpenseBook;
 
@@ -54,11 +54,13 @@ export class ExpenseComponent implements OnInit {
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
     body.userId = this.user.id;
     body.payChannel.type = 1;
-    // body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
-    // body.expenseBookId = this.currenExpenseBook.id;
+    body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
+    body.expenseBookId = this.currenExpenseBook.id;
     // console.log(body);
     // this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data) => {
 
+    // }).catch((error) => {
+    //   console.log(error);
     // });
   }
 

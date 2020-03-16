@@ -22,6 +22,7 @@ const expenseState = createFeatureSelector<State>('expense');
 
 const selectExpenseBook = (state: State) => state.selectedExpenseBook;
 
+
 export const getSelectedExpenseBook = createSelector(expenseState, selectExpenseBook);
 
 

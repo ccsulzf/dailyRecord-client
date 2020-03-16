@@ -6,6 +6,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { BaseDataService } from '../services/baseData.service';
+
 export const PERSON_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => PersonSelectComponent),
@@ -27,21 +29,15 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
   peopleCtrl = new FormControl();
   filteredPeolple: Observable<any[]>;
   selectedPeoples: any[] = [];
-  // allPeoples: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-  allPeoples: any[] = [{
-    id: 1,
-    name: 'Apple'
-  }, {
-    id: 2,
-    name: 'Lemon'
-  }, {
-    id: 3,
-    name: 'Lime'
-  }];
+
+  allPeoples: any[] = [];
+
   @ViewChild('peopleInput', { static: false }) peopleInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
-  constructor() {
+  constructor(
+    private baseDataService:BaseDataService
+  ) {
     this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
       startWith(null),
       map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
@@ -49,6 +45,20 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
 
 
   ngOnInit() {
+    this.getList()
+  }
+
+  getList(){
+    const strObj: any = {};
+    const user = JSON.parse(localStorage.getItem('user'));
+    strObj.userId = user.id;
+
+    this.baseDataService.getBaseData('people', JSON.stringify(strObj)).then((data: any) => {
+      this.allPeoples = data;
+      this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
+        startWith(null),
+        map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+    });
   }
 
   propagateChange = (temp: any) => { };
