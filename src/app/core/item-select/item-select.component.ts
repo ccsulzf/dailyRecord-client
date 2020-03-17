@@ -60,7 +60,6 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.getList();
     this.baseData$.subscribe((data: Object) => {
-      console.log(data);
       for (let key in data) {
         if (key === this.model) {
           this.originList = [...this.originList, data[key]];
@@ -107,13 +106,15 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   filterByExpenseBook(selectedExpenseBook) {
-    if (selectedExpenseBook) {
+    if (selectedExpenseBook && this.model === 'expenseCategory') {
       this.dataList = this.originList.filter((item: any) => {
         return item.expenseBookId === selectedExpenseBook.id;
       });
       if (this.dataList && this.dataList.length) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
+      } else {
+        this.itemSelectControl.setValue('');
       }
       this.filteredOptions = this.itemSelectControl.valueChanges
         .pipe(

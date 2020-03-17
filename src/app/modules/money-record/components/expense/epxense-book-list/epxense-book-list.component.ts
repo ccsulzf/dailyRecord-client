@@ -52,8 +52,8 @@ export class EpxenseBookListComponent implements OnInit {
     const expenseBook = {
       userId: this.user.id,
       name: value
-    }
-    this.http.post(this.url + '/expenseBooks', expenseBook, this.httpOptions).toPromise().then((data) => {
+    };
+    this.http.post(this.url + '/expenseBook', expenseBook, this.httpOptions).toPromise().then((data) => {
       this.showAddExpenseBook = false;
       this.list.push(data);
     }, (error) => {

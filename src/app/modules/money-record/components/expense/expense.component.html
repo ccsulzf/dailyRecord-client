@@ -46,7 +46,7 @@
       </div>
       <!-- 编辑的时候放一个删除的图标 -->
       <div class="btn-group">
-        <button mat-raised-button type="submit" color="primary">Add to Expense</button>
+        <button mat-raised-button [disabled]="expenseForm.valid" type="submit" color="primary">Add to Expense</button>
         <button mat-raised-button color="accent" type="button" (click)="onReset()" >Reset</button>
       </div>
     </form>
