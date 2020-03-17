@@ -7,6 +7,7 @@ import { BaseDataService } from '../services/baseData.service';
 
 import { Store, select } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
+import * as baseData from 'src/app/reducers/baseData.reducer';
 
 export class ItemSelectErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -30,9 +31,12 @@ export const ITEM_SELECT_ACCESSOR: any = {
 export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   @Input() name;
   @Input() model;
-  @Input() type;
+  @Input() type: string;
+
+  private user = JSON.parse(localStorage.getItem('user'));
 
   expenseBook$: Observable<any>;
+  baseData$: Observable<any>;
 
   originList = new Array();
   dataList = new Array();
@@ -45,9 +49,9 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     private store: Store<any>
   ) {
     this.expenseBook$ = store.select(expense.getSelectedExpenseBook);
-
+    this.baseData$ = store.select(baseData.getAddBaseData);
     this.expenseBook$.subscribe((temp) => {
-        this.filterByExpenseBook(temp);
+      this.filterByExpenseBook(temp);
     });
   }
 
@@ -55,8 +59,23 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.getList();
+    this.baseData$.subscribe((data: Object) => {
+      console.log(data);
+      for (let key in data) {
+        if (key === this.model) {
+          this.originList = [...this.originList, data[key]];
+          this.dataList = [...this.dataList, data[key]];
+          this.itemSelectControl.setValue(data[key].name);
+          this.propagateChange(data[key]);
+          this.filteredOptions = this.itemSelectControl.valueChanges
+            .pipe(
+              startWith(''),
+              map(value => this._filter(value))
+            );
+        }
+      }
+    });
   }
-
 
   getList() {
     const strObj: any = {};
@@ -73,6 +92,10 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
           this.filterByExpenseBook(temp);
         });
       } else {
+        if (this.model !== 'expenseStore' && this.model !== 'payChannel') {
+          this.itemSelectControl.setValue(this.dataList[0].name);
+          this.propagateChange(this.dataList[0]);
+        }
         this.filteredOptions = this.itemSelectControl.valueChanges
           .pipe(
             startWith(''),
@@ -84,11 +107,11 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   filterByExpenseBook(selectedExpenseBook) {
-    if(selectedExpenseBook){
+    if (selectedExpenseBook) {
       this.dataList = this.originList.filter((item: any) => {
         return item.expenseBookId === selectedExpenseBook.id;
       });
-      if(this.dataList && this.dataList.length){
+      if (this.dataList && this.dataList.length) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
       }
@@ -98,15 +121,20 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
           map(value => this._filter(value))
         );
     }
-   
+
   }
 
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    data = data || { id: '', name: '' };
+    data = data || { id: '', name: '', userId: this.user.id };
+    if (this.model === 'payChannel') {
+      data.type = this.type;
+    }
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
+    this.itemSelectControl.markAsPristine();
+    this.itemSelectControl.markAsUntouched();
   }
 
   select(data) {
@@ -130,10 +158,21 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     } else {
       // 这里为啥要用这个，以后怎么解决
       setTimeout(() => {
-        this.propagateChange({
-          id: '',
-          name: (value.name || value)
-        });
+        if (this.model === 'payChannel') {
+          this.propagateChange({
+            id: '',
+            name: (value.name || value),
+            type: this.type,
+            userId: this.user.id
+          });
+        } else {
+          this.propagateChange({
+            id: '',
+            name: (value.name || value),
+            userId: this.user.id
+          });
+        }
+
       });
       return [];
     }

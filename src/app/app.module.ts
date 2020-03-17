@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { expenseReducer } from './reducers/expense.reducer';
+import { expenseReducer, baseDataReducer } from './reducers';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,7 +20,7 @@ import { expenseReducer } from './reducers/expense.reducer';
     ShareModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({ expense: expenseReducer })
+    StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer })
     // StoreModule.forRoot(reducers, {
     //   metaReducers,
     //   runtimeChecks: {

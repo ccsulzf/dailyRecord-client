@@ -18,7 +18,6 @@ export class EpxenseBookListComponent implements OnInit {
   private user = JSON.parse(localStorage.getItem('user'));
   showAddExpenseBook = false;
 
-  expenseBook$: Observable<any>;
   ngOnInit() {
     this.getExpenseBookList();
   }

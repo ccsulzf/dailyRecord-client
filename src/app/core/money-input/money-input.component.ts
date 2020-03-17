@@ -37,6 +37,8 @@ export class MoneyInputComponent implements OnInit, ControlValueAccessor {
   writeValue(data: any): void {
     this.moenyInputControl.setValidators(Validators.required);
     this.moenyInputControl.setValue(data);
+    this.moenyInputControl.markAsPristine();
+    this.moenyInputControl.markAsUntouched();
   }
 
   registerOnChange(fn: any): void {

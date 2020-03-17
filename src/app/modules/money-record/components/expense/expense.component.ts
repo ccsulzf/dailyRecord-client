@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
+
+import { addBaseData } from '../../../../actions/baseData.action';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -47,21 +49,42 @@ export class ExpenseComponent implements OnInit {
 
 
   ngOnInit() {
+    // address: [{id:'3',name:'深圳'}],
   }
 
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
     body.userId = this.user.id;
-    body.payChannel.type = 1;
     body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
     body.expenseBookId = this.currenExpenseBook.id;
-    // console.log(body);
-    // this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data) => {
+    this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data: any) => {
+      this.store.dispatch(addBaseData(data.baseData));
+      this.expenseForm.patchValue({
+        person: [],
+        label: [],
+        memo: '',
+        amount: '',
+        content: ''
+      });
+      this.expenseForm.markAsPristine();
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
+  onReset() {
+    this.expenseForm.patchValue({
+      expenseDate: new Date(),
+      expenseStore: '',
+      payChannel: '',
+      person: [],
+      label: [],
+      memo: '',
+      amount: '',
+      content: ''
+    });
+    this.expenseForm.markAsPristine();
   }
 
   onSelectBook(item) {

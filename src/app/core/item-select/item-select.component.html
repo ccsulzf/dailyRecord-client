@@ -6,7 +6,7 @@
       {{option?.name}}
     </mat-option>
   </mat-autocomplete>
-  <mat-error *ngIf="itemSelectControl.hasError('required')">
+  <mat-error *ngIf="itemSelectControl.hasError('required') && (itemSelectControl.touched || itemSelectControl.dirty)">
     {{name}} is <strong>required</strong>
   </mat-error>
 </mat-form-field>

@@ -37,6 +37,8 @@ export class ContentInputComponent implements OnInit, ControlValueAccessor {
   writeValue(data: any): void {
     this.contentInputControl.setValidators(Validators.required);
     this.contentInputControl.setValue(data);
+    this.contentInputControl.markAsPristine();
+    this.contentInputControl.markAsUntouched();
   }
 
   registerOnChange(fn: any): void {

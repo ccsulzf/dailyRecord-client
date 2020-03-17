@@ -25,7 +25,7 @@
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Pay Channel'" [model]="'payChannel'" [type]="1"  formControlName="payChannel"></app-item-select>
+            <app-item-select [name]="'Pay Channel'" [model]="'payChannel'" [type]="'1'"  formControlName="payChannel"></app-item-select>
           </div>
           <div class="moent-input">
             <app-money-input formControlName="amount"></app-money-input>
@@ -44,9 +44,10 @@
           <app-memo-input formControlName="memo"></app-memo-input>
         </div>
       </div>
+      <!-- 编辑的时候放一个删除的图标 -->
       <div class="btn-group">
         <button mat-raised-button type="submit" color="primary">Add to Expense</button>
-        <button mat-raised-button color="accent">Reset</button>
+        <button mat-raised-button color="accent" type="button" (click)="onReset()" >Reset</button>
       </div>
     </form>
   </div>
