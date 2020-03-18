@@ -54,10 +54,6 @@
 }
 
 .detail-item {
-  // display: flex !important;
-  // align-items: center;
-  // justify-content: space-between;
-
   display: grid !important;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
@@ -72,11 +68,6 @@
     color: $income;
     font-size: 1em;
   }
-
-  // P {
-  //   font-size: 0.8em;
-  //   color: #ececec;
-  // }
 }
 
 .month-income {

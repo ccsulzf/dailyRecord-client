@@ -6,8 +6,24 @@ export const selectExpenseBook = createAction(
     props<object>()
   );
 
-export const addExpenseBaseData = createAction(
-  '[Expense Page] Add ExpenseBaseData',
+export const selectExpenseDetail = createAction(
+  '[ExpenseDetail Page] Select ExpenseExpenseDetail',
   props<object>()
 );
+
+export const editExpenseDetail = createAction(
+  '[Expense Page] Select ExpenseExpenseDetail',
+  props<object>()
+);
+
+export const addExpenseDetail =  createAction(
+  '[Expense Page] Select ExpenseExpenseDetail',
+  props<object>()
+);
+
+export const delExpenseDetail =  createAction(
+  '[Expense Page] Select ExpenseExpenseDetail',
+  props()
+);
+
 

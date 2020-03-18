@@ -8,19 +8,19 @@ import { map, startWith } from 'rxjs/operators';
 
 import { BaseDataService } from '../services/baseData.service';
 
-export const PERSON_SELECT_ACCESSOR: any = {
+export const PEOPLE_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => PersonSelectComponent),
+  useExisting: forwardRef(() => PeopleSelectComponent),
   multi: true
 };
 
 @Component({
-  selector: 'app-person-select',
-  templateUrl: './person-select.component.html',
-  styleUrls: ['./person-select.component.scss'],
-  providers: [PERSON_SELECT_ACCESSOR]
+  selector: 'app-people-select',
+  templateUrl: './people-select.component.html',
+  styleUrls: ['./people-select.component.scss'],
+  providers: [PEOPLE_SELECT_ACCESSOR]
 })
-export class PersonSelectComponent implements OnInit, ControlValueAccessor {
+export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
   visible = true;
   selectable = true;
   removable = true;
@@ -64,12 +64,14 @@ export class PersonSelectComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
+    console.log(data);
     this.selectedPeoples = data;
   }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
+  
   registerOnTouched(fn: any): void {
 
   }

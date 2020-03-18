@@ -19,7 +19,7 @@ import { MoneyInputComponent } from './money-input/money-input.component';
 import { MemoInputComponent } from './memo-input/memo-input.component';
 import { ContentInputComponent } from './content-input/content-input.component';
 import { LabelSelectComponent } from './label-select/label-select.component';
-import { PersonSelectComponent } from './person-select/person-select.component';
+import { PeopleSelectComponent } from './people-select/people-select.component';
 
 import { BaseDataService } from './services';
 @NgModule({
@@ -27,7 +27,7 @@ import { BaseDataService } from './services';
     DatePickerComponent,
     AddressSelectComponent,
     ItemSelectComponent, MoneyInputComponent,
-    MemoInputComponent, ContentInputComponent, LabelSelectComponent, PersonSelectComponent],
+    MemoInputComponent, ContentInputComponent, LabelSelectComponent, PeopleSelectComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -51,7 +51,7 @@ import { BaseDataService } from './services';
     MoneyInputComponent,
     MemoInputComponent,
     ContentInputComponent,
-    PersonSelectComponent,
+    PeopleSelectComponent,
     LabelSelectComponent
   ],
   providers: [

@@ -1,7 +1,7 @@
 <div class="expense-content">
-  <div class="expense-form">
-    <app-epxense-book-list></app-epxense-book-list>
-    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+  <form class="expense-form" [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+    <app-epxense-book-list formControlName="expenseBookId"></app-epxense-book-list>
+    <div class="form-body">
       <div class="form-content">
         <div class="calendar item">
           <app-date-picker formControlName="expenseDate" name="date"></app-date-picker>
@@ -32,12 +32,12 @@
           </div>
         </div>
 
-        <div class="person">
-          <app-person-select formControlName="person"></app-person-select>
+        <div class="people">
+          <app-people-select formControlName="peoples"></app-people-select>
         </div>
 
         <div class="label">
-          <app-label-select formControlName="label"></app-label-select>
+          <app-label-select formControlName="labels"></app-label-select>
         </div>
 
         <div class="memo">
@@ -45,15 +45,22 @@
         </div>
       </div>
       <!-- 编辑的时候放一个删除的图标 -->
-      <div class="btn-group">
-        <button mat-raised-button [disabled]="expenseForm.valid" type="submit" color="primary">Add to Expense</button>
+      <div class="btn-group" *ngIf="isAdd">
+        <button mat-raised-button type="submit" color="primary">Add Expense</button>
         <button mat-raised-button color="accent" type="button" (click)="onReset()" >Reset</button>
       </div>
-    </form>
-  </div>
-
+      <div class="btn-group" *ngIf="!isAdd">
+        <div>
+          <button mat-raised-button type="button" color="primary" (click)="editExpense()">Edit Expense</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancel()" >Cancel</button>
+        </div>
+        <button mat-icon-button type="submit" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
   <div class="expense-detail">
     <app-expense-detail></app-expense-detail>
-    <!-- <router-outlet></router-outlet> -->
   </div>
 </div>

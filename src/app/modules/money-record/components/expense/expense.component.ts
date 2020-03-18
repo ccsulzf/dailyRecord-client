@@ -20,21 +20,20 @@ export class ExpenseComponent implements OnInit {
   };
   private user = JSON.parse(localStorage.getItem('user'));
 
-  expenseBook$: Observable<any>;
+  isAdd = true;
+  getExpenseDetail$: Observable<any>;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private store: Store<any>
   ) {
-    this.expenseBook$ = store.select(expense.getSelectedExpenseBook);
-    this.expenseBook$.subscribe((temp) => {
-      this.currenExpenseBook = temp;
-    });
+    this.getExpenseDetail$ = store.select(expense.getExpenseDetail);
   }
 
-  currenExpenseBook;
-
   expenseForm = this.fb.group({
+    id: [''],
+    userId:[this.user.id],
+    expenseBookId: [''],
     expenseDate: [new Date()],
     address: [''],
     expenseCategory: [''],
@@ -42,27 +41,44 @@ export class ExpenseComponent implements OnInit {
     content: [''],
     payChannel: [''],
     amount: [''],
-    person: [[]],
-    label: [[]],
+    peoples: [[]],
+    labels: [[]],
     memo: ['']
   });
 
 
   ngOnInit() {
-    // address: [{id:'3',name:'深圳'}],
+    this.getExpenseDetail$.subscribe((value) => {
+      if (value) {
+        this.isAdd = false;
+        this.expenseForm.patchValue({
+          id: value.id,
+          expenseBookId:value.expenseBook.id,
+          expenseDate: value.expenseDate,
+          amount: value.amount,
+          content: value.content,
+          memo: value.memo,
+          address: value.address,
+          expenseStore: value.expenseStore,
+          expenseCategory: value.expenseCategory,
+          payChannel: value.payChannel,
+          labels:value.labels,
+          peoples:value.peoples
+        });
+      }
+    });
   }
 
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
-    body.userId = this.user.id;
-    body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
-    body.expenseBookId = this.currenExpenseBook.id;
+    // body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
+
     this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.expenseForm.patchValue({
-        person: [],
-        label: [],
+        peoples: [],
+        labels: [],
         memo: '',
         amount: '',
         content: ''
@@ -73,13 +89,17 @@ export class ExpenseComponent implements OnInit {
     });
   }
 
+  editExpense(){
+    console.log(this.expenseForm.value);
+  }
+
   onReset() {
     this.expenseForm.patchValue({
       expenseDate: new Date(),
       expenseStore: '',
       payChannel: '',
-      person: [],
-      label: [],
+      peoples: [],
+      labels: [],
       memo: '',
       amount: '',
       content: ''
@@ -87,7 +107,9 @@ export class ExpenseComponent implements OnInit {
     this.expenseForm.markAsPristine();
   }
 
-  onSelectBook(item) {
-    this.currenExpenseBook = item;
+
+  cancel(){
+    this.onReset();
+    this.isAdd = true;
   }
 }

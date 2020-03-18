@@ -1,14 +1,22 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, forwardRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { selectExpenseBook } from '../../../../../actions/expense.action';
-import { Observable } from 'rxjs';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+export const EXPENSEBOOK_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => EpxenseBookListComponent),
+  multi: true
+};
+
 @Component({
   selector: 'app-epxense-book-list',
   templateUrl: './epxense-book-list.component.html',
-  styleUrls: ['./epxense-book-list.component.scss']
+  styleUrls: ['./epxense-book-list.component.scss'],
+  providers: [EXPENSEBOOK_ACCESSOR]
 })
-export class EpxenseBookListComponent implements OnInit {
+export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   list;
   currenBook;
   private url = 'http://localhost:3000';
@@ -37,15 +45,17 @@ export class EpxenseBookListComponent implements OnInit {
       if (data && data.length) {
         this.list = data;
         this.currenBook = this.list[0];
+        this.propagateChange(this.currenBook.id);
         this.store.dispatch(selectExpenseBook(this.list[0]));
       }
     }, (error) => {
     });
   }
 
-  changeBook(item){
+  changeBook(item) {
     this.currenBook = item;
     this.store.dispatch(selectExpenseBook(item));
+    this.propagateChange(item.id);
   }
 
   addBook(value) {
@@ -58,7 +68,21 @@ export class EpxenseBookListComponent implements OnInit {
       this.list.push(data);
     }, (error) => {
     });
-
   }
 
+  propagateChange = (temp: any) => { };
+
+  writeValue(data: any): void {
+    if(data){
+      const expenseBook = this.list.find( item => item.id === data);
+      this.currenBook = expenseBook;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+
+  }
 }

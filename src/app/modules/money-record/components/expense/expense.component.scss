@@ -12,7 +12,7 @@
   display: flex;
 }
 
-form {
+.form-body {
   display: flex;
   flex-direction: column;
   border: 2px solid $primary;
@@ -57,7 +57,7 @@ form {
       }
     }
 
-    .person,
+    .people,
     .label {
       grid-row: span 1;
       grid-column: span 6;
@@ -78,7 +78,11 @@ form {
     align-items: center;
     justify-content: center;
     padding: 10px 0;
-
+    div{
+      flex: 1;
+      justify-content: center;
+      display: flex;
+    }
     button {
       margin: 0 15px;
     }

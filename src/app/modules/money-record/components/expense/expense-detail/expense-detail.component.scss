@@ -14,35 +14,63 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 1em;
+    padding: 0;
   }
 
-  mat-divider {
-    margin: 5px 0;
-  }
+  // mat-divider {
+  //   margin: 5px 0;
+  // }
 
 }
-
 
 .detail-list {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding: 5px 5px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 40px);
 
-  mat-expansion-panel {
-    margin-bottom: 5px;
+  mat-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+
+    mat-list-item {
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, .26);
+    }
+
+    &::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, .26);
-  }
-
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-  }
 }
 
+.detail-item {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+
+  span,
+  div {
+    flex: 1;
+    font-size: 0.9em;
+  }
+
+  .detail-number {
+    text-align: right;
+    color: $expense;
+  }
+}
 .day-expense {
   span {
     font-size: 0.8em;
@@ -56,69 +84,4 @@
     text-align: right;
     color: $primary;
   }
-}
-
-.detail-ul {
-  background: #efefef;
-  color: black;
-
-  .category-name {
-    justify-content: center;
-    /* text-align: center; */
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 50%;
-    border-bottom: 2px solid #fff;
-  }
-
-  .detail-item {
-    flex: 1;
-    width: 200px;
-
-    li {
-      display: flex;
-      flex-direction: column;
-      border-bottom: 2px solid #fff;
-      border-left: 2px solid #fff;
-    }
-
-    div {
-      display: flex;
-      justify-content: space-between;
-      padding: 5px;
-
-      span {
-        width: 50%;
-
-        &:last-of-type {
-          text-align: right;
-        }
-      }
-    }
-  }
-
-}
-
-.detail-ul li {
-  display: flex;
-}
-
-::ng-deep .mat-expansion-panel-body {
-  padding: 0px !important;
-}
-
-mat-expansion-panel-header {
-  padding: 0 12px;
-}
-
-mat-panel-description {
-  justify-content: flex-end;
-  margin-right: 0px;
-  color: $primary;
-}
-
-::ng-deep .mat-expanded {
-  font-size: 1.1em !important;
-  transition: .2s;
 }
