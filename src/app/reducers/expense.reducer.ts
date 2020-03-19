@@ -6,13 +6,15 @@ interface State {
     selectedExpenseDetail: object,
     addedExpenseDetail: object,
     editedExpenseDetail: object,
+    deleteExpenseDetailId:object,
 }
 
 export const expenState: State = {
     selectedExpenseBook: null,
     selectedExpenseDetail: null,
     addedExpenseDetail: null,
-    editedExpenseDetail: null
+    editedExpenseDetail: null,
+    deleteExpenseDetailId:null
 };
 
 const expenseBookReducer = createReducer(
@@ -28,6 +30,9 @@ const expenseBookReducer = createReducer(
     }),
     on(ExpenseActions.editExpenseDetail, (state, value) => {
         return { ...state, editedExpenseDetail: value }
+    }),
+    on(ExpenseActions.delExpenseDetail, (state, value) => {
+        return { ...state, deleteExpenseDetailId: value }
     })
 )
 
@@ -41,6 +46,8 @@ const addExpenseDetail = (state: State) => state.addedExpenseDetail;
 
 const editExpenseDetail = (state: State) => state.editedExpenseDetail
 
+const deleteExpenseDetail = (state: State) => state.deleteExpenseDetailId
+
 export const getSelectedExpenseBook = createSelector(expenseState, selectExpenseBook);
 
 export const getExpenseDetail = createSelector(expenseState, selectExpenseDetail);
@@ -48,6 +55,8 @@ export const getExpenseDetail = createSelector(expenseState, selectExpenseDetail
 export const getAddExpenseDetail = createSelector(expenseState, addExpenseDetail);
 
 export const getEditExpenseDetail = createSelector(expenseState, editExpenseDetail);
+
+export const getDelExpenseDetailId = createSelector(expenseState, deleteExpenseDetail);
 
 export function expenseReducer(state: State, action: Action) {
     return expenseBookReducer(state, action);

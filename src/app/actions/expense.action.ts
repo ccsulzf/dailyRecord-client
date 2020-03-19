@@ -12,18 +12,18 @@ export const selectExpenseDetail = createAction(
 );
 
 export const editExpenseDetail = createAction(
-  '[Expense Page] Select ExpenseExpenseDetail',
+  '[Expense Page] edit ExpenseExpenseDetail',
   props<object>()
 );
 
 export const addExpenseDetail =  createAction(
-  '[Expense Page] Select ExpenseExpenseDetail',
+  '[Expense Page] add ExpenseExpenseDetail',
   props<object>()
 );
 
 export const delExpenseDetail =  createAction(
-  '[Expense Page] Select ExpenseExpenseDetail',
-  props()
+  '[Expense Page] del ExpenseExpenseDetail',
+  props<object>()
 );
 
 

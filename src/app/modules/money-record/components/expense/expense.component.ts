@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 
 import { addBaseData } from '../../../../actions/baseData.action';
-import { addExpenseDetail, editExpenseDetail } from '../../../../actions/expense.action';
+import { addExpenseDetail, editExpenseDetail, delExpenseDetail } from '../../../../actions/expense.action';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -90,10 +90,13 @@ export class ExpenseComponent implements OnInit {
   }
 
   editExpense() {
-    console.log(this.expenseForm.value);
     this.http.post(this.url + '/expense/edit', this.expenseForm.value, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(editExpenseDetail({ oldId: this.expenseForm.value.id, expenseDetail: data.expenseDetail }));
+      this.store.dispatch(editExpenseDetail({
+        oldId: this.expenseForm.value.id,
+        expenseDetail: data.expenseDetail
+      }));
+      this.cancel();
       this.expenseForm.patchValue({
         peoples: [],
         labels: [],
@@ -105,6 +108,20 @@ export class ExpenseComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  deleteExpense() {
+    const query = {
+      id: this.expenseForm.value.id,
+      userId: this.user.id
+    };
+    this.http.get(this.url + `/expense/del?userId=${this.user.id}&id=${this.expenseForm.value.id}`).toPromise()
+      .then((data) => {
+        this.store.dispatch(delExpenseDetail({ id: this.expenseForm.value.id }));
+        this.cancel();
+      }).catch((error) => {
+        console.log(error);
+      })
   }
 
   onReset() {

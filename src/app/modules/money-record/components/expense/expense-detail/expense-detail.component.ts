@@ -24,7 +24,7 @@ export class ExpenseDetailComponent implements OnInit {
   };
   private user = JSON.parse(localStorage.getItem('user'));
 
-  public date = moment().format('YYYY-MM-DD');
+  public date = new Date();
 
   public totalAmount = 0;
 
@@ -32,6 +32,7 @@ export class ExpenseDetailComponent implements OnInit {
 
   addExpenseDetail$: Observable<any>;
   editExpenseDetail$: Observable<any>;
+  delExpenseDetail$: Observable<any>;
   constructor(
     private http: HttpClient,
     private store: Store<any>
@@ -40,10 +41,63 @@ export class ExpenseDetailComponent implements OnInit {
   ngOnInit() {
     this.addExpenseDetail$ = this.store.select(expense.getAddExpenseDetail);
     this.editExpenseDetail$ = this.store.select(expense.getEditExpenseDetail);
+    this.delExpenseDetail$ = this.store.select(expense.getDelExpenseDetailId);
+
+    this.delExpenseDetail$.subscribe((data) => {
+      let delExpenseDetail;
+      for (const item of this.list) {
+        delExpenseDetail = _.find(item.expenseDetailList, (temp) => {
+          return temp.id === data.id
+        });
+        this.totalAmount -= delExpenseDetail.amount;
+        item.subTotal -= delExpenseDetail.amount;
+        _.remove(item.expenseDetailList, delExpenseDetail);
+        break;
+      }
+      _.remove(this.list, (item) => {
+        return item.expenseDetailList.length === 0;
+      });
+    });
 
     this.editExpenseDetail$.subscribe((data) => {
       if (data) {
-        
+        const oldId = data.oldId;
+        const expenseDetail = data.expenseDetail;
+
+        if (moment(this.date).isSame(expenseDetail.expenseDate)) {
+          for (const item of this.list) {
+            const oldItem = _.find(item.expenseDetailList, (temp) => {
+              return temp.id === data.oldId
+            });
+            this.totalAmount -= oldItem.amount;
+            item.subTotal -= oldItem.amount;
+            _.remove(item.expenseDetailList, oldItem);
+            break;
+          }
+          this.totalAmount += expenseDetail.amount;
+          _.remove(this.list, (item) => {
+            return item.expenseDetailList.length === 0;
+          });
+          const hasExpenseBook = _.find(this.list, (temp) => {
+            return temp['expenseBookName'] === expenseDetail['expenseBook'].name;
+          });
+          if (hasExpenseBook) {
+            hasExpenseBook.subTotal += expenseDetail.amount;
+            const expenseDetailList = hasExpenseBook['hasExpenseBook'];
+            expenseDetailList.push(expenseDetail);
+          } else {
+            this.list.push({
+              expenseBookName: expenseDetail['expenseBook'].name,
+              subTotal: expenseDetail['amount'],
+              expenseDetailList: [
+                expenseDetail
+              ]
+            });
+          }
+        } else {
+          this.dateInputEle.nativeElement.value = moment(expenseDetail.expenseDate).format('YYYY/MM/DD');
+          this.getExpenseDetailList(expenseDetail.expenseDate);
+        }
       }
     });
 
@@ -76,18 +130,18 @@ export class ExpenseDetailComponent implements OnInit {
   }
 
   getExpenseDetailList(date) {
+    date = moment(date).format('YYYY-MM-DD')
     this.http.get(this.url + `/expense/getList?userId=${this.user.id}&expenseDate=${date}`, this.httpOptions).toPromise().then((data) => {
       this.list = this.composeData(data);
     });
   }
 
   select(item) {
-    console.log(item);
     this.store.dispatch(selectExpenseDetail(item));
   }
 
   dateSelect(event: MatDatepickerInputEvent<Date>) {
-    this.getExpenseDetailList(moment(event.value).format('YYYY-MM-DD'));
+    this.getExpenseDetailList(moment(event.value).format('YYYY/MM/DD'));
   }
 
   // 数据格式

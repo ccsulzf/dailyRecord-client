@@ -48,8 +48,10 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   }
 
   dateSelect(event: MatDatepickerInputEvent<Date>) {
-    this.dateFormControl.setValue(moment(event.value).format('YYYY-MM-DD'));
-    this.propagateChange(moment(event.value).format('YYYY-MM-DD'));
+    // this.dateFormControl.setValue(moment(event.value).format('YYYY-MM-DD'));
+    this.dateFormControl.setValue(event.value);
+    this.propagateChange(moment(event.value).format('YYYY/MM/DD'));
+    console.log(moment(event.value).format('YYYY/MM/DD'));
   }
 
 
