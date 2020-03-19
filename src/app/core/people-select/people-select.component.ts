@@ -64,7 +64,6 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    console.log(data);
     this.selectedPeoples = data;
   }
 

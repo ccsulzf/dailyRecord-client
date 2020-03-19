@@ -1,8 +1,8 @@
   <mat-form-field class="full-width">
-    <input matInput [formControl]="dateFormControl" autocomplete="off" [errorStateMatcher]="matcher"
-      [matDatepicker]="picker" placeholder="Choose a date">
+    <input matInput [formControl]="dateFormControl" disabled autocomplete="off" [errorStateMatcher]="matcher"
+      [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="dateSelect($event)">
     <mat-datepicker-toggle tabindex="-1" matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker #picker disabled="false"></mat-datepicker>
     <mat-error *ngIf="dateFormControl.hasError('required')">
       Date is <strong>required</strong>
     </mat-error>

@@ -2,14 +2,14 @@
   <!-- date & total amount-->
   <div class="detail-header">
     <mat-datepicker-toggle tabindex="-1"  matPrefix [for]="picker"></mat-datepicker-toggle>
-    <input matInput [matDatepicker]="picker"  (dateChange)="dateSelect($event)" disabled [value]="date">
+    <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="date">
     <mat-datepicker #picker disabled="false"></mat-datepicker>
   </div>
 
   <!--expense list -->
   <div class="detail-list">   
     <mat-list>
-      <ng-container *ngFor="let item of list$ | async">
+      <ng-container *ngFor="let item of list">
         <div mat-subheader class="detail-header">
           <span>
             {{item.expenseBookName}}
@@ -29,7 +29,7 @@
     </mat-list>
   </div>
   <mat-divider></mat-divider>
-  <div class="day-expense">
+  <div class="day-expense" *ngIf="list && list.length">
     <span>Day of the expense:</span>
     <p>
       -{{totalAmount}}RMB

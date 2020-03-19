@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 
 import { addBaseData } from '../../../../actions/baseData.action';
+import { addExpenseDetail, editExpenseDetail } from '../../../../actions/expense.action';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -32,8 +33,8 @@ export class ExpenseComponent implements OnInit {
 
   expenseForm = this.fb.group({
     id: [''],
-    userId:[this.user.id],
-    expenseBookId: [''],
+    userId: [this.user.id],
+    expenseBook: [''],
     expenseDate: [new Date()],
     address: [''],
     expenseCategory: [''],
@@ -53,7 +54,7 @@ export class ExpenseComponent implements OnInit {
         this.isAdd = false;
         this.expenseForm.patchValue({
           id: value.id,
-          expenseBookId:value.expenseBook.id,
+          expenseBook: value.expenseBook,
           expenseDate: value.expenseDate,
           amount: value.amount,
           content: value.content,
@@ -62,8 +63,8 @@ export class ExpenseComponent implements OnInit {
           expenseStore: value.expenseStore,
           expenseCategory: value.expenseCategory,
           payChannel: value.payChannel,
-          labels:value.labels,
-          peoples:value.peoples
+          labels: value.labels,
+          peoples: value.peoples
         });
       }
     });
@@ -72,10 +73,9 @@ export class ExpenseComponent implements OnInit {
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
-    // body.expenseCategory.expenseBookId = this.currenExpenseBook.id;
-
     this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
+      this.store.dispatch(addExpenseDetail(data.expenseDetail));
       this.expenseForm.patchValue({
         peoples: [],
         labels: [],
@@ -89,8 +89,22 @@ export class ExpenseComponent implements OnInit {
     });
   }
 
-  editExpense(){
+  editExpense() {
     console.log(this.expenseForm.value);
+    this.http.post(this.url + '/expense/edit', this.expenseForm.value, this.httpOptions).toPromise().then((data: any) => {
+      this.store.dispatch(addBaseData(data.baseData));
+      this.store.dispatch(editExpenseDetail({ oldId: this.expenseForm.value.id, expenseDetail: data.expenseDetail }));
+      this.expenseForm.patchValue({
+        peoples: [],
+        labels: [],
+        memo: '',
+        amount: '',
+        content: ''
+      });
+      this.expenseForm.markAsPristine();
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   onReset() {
@@ -105,10 +119,11 @@ export class ExpenseComponent implements OnInit {
       content: ''
     });
     this.expenseForm.markAsPristine();
+    console.log(this.expenseForm.value);
   }
 
 
-  cancel(){
+  cancel() {
     this.onReset();
     this.isAdd = true;
   }

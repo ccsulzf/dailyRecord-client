@@ -106,7 +106,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   filterByExpenseBook(selectedExpenseBook) {
-    if (selectedExpenseBook && this.model === 'expenseCategory') {
+    if (selectedExpenseBook && this.model === 'expenseCategory' && this.originList && this.originList.length) {
       this.dataList = this.originList.filter((item: any) => {
         return item.expenseBookId === selectedExpenseBook.id;
       });
@@ -134,6 +134,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     }
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
+    this.propagateChange(data);
     this.itemSelectControl.markAsPristine();
     this.itemSelectControl.markAsUntouched();
   }

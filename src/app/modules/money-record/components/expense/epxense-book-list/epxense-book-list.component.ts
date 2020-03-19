@@ -45,7 +45,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
       if (data && data.length) {
         this.list = data;
         this.currenBook = this.list[0];
-        this.propagateChange(this.currenBook.id);
+        this.propagateChange(this.currenBook);
         this.store.dispatch(selectExpenseBook(this.list[0]));
       }
     }, (error) => {
@@ -55,7 +55,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   changeBook(item) {
     this.currenBook = item;
     this.store.dispatch(selectExpenseBook(item));
-    this.propagateChange(item.id);
+    this.propagateChange(item);
   }
 
   addBook(value) {
@@ -74,8 +74,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
 
   writeValue(data: any): void {
     if(data){
-      const expenseBook = this.list.find( item => item.id === data);
-      this.currenBook = expenseBook;
+      this.currenBook = data;
     }
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import * as moment from 'moment';
 export class DateErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -44,6 +46,13 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void {
 
   }
+
+  dateSelect(event: MatDatepickerInputEvent<Date>) {
+    this.dateFormControl.setValue(moment(event.value).format('YYYY-MM-DD'));
+    this.propagateChange(moment(event.value).format('YYYY-MM-DD'));
+  }
+
+
   setDisabledState?(isDisabled: boolean): void {
 
   }
