@@ -3,19 +3,20 @@
     <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
       <div class="form-content">
         <div class="calendar item">
-          <app-date-picker formControlName="date" name="date"></app-date-picker>
+          <app-date-picker formControlName="incomeDate" name="incomeDate"></app-date-picker>
         </div>
 
         <div class="address item">
-          <app-address-select formControlName="address" name="address"></app-address-select>
+          <app-item-select [name]="'Address'" [model]="'address'" formControlName="address"></app-item-select>
         </div>
 
         <div class="category item">
-          <app-item-select [name]="'Category'" formControlName="category"></app-item-select>
+          <app-item-select [name]="'Category'" [model]="'incomeCategory'" formControlName="incomeCategory">
+          </app-item-select>
         </div>
 
         <div class="store item">
-          <app-item-select [name]="'Store'" formControlName="store"></app-item-select>
+          <app-item-select [name]="'Store'" [model]="'incomeStore'" formControlName="incomeStore"></app-item-select>
         </div>
 
         <div class="content">
@@ -24,28 +25,38 @@
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Pay Channel'" formControlName="payChannel"></app-item-select>
+            <app-item-select [name]="'Pay Channel'" [model]="'payChannel'" [type]="'2'" formControlName="payChannel">
+            </app-item-select>
           </div>
           <div class="moent-input">
-            <app-money-input formControlName="money"></app-money-input>
+            <app-money-input formControlName="amount"></app-money-input>
           </div>
         </div>
 
         <div class="person">
-          <app-people-select formControlName="person"></app-people-select>
+          <app-people-select formControlName="peoples"></app-people-select>
         </div>
 
         <div class="label">
-          <app-label-select formControlName="label"></app-label-select>
+          <app-label-select formControlName="labels"></app-label-select>
         </div>
 
         <div class="memo">
           <app-memo-input formControlName="memo"></app-memo-input>
         </div>
       </div>
-      <div class="btn-group">
-        <button mat-raised-button type="submit" color="primary">Add to Income</button>
+      <div class="btn-group" *ngIf="isAdd">
+        <button mat-raised-button type="submit" color="primary">Add Income</button>
         <button mat-raised-button color="accent">Reset</button>
+      </div>
+      <div class="btn-group" *ngIf="!isAdd">
+        <div>
+          <button mat-raised-button type="button" color="primary">Edit Income</button>
+          <button mat-raised-button color="accent" type="button">Cancel</button>
+        </div>
+        <button mat-icon-button type="button" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </form>
   </div>

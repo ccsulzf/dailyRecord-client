@@ -14,7 +14,6 @@ import { addExpenseDetail, editExpenseDetail, delExpenseDetail } from '../../../
   styleUrls: ['./expense.component.scss']
 })
 export class ExpenseComponent implements OnInit {
-  date = '2019-12-01';
   private url = 'http://localhost:3000';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

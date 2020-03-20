@@ -6,19 +6,19 @@ interface State {
     selectedExpenseDetail: object,
     addedExpenseDetail: object,
     editedExpenseDetail: object,
-    deleteExpenseDetailId:object,
+    deleteExpenseDetailId: object,
 }
 
-export const expenState: State = {
+export const expenseState: State = {
     selectedExpenseBook: null,
     selectedExpenseDetail: null,
     addedExpenseDetail: null,
     editedExpenseDetail: null,
-    deleteExpenseDetailId:null
+    deleteExpenseDetailId: null
 };
 
-const expenseBookReducer = createReducer(
-    expenState,
+const createExpenseReducer = createReducer(
+    expenseState,
     on(ExpenseActions.selectExpenseBook, (state, value) => {
         return { ...state, selectedExpenseBook: value };
     }),
@@ -36,7 +36,7 @@ const expenseBookReducer = createReducer(
     })
 )
 
-const expenseState = createFeatureSelector<State>('expense');
+const expense = createFeatureSelector<State>('expense');
 
 const selectExpenseBook = (state: State) => state.selectedExpenseBook;
 
@@ -48,16 +48,16 @@ const editExpenseDetail = (state: State) => state.editedExpenseDetail
 
 const deleteExpenseDetail = (state: State) => state.deleteExpenseDetailId
 
-export const getSelectedExpenseBook = createSelector(expenseState, selectExpenseBook);
+export const getSelectedExpenseBook = createSelector(expense, selectExpenseBook);
 
-export const getExpenseDetail = createSelector(expenseState, selectExpenseDetail);
+export const getExpenseDetail = createSelector(expense, selectExpenseDetail);
 
-export const getAddExpenseDetail = createSelector(expenseState, addExpenseDetail);
+export const getAddExpenseDetail = createSelector(expense, addExpenseDetail);
 
-export const getEditExpenseDetail = createSelector(expenseState, editExpenseDetail);
+export const getEditExpenseDetail = createSelector(expense, editExpenseDetail);
 
-export const getDelExpenseDetailId = createSelector(expenseState, deleteExpenseDetail);
+export const getDelExpenseDetailId = createSelector(expense, deleteExpenseDetail);
 
 export function expenseReducer(state: State, action: Action) {
-    return expenseBookReducer(state, action);
+    return createExpenseReducer(state, action);
 }

@@ -91,7 +91,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
           this.filterByExpenseBook(temp);
         });
       } else {
-        if (this.model !== 'expenseStore' && this.model !== 'payChannel') {
+        if (this.model !== 'expenseStore' && this.model !== 'payChannel' && this.dataList.length) {
           this.itemSelectControl.setValue(this.dataList[0].name);
           this.propagateChange(this.dataList[0]);
         }
