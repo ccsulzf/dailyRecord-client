@@ -51,10 +51,10 @@
       </div>
       <div class="btn-group" *ngIf="!isAdd">
         <div>
-          <button mat-raised-button type="button" color="primary">Edit Income</button>
-          <button mat-raised-button color="accent" type="button">Cancel</button>
+          <button mat-raised-button type="button" color="primary" (click)="editIncome()">Edit Income</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancel()">Cancel</button>
         </div>
-        <button mat-icon-button type="button" color="warn">
+        <button mat-icon-button type="button"  (click)="deleteIncome()" color="warn">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

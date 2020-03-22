@@ -46,15 +46,32 @@ export class IncomeComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.getIncomeDetail$.subscribe((value) => {
+      if (value) {
+        this.isAdd = false;
+        this.incomeForm.patchValue({
+          id: value.id,
+          incomeDate: value.incomeDate,
+          amount: value.amount,
+          content: value.content,
+          memo: value.memo,
+          address: value.address,
+          incomeStore: value.incomeStore,
+          incomeCategory: value.incomeCategory,
+          payChannel: value.payChannel,
+          labels: value.labels,
+          peoples: value.peoples
+        });
+      }
+    });
   }
 
   onSubmit() {
-    console.log(this.incomeForm.value);
     const body = this.incomeForm.value;
-    body.incomeDate = moment(body.incomeDate).format('YYYY/MM/DD');
+    body.incomeDate = moment(body.incomeDate).format('YYYY-MM-DD');
     this.http.post(this.url + '/income/add', body, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(addIncomeDetail(data.expenseDetail));
+      this.store.dispatch(addIncomeDetail(data.incomeDetail));
       this.incomeForm.patchValue({
         peoples: [],
         labels: [],
@@ -66,6 +83,48 @@ export class IncomeComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  editIncome(){
+    this.http.post(this.url + '/income/edit', this.incomeForm.value, this.httpOptions).toPromise().then((data: any) => {
+      this.store.dispatch(addBaseData(data.baseData));
+      this.store.dispatch(editIncomeDetail({
+        oldId: this.incomeForm.value.id,
+        incomeDetail: data.incomeDetail
+      }));
+      this.cancel();
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  onReset() {
+    this.incomeForm.patchValue({
+      incomeDate: new Date(),
+      incomeStore: '',
+      payChannel: '',
+      peoples: [],
+      labels: [],
+      memo: '',
+      amount: '',
+      content: ''
+    });
+    this.incomeForm.markAsPristine();
+  }
+
+  deleteIncome(){
+    this.http.get(this.url + `/income/del?userId=${this.user.id}&id=${this.incomeForm.value.id}`).toPromise()
+      .then((data) => {
+        this.store.dispatch(delIncomeDetail({ id: this.incomeForm.value.id }));
+        this.cancel();
+      }).catch((error) => {
+        console.log(error);
+      })
+  }
+
+  cancel() {
+    this.onReset();
+    this.isAdd = true;
   }
 
 }

@@ -61,9 +61,7 @@ export class ExpenseDetailComponent implements OnInit {
 
     this.editExpenseDetail$.subscribe((data) => {
       if (data) {
-        const oldId = data.oldId;
         const expenseDetail = data.expenseDetail;
-
         if (moment(this.date).isSame(expenseDetail.expenseDate)) {
           for (const item of this.list) {
             const oldItem = _.find(item.expenseDetailList, (temp) => {
