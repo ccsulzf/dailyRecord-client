@@ -13,10 +13,13 @@ form {
   height: 100%;
   display: flex;
   flex-direction: column;
+
   .filter-content {
     display: flex;
     flex: 1;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .btn-group {

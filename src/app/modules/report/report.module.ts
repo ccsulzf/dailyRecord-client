@@ -16,7 +16,8 @@ import {
   MatDividerModule,
   MatChipsModule,
   MatSliderModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSelectModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -28,6 +29,7 @@ import { SelectComponent } from './report-filter/filter-items/select/select.comp
 import { InputComponent } from './report-filter/filter-items/input/input.component';
 import { RangeComponent } from './report-filter/filter-items/range/range.component';
 import { GroupComponent } from './report-filter/filter-items/group/group.component';
+import { LabelPeopleComponent } from './report-filter/filter-items/label-people/label-people.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -48,7 +50,8 @@ import { GroupComponent } from './report-filter/filter-items/group/group.compone
     MatDividerModule,
     MatChipsModule,
     MatSliderModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   declarations: [
     ReportComponent,
@@ -58,7 +61,8 @@ import { GroupComponent } from './report-filter/filter-items/group/group.compone
     SelectComponent,
     InputComponent,
     RangeComponent,
-    GroupComponent
+    GroupComponent,
+    LabelPeopleComponent
   ],
   providers: [
     // { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }

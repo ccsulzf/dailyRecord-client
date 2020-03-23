@@ -10,9 +10,17 @@ import { GridOptions } from 'ag-grid-community';
 export class ExpenseReportComponent implements OnInit, AfterViewInit {
   gridOptions: GridOptions;
   columnDefs = [
-    { headerName: 'Make', field: 'make' },
-    { headerName: 'Model', field: 'model' },
-    { headerName: 'Price', field: 'price' }
+    { headerName: 'Date', field: 'make' },
+    { headerName: 'Address', field: 'model' },
+    { headerName: 'ExpenseBook', field: 'price' },
+    { headerName: 'ExpenseCategory', field: 'price' },
+    { headerName: 'PayChannel', field: 'price' },
+    { headerName: 'ExpenseStore', field: 'price' },
+    { headerName: 'ExpenseContent', field: 'price' },
+    { headerName: 'Amount', field: 'price' },
+    { headerName: 'Peoples', field: 'price' },
+    { headerName: 'Labels', field: 'price' },
+    { headerName: 'Memo', field: 'price' },
   ];
 
   rowData = [
