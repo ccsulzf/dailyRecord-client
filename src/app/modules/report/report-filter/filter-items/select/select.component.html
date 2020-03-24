@@ -1,7 +1,9 @@
 <div class="report-select">
-  <p>Select:</p>
+  <p>{{item?.name}}:</p>
   <div class="select-content">
-    <button mat-stroked-button type="button" color="primary">Primary</button>
-    <button mat-flat-button type="button" color="primary">Primary</button>
+    <ng-container *ngFor="let item of list$ | async">
+      <button (click)="select(item)" mat-stroked-button type="button" color="primary"
+        [class.btn-selected]="item.selected" class="btn-selected ">{{item.name}}</button>
+    </ng-container>
   </div>
 </div>

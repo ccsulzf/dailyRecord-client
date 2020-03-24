@@ -30,6 +30,8 @@ import { InputComponent } from './report-filter/filter-items/input/input.compone
 import { RangeComponent } from './report-filter/filter-items/range/range.component';
 import { GroupComponent } from './report-filter/filter-items/group/group.component';
 import { LabelPeopleComponent } from './report-filter/filter-items/label-people/label-people.component';
+
+import { ReportFilterService } from './services';
 @NgModule({
   imports: [
     FormsModule,
@@ -65,6 +67,7 @@ import { LabelPeopleComponent } from './report-filter/filter-items/label-people/
     LabelPeopleComponent
   ],
   providers: [
+    ReportFilterService
     // { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }
   ]
 })

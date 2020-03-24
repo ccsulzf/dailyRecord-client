@@ -1,58 +1,75 @@
 export const filterOption = [{
     type: 'Between',
-    value: ['', ''],
+    value: {
+        start: '',
+        end: ''
+    },
     field: 'expenseDate',
-    component: 'date'
+    component: 'date',
+    name: 'ExpenseDate'
 }, {
     type: 'In',
     value: [],
     field: 'expenseBookId',
-    model: 'ExpenseBook',
-    component: 'select'
+    model: 'expenseBook',
+    component: 'select',
+    name: 'ExpenseBook'
 }, {
     type: 'In',
     value: [],
     field: 'addressId',
-    model: 'Address',
-    component: 'select'
+    model: 'address',
+    component: 'select',
+    name: 'Address'
 }, {
     type: 'In',
     value: [],
     field: 'expenseCategoryId',
-    model: 'ExpenseCategory',
-    component: 'select'
+    model: 'expenseCategory',
+    component: 'select',
+    name: 'ExpenseCategory'
 }, {
     type: 'In',
     value: [],
     field: 'payChannelId',
-    model: 'PayChannel',
-    component: 'select'
+    model: 'payChannel',
+    component: 'select',
+    name: 'PayChannel',
+    payChannelType: 1
 }, {
     type: 'In',
     value: [],
     field: 'expenseStoreId',
-    model: 'ExpenseStore',
-    component: 'select'
+    model: 'expenseStore',
+    component: 'select',
+    name: 'ExpenseStore'
 }, {
     type: 'Like',
     value: [],
     field: 'expenseContent',
-    component: 'input'
+    component: 'input',
+    name: 'ExpenseContent'
 }, {
     type: 'Between',
-    value: [],
+    value: {
+        min: '',
+        max: ''
+    },
     field: 'amount',
-    component: 'range'
+    component: 'range',
+    name: 'Amount'
 }, {
     type: 'In',
     value: [],
     field: 'peopleId',
     model: 'People',
-    component: 'label-people'
+    component: 'label-people',
+    name: 'People'
 }, {
     type: 'In',
     value: [],
     field: 'lableId',
     model: 'Label',
-    component: 'label-people'
+    component: 'label-people',
+    name: 'Label'
 }];

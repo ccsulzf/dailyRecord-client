@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-range',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./range.component.scss']
 })
 export class RangeComponent implements OnInit {
-
+  @Input() item;
   constructor() { }
 
   ngOnInit() {

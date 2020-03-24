@@ -1,10 +1,10 @@
 <div class="report-date">
   <p>
-    Date:
+    {{item?.name}}:
   </p>
   <div class="date-content">
     <mat-form-field floatLabel="never">
-      <input matInput autocomplete="off" [matDatepicker]="startDate" placeholder="Start Date">
+      <input matInput autocomplete="off" [(ngModel)]="item.value.start" [matDatepicker]="startDate" placeholder="Start Date">
       <mat-datepicker-toggle tabindex="-1" matSuffix [for]="startDate"></mat-datepicker-toggle>
       <mat-datepicker #startDate></mat-datepicker>
     </mat-form-field>
@@ -14,9 +14,9 @@
       <mat-datepicker #endDate></mat-datepicker>
     </mat-form-field>
   </div>
-  <mat-chip-list>
+  <!-- <mat-chip-list>
     <mat-chip>This Week</mat-chip>
     <mat-chip>This Month</mat-chip>
     <mat-chip color="primary" selected>Last Month</mat-chip>
-  </mat-chip-list>
+  </mat-chip-list> -->
 </div>

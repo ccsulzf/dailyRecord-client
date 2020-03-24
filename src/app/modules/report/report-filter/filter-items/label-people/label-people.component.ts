@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 @Component({
     selector: 'app-lable-people',
@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
     styleUrls: ['./label-people.component.scss']
 })
 export class LabelPeopleComponent {
+    @Input() item;
     toppings = new FormControl();
 
     toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];

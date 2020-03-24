@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 
+import { filterOption } from './condition';
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'app-expense-report',
@@ -8,6 +9,7 @@ import { GridOptions } from 'ag-grid-community';
   styleUrls: ['./expense-report.component.scss']
 })
 export class ExpenseReportComponent implements OnInit, AfterViewInit {
+  filterOption = filterOption;
   gridOptions: GridOptions;
   columnDefs = [
     { headerName: 'Date', field: 'make' },

@@ -9,14 +9,20 @@
     padding-bottom: .4375em;
   }
 
+  .btn-selected {
+    background-color: #673ab7;
+    color: #fff;
+  }
+
   .select-content {
     padding: .4375em 0;
     max-height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
+    max-height: 100px;
 
     button {
-      margin-right: 5px;
+      margin: 5px 5px 0 0;
     }
 
     &::-webkit-scrollbar-thumb {

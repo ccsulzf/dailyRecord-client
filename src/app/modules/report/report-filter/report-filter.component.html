@@ -1,15 +1,21 @@
-
 <form>
   <div class="filter-content">
-    <app-date></app-date>
-    <app-select></app-select>
-    <app-input></app-input>
-    <app-range></app-range>
-    <app-lable-people></app-lable-people>
+    <ng-container *ngFor="let item of filterOption">
+      <ng-container [ngSwitch]="item?.component">
+        <app-date *ngSwitchCase="'date'" [item]="item"></app-date>
+        <app-select *ngSwitchCase="'select'" [item]="item"></app-select>
+        <app-input *ngSwitchCase="'input'" [item]="item"></app-input>
+        <app-range *ngSwitchCase="'range'" [item]="item"></app-range>
+        <app-lable-people *ngSwitchCase="'label-people'" [item]="item"></app-lable-people>
+      </ng-container>
+    </ng-container>
   </div>
 
   <div class="btn-group">
-    <button mat-raised-button type="submit" color="primary">Confirm</button>
+    <button (click)="test()" mat-raised-button color="primary">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
     <button mat-raised-button color="accent">Reset</button>
   </div>
 </form>
