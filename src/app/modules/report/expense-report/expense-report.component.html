@@ -1,6 +1,6 @@
 <!-- hasBackdrop="true" -->
 <mat-drawer-container class="example-container">
-  <mat-drawer #drawer mode="over" [opened]="true">
+  <mat-drawer #drawer mode="over" [opened]="false">
     <app-report-filter [filterOption]="filterOption"></app-report-filter>
   </mat-drawer>
   <mat-drawer-content>
@@ -23,8 +23,7 @@
       <ag-grid-angular style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
         [gridOptions]="gridOptions">
       </ag-grid-angular>
-      <mat-paginator [length]="1000" [pageSize]="100" [pageSizeOptions]="[100, 200, 500, 1000]">
-      </mat-paginator>
+      <page [length]="1000"></page>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

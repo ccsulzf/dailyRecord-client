@@ -1,9 +1,6 @@
 export const filterOption = [{
     type: 'Between',
-    value: {
-        start: '',
-        end: ''
-    },
+    value: ['2020-03-20', '2020-03-22'],
     field: 'expenseDate',
     component: 'date',
     name: 'ExpenseDate'
@@ -45,16 +42,13 @@ export const filterOption = [{
     name: 'ExpenseStore'
 }, {
     type: 'Like',
-    value: [],
+    value: '',
     field: 'expenseContent',
     component: 'input',
-    name: 'ExpenseContent'
+    name: 'Content'
 }, {
     type: 'Between',
-    value: {
-        min: '',
-        max: ''
-    },
+    value: ['', ''],
     field: 'amount',
     component: 'range',
     name: 'Amount'
@@ -62,14 +56,20 @@ export const filterOption = [{
     type: 'In',
     value: [],
     field: 'peopleId',
-    model: 'People',
+    model: 'people',
     component: 'label-people',
     name: 'People'
 }, {
     type: 'In',
     value: [],
     field: 'lableId',
-    model: 'Label',
+    model: 'label',
     component: 'label-people',
     name: 'Label'
+}, {
+    type: 'Like',
+    value: '',
+    field: 'memo',
+    component: 'input',
+    name: 'Memo'
 }];

@@ -1,15 +1,15 @@
 <div class="report-range">
   <p>
-    Range:
+    {{item.name}}:
   </p>
   <div class="range-content">
     <mat-form-field floatLabel="always" appearance="outline">
       <mat-label>Min Value</mat-label>
-      <input matInput type="number" placeholder="min value">
+      <input matInput type="number" [(ngModel)]="item.value[0]" placeholder="min value">
     </mat-form-field>
     <mat-form-field floatLabel="always" appearance="outline">
       <mat-label>Max Value</mat-label>
-      <input matInput type="number" placeholder="max value">
+      <input matInput type="number" [(ngModel)]="item.value[1]" placeholder="max value">
     </mat-form-field>
   </div>
 </div>

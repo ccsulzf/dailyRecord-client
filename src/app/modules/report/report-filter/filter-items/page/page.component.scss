@@ -1,0 +1,20 @@
+mat-paginator {
+  margin-top: 5px;
+}
+
+:host ::ng-deep .mat-paginator-container {
+  height: 45px;
+  min-height: 45px !important;
+}
+
+:host ::ng-deep .mat-paginator-page-size-select {
+  margin: 0px 4px 0 4px;
+}
+
+:host ::ng-deep .mat-paginator-page-size {
+  align-items: center;
+}
+
+:host ::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden;
+}

@@ -144,17 +144,13 @@ export class IncomeDetailComponent implements OnInit {
     this.getIncomeDetailList(this.date.value);
   }
 
-  test() {
-    setTimeout(() => {
-      this.date.setValue(moment('2020-05'));
-    }, 5000);
-  }
-
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value;
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
     datepicker.close();
+
+    console.log(this.date.value);
   }
 
   getIncomeDetailList(date) {

@@ -17,7 +17,8 @@ import {
   MatChipsModule,
   MatSliderModule,
   MatCheckboxModule,
-  MatSelectModule
+  MatSelectModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -31,7 +32,8 @@ import { RangeComponent } from './report-filter/filter-items/range/range.compone
 import { GroupComponent } from './report-filter/filter-items/group/group.component';
 import { LabelPeopleComponent } from './report-filter/filter-items/label-people/label-people.component';
 
-import { ReportFilterService } from './services';
+import { ReportFilterService, ReportExpenseService } from './services';
+import { PageComponent } from './report-filter/filter-items/page/page.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -64,11 +66,13 @@ import { ReportFilterService } from './services';
     InputComponent,
     RangeComponent,
     GroupComponent,
-    LabelPeopleComponent
+    LabelPeopleComponent,
+    PageComponent
   ],
   providers: [
-    ReportFilterService
-    // { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
+    ReportFilterService,
+    ReportExpenseService
   ]
 })
 export class ReportModule { }

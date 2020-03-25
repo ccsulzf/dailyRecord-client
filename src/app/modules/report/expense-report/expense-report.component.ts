@@ -1,14 +1,18 @@
-import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 
 import { filterOption } from './condition';
+import { ReportFilterService, ReportExpenseService } from '../services';
+import { Subscription } from 'rxjs';
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'app-expense-report',
   templateUrl: './expense-report.component.html',
   styleUrls: ['./expense-report.component.scss']
 })
-export class ExpenseReportComponent implements OnInit, AfterViewInit {
+export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  getFilter: Subscription;
   filterOption = filterOption;
   gridOptions: GridOptions;
   columnDefs = [
@@ -42,7 +46,10 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit {
     { make: 'Ford', model: 'Mondeo', price: 32000 },
     { make: 'Porsche', model: 'Boxter', price: 72000 }
   ];
-  constructor() {
+  constructor(
+    private reportFilterService: ReportFilterService,
+    private reportExpenseService: ReportExpenseService
+  ) {
     this.gridOptions = {
       enableColResize: true,
       enableSorting: true,
@@ -54,6 +61,15 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getFilter = this.reportFilterService.getFilter().subscribe((data) => {
+      this.reportExpenseService.getList(data).then((value) => {
+        console.log(value);
+      });
+      this.reportExpenseService.getTotal(data).then((value) => {
+        console.log(value);
+      });
+      console.log(data);
+    });
   }
 
   ngAfterViewInit() {
@@ -70,5 +86,8 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit {
     this.gridOptions.columnApi.autoSizeColumns(this.gridOptions.columnApi.getAllDisplayedColumns());
   }
 
+  ngOnDestroy() {
+    this.getFilter.unsubscribe();
+  }
 
 }

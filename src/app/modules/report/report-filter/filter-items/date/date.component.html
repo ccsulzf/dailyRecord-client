@@ -4,14 +4,14 @@
   </p>
   <div class="date-content">
     <mat-form-field floatLabel="never">
-      <input matInput autocomplete="off" [(ngModel)]="item.value.start" [matDatepicker]="startDate" placeholder="Start Date">
+      <input matInput autocomplete="off" disabled [formControl]="start" (dateChange)="startDateChange($event)" [matDatepicker]="startDate" placeholder="Start Date">
       <mat-datepicker-toggle tabindex="-1" matSuffix [for]="startDate"></mat-datepicker-toggle>
-      <mat-datepicker #startDate></mat-datepicker>
+      <mat-datepicker #startDate  disabled="false"></mat-datepicker>
     </mat-form-field>
     <mat-form-field floatLabel="never">
-      <input matInput autocomplete="off" [matDatepicker]="endDate" placeholder="End Date">
+      <input matInput autocomplete="off" disabled [formControl]="end" (dateChange)="endDateChange($event)" [matDatepicker]="endDate" placeholder="End Date">
       <mat-datepicker-toggle tabindex="-1" matSuffix [for]="endDate"></mat-datepicker-toggle>
-      <mat-datepicker #endDate></mat-datepicker>
+      <mat-datepicker #endDate  disabled="false"></mat-datepicker>
     </mat-form-field>
   </div>
   <!-- <mat-chip-list>

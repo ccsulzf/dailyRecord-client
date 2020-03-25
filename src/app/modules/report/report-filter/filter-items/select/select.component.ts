@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ReportFilterService } from '../../../services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -11,8 +12,6 @@ import { map } from 'rxjs/operators';
 export class SelectComponent implements OnInit {
   @Input() item;
   list$: Observable<any>;
-  private user = JSON.parse(localStorage.getItem('user'));
-
   private url = 'http://localhost:3000';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -47,8 +46,13 @@ export class SelectComponent implements OnInit {
 
   select(item) {
     item.selected = !item.selected;
-    this.reportFilterService.selectCondition(item);
-    this.item.value.push(item.id);
+    if (item.selected) {
+      this.item.value.push(item.id);
+    } else {
+      _.remove(this.item.value, (temp) => {
+        return temp === item.id;
+      });
+    }
   }
 
 }
