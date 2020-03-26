@@ -3,6 +3,7 @@
   <mat-drawer #drawer mode="over" [opened]="false">
     <app-report-filter [filterOption]="filterOption"></app-report-filter>
   </mat-drawer>
+
   <mat-drawer-content>
     <div class="report-tools">
       <div class="btn-filter">
@@ -12,18 +13,37 @@
         <!-- if has filter condition -->
         <span class="dot shadow"></span>
       </div>
+      <div class="report-summary">
+        <div>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          TotalExpenseAmount
+          <mat-icon>keyboard_arrow_right</mat-icon>:
+          <p>
+            -{{totalAmount}} RMB
+          </p>
+        </div>
+        <div>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          TotalExpenseCount
+          <mat-icon>keyboard_arrow_right</mat-icon>:
+          <p>
+            {{totalCount}} ROWS
+          </p>
+        </div>
+      </div>
       <div class="btn-group">
-        <button mat-raised-button>
+        <button mat-button>
           <mat-icon>library_books</mat-icon>
           Export
         </button>
       </div>
     </div>
     <div class="report-content shadow">
+      <!-- [domLayout]="'autoHeight'" -->
       <ag-grid-angular style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
-        [gridOptions]="gridOptions">
+        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)">
       </ag-grid-angular>
-      <page [length]="1000"></page>
+      <page [length]="totalCount"></page>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
