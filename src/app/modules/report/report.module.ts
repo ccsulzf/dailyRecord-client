@@ -34,6 +34,8 @@ import { LabelPeopleComponent } from './report-filter/filter-items/label-people/
 
 import { ReportFilterService, ReportExpenseService } from './services';
 import { PageComponent } from './report-filter/filter-items/page/page.component';
+
+import { CustomTooltip } from './grid-components';
 @NgModule({
   imports: [
     FormsModule,
@@ -46,7 +48,7 @@ import { PageComponent } from './report-filter/filter-items/page/page.component'
     MatButtonModule,
     MatBadgeModule,
     MatPaginatorModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([CustomTooltip]),
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
@@ -67,7 +69,8 @@ import { PageComponent } from './report-filter/filter-items/page/page.component'
     RangeComponent,
     GroupComponent,
     LabelPeopleComponent,
-    PageComponent
+    PageComponent,
+    CustomTooltip
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },

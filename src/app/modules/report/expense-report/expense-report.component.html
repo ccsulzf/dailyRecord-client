@@ -40,9 +40,14 @@
     </div>
     <div class="report-content shadow">
       <!-- [domLayout]="'autoHeight'" -->
-      <ag-grid-angular style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
-        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
+      <ag-grid-angular #agGrid style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [rowData]="rowData"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)"
+      >
+    </ag-grid-angular>
       <page [length]="totalCount"></page>
     </div>
   </mat-drawer-content>
