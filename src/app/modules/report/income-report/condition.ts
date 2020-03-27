@@ -1,16 +1,9 @@
 export const filterOption = [{
     type: 'Between',
     value: ['', ''],
-    field: 'expenseDate',
+    field: 'incomeDate',
     component: 'date',
-    name: 'ExpenseDate'
-}, {
-    type: 'In',
-    value: [],
-    field: 'expenseBookId',
-    model: 'expenseBook',
-    component: 'select',
-    name: 'ExpenseBook'
+    name: 'IncomeDate'
 }, {
     type: 'In',
     value: [],
@@ -21,10 +14,10 @@ export const filterOption = [{
 }, {
     type: 'In',
     value: [],
-    field: 'expenseCategoryId',
-    model: 'expenseCategory',
+    field: 'incomeCategoryId',
+    model: 'incomeCategory',
     component: 'select',
-    name: 'ExpenseCategory'
+    name: 'IncomeCategory'
 }, {
     type: 'In',
     value: [],
@@ -36,14 +29,14 @@ export const filterOption = [{
 }, {
     type: 'In',
     value: [],
-    field: 'expenseStoreId',
-    model: 'expenseStore',
+    field: 'incomeStoreId',
+    model: 'incomeStore',
     component: 'select',
-    name: 'ExpenseStore'
+    name: 'IncomeStore'
 }, {
     type: 'Like',
     value: '',
-    field: 'expenseContent',
+    field: 'incomeContent',
     component: 'input',
     name: 'Content'
 }, {

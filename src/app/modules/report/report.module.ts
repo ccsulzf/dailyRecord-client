@@ -32,10 +32,11 @@ import { RangeComponent } from './report-filter/filter-items/range/range.compone
 import { GroupComponent } from './report-filter/filter-items/group/group.component';
 import { LabelPeopleComponent } from './report-filter/filter-items/label-people/label-people.component';
 
-import { ReportFilterService, ReportExpenseService } from './services';
+import { ReportFilterService, ReportExpenseService, ReportIncomeService } from './services';
 import { PageComponent } from './report-filter/filter-items/page/page.component';
 
 import { CustomTooltip } from './grid-components';
+import { IncomeReportComponent } from './income-report/income-report.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -70,12 +71,14 @@ import { CustomTooltip } from './grid-components';
     GroupComponent,
     LabelPeopleComponent,
     PageComponent,
-    CustomTooltip
+    CustomTooltip,
+    IncomeReportComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
     ReportFilterService,
-    ReportExpenseService
+    ReportExpenseService,
+    ReportIncomeService
   ]
 })
 export class ReportModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReportFilterService } from '../services';
+
 @Component({
   selector: 'app-report-filter',
   templateUrl: './report-filter.component.html',
@@ -7,6 +8,7 @@ import { ReportFilterService } from '../services';
 })
 export class ReportFilterComponent implements OnInit {
   @Input() filterOption;
+
   constructor(
     private reportFilterService: ReportFilterService
   ) { }
@@ -18,4 +20,5 @@ export class ReportFilterComponent implements OnInit {
   search() {
     this.reportFilterService.updateFilterCondition(this.filterOption);
   }
+
 }

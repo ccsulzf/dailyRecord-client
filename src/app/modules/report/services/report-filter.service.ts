@@ -6,26 +6,29 @@ import *  as _ from 'lodash';
 @Injectable()
 export class ReportFilterService {
     public conditionList = [];
-
-    private filterCondition$ = new Subject<Object>(); // 过滤条件选择
-    private filterPage$ = new Subject<Object>();    // 分页条件选择
-    private composeFilter$: Observable<Object>; // 组装最终的
+    private filterCondition$ = new Subject<Object>(); // 过滤条件改变
+    private composeFilter$ = new Subject<Object>(); // 组装最终的
 
     constructor() {
 
-        this.composeFilter$ = combineLatest(this.filterCondition$, this.filterPage$).pipe(
-            map(value => this.compose(value))
-        );
     }
 
     updateFilterCondition(value) {
+        this.conditionList = value;
         this.filterCondition$.next(value);
+        this.composeFilter$.next(this.compose([value, {
+            skip: 0,
+            take: 100
+        }]));
     }
 
     updateFilterPage(value) {
-        this.filterPage$.next(value);
+        this.composeFilter$.next(this.compose([this.conditionList, value]));
     }
 
+    filterConditionChange(): Observable<Object> {
+        return this.filterCondition$;
+    }
     getFilter(): Observable<Object> {
         return this.composeFilter$;
     }

@@ -7,10 +7,9 @@ import { ReportFilterService } from '../../../services';
 })
 export class PageComponent implements OnInit {
   @Input() length;
-
+  @Input() pageIndex;
   pageSize = 100;
   pageSizeOptions = [100, 200, 500, 1000];
-  pageIndex = 0;
   pageFilter = {
     skip: 0,
     take: 100
@@ -20,14 +19,10 @@ export class PageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.reportFilterService.updateFilterPage(this.pageFilter);
-    // this.reportFilterService.getFilterCondition().subscribe(() => {
-    //   this.pageIndex = 0;
-    //   this.reportFilterService.updateFilterPage({
-    //     skip: 0,
-    //     take: 100
-    //   });
-    // })
+    this.reportFilterService.filterConditionChange().subscribe(() => {
+      this.pageIndex = 0;
+    });
+
   }
 
   select(data) {

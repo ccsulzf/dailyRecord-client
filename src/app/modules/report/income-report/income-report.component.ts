@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { filterOption } from './condition';
-import { ReportFilterService, ReportExpenseService } from '../services';
 import { Subscription } from 'rxjs';
+import { ReportFilterService, ReportIncomeService } from '../services';
 import { CustomTooltip } from '../grid-components/custom-tooltip/custom-tooltip.component';
 import { MatDrawer } from '@angular/material';
-import * as  _ from 'lodash';
+import * as _ from 'lodash';
 @Component({
-  encapsulation: ViewEncapsulation.Emulated,
-  selector: 'app-expense-report',
-  templateUrl: './expense-report.component.html',
-  styleUrls: ['./expense-report.component.scss']
+  selector: 'app-income-report',
+  templateUrl: './income-report.component.html',
+  styleUrls: ['./income-report.component.scss']
 })
-export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy {
+export class IncomeReportComponent implements OnInit, OnDestroy {
   @ViewChild('drawer', { static: false }) public drawer: MatDrawer;
+
   getFilter: Subscription;
   filterOption = filterOption;
 
@@ -25,22 +25,21 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
   private defaultColDef;
   private frameworkComponents;
   private rowData = [];
-
   constructor(
     private reportFilterService: ReportFilterService,
-    private reportExpenseService: ReportExpenseService
+    private reportIncomeService: ReportIncomeService
   ) {
-    const item = _.find(filterOption, { field: 'expenseDate' });
-    this.reportExpenseService.setDefaultDate(item);
+    const item = _.find(filterOption, { field: 'incomeDate' });
+    this.reportIncomeService.setDefaultDate(this.filterOption);
     this.columnDefs = [
-      { headerName: 'Date', field: 'expenseDate' },
-      { headerName: 'ExpenseContent', field: 'content', },
+      { headerName: 'Date', field: 'incomeDate' },
+      { headerName: 'IncomeContent', field: 'content', },
       {
         headerName: 'Amount', field: 'amount',
         cellRenderer: (params) => {
-          return params.value ? `- ${params.value}` : '';
+          return params.value ? `+ ${params.value}` : '';
         },
-        cellStyle: { color: '#673ab7' },
+        cellStyle: { color: '#f44336' },
       },
       {
         headerName: 'Address', field: 'address',
@@ -49,13 +48,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         },
       },
       {
-        headerName: 'ExpenseBook', field: 'expenseBook',
-        cellRenderer: (params) => {
-          return params.value.name;
-        },
-      },
-      {
-        headerName: 'ExpenseCategory', field: 'expenseCategory',
+        headerName: 'IncomeCategory', field: 'incomeCategory',
         cellRenderer: (params) => {
           return params.value.name;
         },
@@ -67,37 +60,18 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         },
       },
       {
-        headerName: 'ExpenseStore', field: 'expenseStore',
+        headerName: 'IncomeStore', field: 'incomeStore',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
         headerName: 'Peoples', field: 'peoples',
-        cellRenderer: (params) => {
-          console.log(params.value);
-          if (params.value && params.value.length) {
-            return params.value.length === 2 ? `<mat-icon>person_outline</mat-icon>
-            ${params.value[0][name]}` : '123';
-          }
-          return '';
-        },
         tooltipField: 'peoples',
       },
       { headerName: 'Labels', field: 'price' },
       { headerName: 'Memo', field: 'memo' },
     ];
-    this.defaultColDef = {
-      editable: false,
-      sortable: true,
-      flex: 1,
-      minWidth: 100,
-      filter: true,
-      resizable: true,
-      tooltipShowDelay: 0,
-      tooltipComponent: 'customTooltip',
-    };
-
     this.frameworkComponents = { customTooltip: CustomTooltip };
   }
 
@@ -106,12 +80,12 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.drawer) {
         this.drawer.close();
       }
-      this.reportExpenseService.getList(data).then((value) => {
+      this.reportIncomeService.getList(data).then((value) => {
         this.gridApi.setRowData(value);
         this.gridApi.sizeColumnsToFit();
         this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
       });
-      this.reportExpenseService.getTotal(data).then((value) => {
+      this.reportIncomeService.getTotal(data).then((value) => {
         this.totalAmount = value.totalAmount;
         this.totalCount = Number(value.totalCount);
       });
@@ -124,20 +98,15 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.gridApi.sizeColumnsToFit();
     this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
     try {
-      //用来设置tooltipShowDelay
-      //在组件中没有用 [tooltipShowDelay]="tooltipShowDelay"
       (params.api as any).context.beanWrappers.tooltipManager.beanInstance.MOUSEOVER_SHOW_TOOLTIP_TIMEOUT = 0;
     } catch (e) {
       console.error(e);
     }
   }
 
-  ngAfterViewInit() {
-
-  }
-
   ngOnDestroy() {
     this.getFilter.unsubscribe();
   }
+
 
 }

@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import *  as _ from 'lodash';
 import { repeat, toArray, map } from 'rxjs/operators';
 @Injectable()
-export class ReportExpenseService {
+export class ReportIncomeService {
     private url = 'http://localhost:3000';
     private httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,14 +18,13 @@ export class ReportExpenseService {
     ) {
         moment.locale('zh-cn');
     }
-
     setDefaultDate(item) {
-        item.value[0] = moment().week(moment().week()).startOf('week').format('YYYY-MM-DD');
-        item.value[1] = moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')
+        item.value[0] = moment().startOf('month').format('YYYY-MM-DD');
+        item.value[1] = moment().endOf('month').format('YYYY-MM-DD');
     }
 
     getList(data): Promise<any> {
-        return this.http.post(this.url + '/report/expenseData', data, this.httpOptions).pipe(
+        return this.http.post(this.url + '/report/incomeData', data, this.httpOptions).pipe(
             repeat(10),
             toArray(),
             map((value) => {
@@ -36,7 +35,7 @@ export class ReportExpenseService {
     }
 
     getTotal(data): Promise<any> {
-        return this.http.post(this.url + '/report/expenseTotal', _.pick(data, ['userId', 'conditionList']), this.httpOptions).toPromise();
+        return this.http.post(this.url + '/report/incomeTotal', _.pick(data, ['userId', 'conditionList']), this.httpOptions).toPromise();
     }
 
 }
