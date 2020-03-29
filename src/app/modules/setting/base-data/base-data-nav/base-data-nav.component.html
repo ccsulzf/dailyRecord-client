@@ -1,0 +1,10 @@
+<mat-list>
+  <ng-container *ngFor="let item of baseDataModelList">
+    <h3 mat-subheader>{{ item.group }}</h3>
+    <!-- [class.item-selected]="i===0" -->
+    <mat-list-item *ngFor="let baseData of item.list;let i=index" >
+      <div mat-line > {{baseData.name}} </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-list>

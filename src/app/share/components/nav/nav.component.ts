@@ -30,7 +30,7 @@ const TREE_DATA: FoodNode[] = [
     name: 'Setting',
     children: [
       // { name: 'Person Info' },
-      { name: 'Record Info' }
+      { name: 'BaseData', path: '/setting/baseData' }
     ]
   }
 ];

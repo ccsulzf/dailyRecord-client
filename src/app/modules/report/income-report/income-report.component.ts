@@ -5,6 +5,7 @@ import { ReportFilterService, ReportIncomeService } from '../services';
 import { CustomTooltip } from '../grid-components/custom-tooltip/custom-tooltip.component';
 import { MatDrawer } from '@angular/material';
 import * as _ from 'lodash';
+import { LabelPeopleRenderer } from '../grid-components';
 @Component({
   selector: 'app-income-report',
   templateUrl: './income-report.component.html',
@@ -30,7 +31,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
     private reportIncomeService: ReportIncomeService
   ) {
     const item = _.find(filterOption, { field: 'incomeDate' });
-    this.reportIncomeService.setDefaultDate(this.filterOption);
+    this.reportIncomeService.setDefaultDate(item);
     this.columnDefs = [
       { headerName: 'Date', field: 'incomeDate' },
       { headerName: 'IncomeContent', field: 'content', },
@@ -67,12 +68,16 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
       },
       {
         headerName: 'Peoples', field: 'peoples',
-        tooltipField: 'peoples',
+        cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Labels', field: 'price' },
+      { headerName: 'Labels', field: 'labels',
+      cellRenderer: 'labelPeopleRenderer', },
       { headerName: 'Memo', field: 'memo' },
     ];
-    this.frameworkComponents = { customTooltip: CustomTooltip };
+    this.frameworkComponents = { 
+      customTooltip: CustomTooltip,
+      labelPeopleRenderer: LabelPeopleRenderer
+    };
   }
 
   ngOnInit() {
@@ -80,6 +85,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
       if (this.drawer) {
         this.drawer.close();
       }
+      this.init();
       this.reportIncomeService.getList(data).then((value) => {
         this.gridApi.setRowData(value);
         this.gridApi.sizeColumnsToFit();
@@ -91,6 +97,12 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  init() {
+    this.totalAmount = 0;
+    this.totalCount = 0;
+  }
+
 
   onGridReady(params) {
     this.gridApi = params.api;

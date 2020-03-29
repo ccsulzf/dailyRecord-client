@@ -18,7 +18,9 @@ import {
   MatSliderModule,
   MatCheckboxModule,
   MatSelectModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
+  MatListModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -35,7 +37,7 @@ import { LabelPeopleComponent } from './report-filter/filter-items/label-people/
 import { ReportFilterService, ReportExpenseService, ReportIncomeService } from './services';
 import { PageComponent } from './report-filter/filter-items/page/page.component';
 
-import { CustomTooltip } from './grid-components';
+import { CustomTooltip, LabelPeopleRenderer } from './grid-components';
 import { IncomeReportComponent } from './income-report/income-report.component';
 @NgModule({
   imports: [
@@ -49,7 +51,7 @@ import { IncomeReportComponent } from './income-report/income-report.component';
     MatButtonModule,
     MatBadgeModule,
     MatPaginatorModule,
-    AgGridModule.withComponents([CustomTooltip]),
+    AgGridModule.withComponents([CustomTooltip, LabelPeopleRenderer]),
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
@@ -58,7 +60,9 @@ import { IncomeReportComponent } from './income-report/income-report.component';
     MatChipsModule,
     MatSliderModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule,
+    MatTooltipModule
   ],
   declarations: [
     ReportComponent,
@@ -72,7 +76,8 @@ import { IncomeReportComponent } from './income-report/income-report.component';
     LabelPeopleComponent,
     PageComponent,
     CustomTooltip,
-    IncomeReportComponent
+    IncomeReportComponent,
+    LabelPeopleRenderer
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },

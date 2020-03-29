@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDe
 import { filterOption } from './condition';
 import { ReportFilterService, ReportExpenseService } from '../services';
 import { Subscription } from 'rxjs';
-import { CustomTooltip } from '../grid-components/custom-tooltip/custom-tooltip.component';
+import { CustomTooltip, LabelPeopleRenderer } from '../grid-components';
 import { MatDrawer } from '@angular/material';
 import * as  _ from 'lodash';
 @Component({
@@ -74,31 +74,26 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       },
       {
         headerName: 'Peoples', field: 'peoples',
-        cellRenderer: (params) => {
-          console.log(params.value);
-          if (params.value && params.value.length) {
-            return params.value.length === 2 ? `<mat-icon>person_outline</mat-icon>
-            ${params.value[0][name]}` : '123';
-          }
-          return '';
-        },
-        tooltipField: 'peoples',
+        cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Labels', field: 'price' },
+      {
+        headerName: 'Labels', field: 'labels',
+        cellRenderer: 'labelPeopleRenderer',
+      },
       { headerName: 'Memo', field: 'memo' },
     ];
     this.defaultColDef = {
       editable: false,
-      sortable: true,
-      flex: 1,
-      minWidth: 100,
-      filter: true,
+      sortable: false,
+      filter: false,
       resizable: true,
-      tooltipShowDelay: 0,
       tooltipComponent: 'customTooltip',
     };
 
-    this.frameworkComponents = { customTooltip: CustomTooltip };
+    this.frameworkComponents = {
+      customTooltip: CustomTooltip,
+      labelPeopleRenderer: LabelPeopleRenderer
+    };
   }
 
   ngOnInit() {
@@ -106,16 +101,23 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.drawer) {
         this.drawer.close();
       }
+      this.init();
       this.reportExpenseService.getList(data).then((value) => {
         this.gridApi.setRowData(value);
         this.gridApi.sizeColumnsToFit();
         this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
       });
       this.reportExpenseService.getTotal(data).then((value) => {
+
         this.totalAmount = value.totalAmount;
         this.totalCount = Number(value.totalCount);
       });
     });
+  }
+
+  init() {
+    this.totalAmount = 0;
+    this.totalCount = 0;
   }
 
   onGridReady(params) {
@@ -123,6 +125,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
     this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
+   
     try {
       //用来设置tooltipShowDelay
       //在组件中没有用 [tooltipShowDelay]="tooltipShowDelay"

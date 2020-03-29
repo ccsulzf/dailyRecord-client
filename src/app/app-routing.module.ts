@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/record',
+    redirectTo: '/setting',
     pathMatch: 'full'
   },
   {
@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'report',
     loadChildren: () => import('./modules/report/report.module').then(mod => mod.ReportModule)
+  },
+  {
+    path: 'setting',
+    loadChildren: () => import('./modules/setting/setting.module').then(mod => mod.SettingModule)
   }
 ];
 

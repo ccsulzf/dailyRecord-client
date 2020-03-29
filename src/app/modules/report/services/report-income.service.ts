@@ -18,6 +18,7 @@ export class ReportIncomeService {
     ) {
         moment.locale('zh-cn');
     }
+    
     setDefaultDate(item) {
         item.value[0] = moment().startOf('month').format('YYYY-MM-DD');
         item.value[1] = moment().endOf('month').format('YYYY-MM-DD');

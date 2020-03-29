@@ -1,0 +1,69 @@
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding [style.display]="shouldRender(node) ? 'flex' : 'none'"
+    class="example-tree-node">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <div style="width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 0;">
+      <button mat-icon-button disabled></button>
+      <div style="    display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-between;">
+        <p>{{node.name}}</p>
+        <div>
+          <button mat-icon-button color="primary" (click)="edit = true">
+            <mat-icon>mode_edit</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>visibility_off</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- {{node.name}} -->
+  </cdk-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="example-tree-node">
+    <div style="width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 0;">
+      <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
+        (click)="node.isExpanded = !node.isExpanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      <div style="    display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: space-between;">
+        <p>{{node.name}}</p>
+        <div>
+          <button mat-icon-button color="primary" (click)="edit = true">
+            <mat-icon>mode_edit</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>visibility_off</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </cdk-tree-node>
+</cdk-tree>
