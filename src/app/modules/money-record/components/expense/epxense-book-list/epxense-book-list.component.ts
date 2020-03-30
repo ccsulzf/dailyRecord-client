@@ -65,7 +65,10 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
     };
     this.http.post(this.url + '/expenseBook', expenseBook, this.httpOptions).toPromise().then((data) => {
       this.showAddExpenseBook = false;
+      this.currenBook = data;
       this.list.push(data);
+      this.propagateChange(data);
+      this.store.dispatch(selectExpenseBook(data));
     }, (error) => {
     });
   }

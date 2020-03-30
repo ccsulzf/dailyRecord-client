@@ -5,10 +5,11 @@ import { map, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material';
 import { BaseDataService } from '../services/baseData.service';
 
+import * as _ from 'lodash';
+
 import { Store, select } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 import * as baseData from 'src/app/reducers/baseData.reducer';
-
 
 export class ExpenseCategorySelectErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -108,6 +109,14 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         this.expenseBookCategoryList = this.allExpenseCategoryList.filter((item) => {
             return item.expenseBookId === this.expenseBookId;
         });
+        if(this.expenseBookCategoryList && this.expenseBookCategoryList.length){
+            const item = this.expenseBookCategoryList[0];
+            this.itemSelectControl.setValue(item.name);
+            this.propagateChange(item);
+        } else {
+            this.itemSelectControl.setValue('');
+        }
+        this.filterList = _.cloneDeep(this.expenseBookCategoryList);
     }
 
     select(data) {
