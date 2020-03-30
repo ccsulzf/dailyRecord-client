@@ -9,10 +9,14 @@ import { BaseDataNavComponent } from './base-data/base-data-nav/base-data-nav.co
 
 import { MatListModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { BookManageComponent } from './base-data/book-manage/book-manage.component';
+
+import { BaseDataManageComponent } from './base-data/baseData-manage';
+
 import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
+import { BaseDataService } from './services';
 @NgModule({
-  declarations: [BaseDataComponent, SettingComponent, BaseDataNavComponent, BookManageComponent],
+  declarations: [BaseDataComponent, SettingComponent, BaseDataNavComponent, BookManageComponent,BaseDataManageComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
@@ -25,8 +29,9 @@ import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
     FormsModule,
     CdkTreeModule
   ],
-  providers:[
-    CdkTreeNodeDef
+  providers: [
+    CdkTreeNodeDef,
+    BaseDataService
   ]
 })
 export class SettingModule { }

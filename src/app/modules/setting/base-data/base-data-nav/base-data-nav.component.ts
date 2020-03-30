@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { BaseDataService } from '../../services';
 @Component({
   selector: 'base-data-nav',
   templateUrl: './base-data-nav.component.html',
   styleUrls: ['./base-data-nav.component.scss']
 })
 export class BaseDataNavComponent implements OnInit {
+  @Output() selectBaseData = new EventEmitter<any>();
+  currenBaseData = null
   private baseDataModelList = [
     {
       group: 'Expense',
@@ -26,7 +28,7 @@ export class BaseDataNavComponent implements OnInit {
           model: 'incomeCategory'
         }, {
           name: 'IncomeStore',
-          model: 'income'
+          model: 'incomeStore'
         }
       ]
     }, {
@@ -48,9 +50,21 @@ export class BaseDataNavComponent implements OnInit {
       ]
     }
   ];
-  constructor() { }
+  constructor(
+    private baseDataService: BaseDataService
+  ) { }
+
+  select(item) {
+    this.currenBaseData = item;
+    this.selectBaseData.emit(item);
+    this.baseDataService.getBaseData(item.model);
+  }
 
   ngOnInit() {
+    this.select({
+      name: 'ExpenseBook',
+      model: 'expenseBook'
+    });
   }
 
 }

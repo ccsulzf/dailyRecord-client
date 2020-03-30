@@ -20,14 +20,17 @@ import { MemoInputComponent } from './memo-input/memo-input.component';
 import { ContentInputComponent } from './content-input/content-input.component';
 import { LabelSelectComponent } from './label-select/label-select.component';
 import { PeopleSelectComponent } from './people-select/people-select.component';
-
+import { ExpenseCategorySelectComponent } from './expenseCatgeory-select';
 import { BaseDataService } from './services';
 @NgModule({
   declarations: [
     DatePickerComponent,
     AddressSelectComponent,
     ItemSelectComponent, MoneyInputComponent,
-    MemoInputComponent, ContentInputComponent, LabelSelectComponent, PeopleSelectComponent],
+    MemoInputComponent, ContentInputComponent,
+    LabelSelectComponent,
+    PeopleSelectComponent,
+    ExpenseCategorySelectComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -52,7 +55,8 @@ import { BaseDataService } from './services';
     MemoInputComponent,
     ContentInputComponent,
     PeopleSelectComponent,
-    LabelSelectComponent
+    LabelSelectComponent,
+    ExpenseCategorySelectComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },

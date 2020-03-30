@@ -6,7 +6,7 @@
     <div style="width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px 20px 10px 0;">
+    padding: 10px 20px 10px 0;" *ngIf="!node.isEdit">
       <button mat-icon-button disabled></button>
       <div style="    display: flex;
       align-items: center;
@@ -14,7 +14,7 @@
       justify-content: space-between;">
         <p>{{node.name}}</p>
         <div>
-          <button mat-icon-button color="primary" (click)="edit = true">
+          <button mat-icon-button color="primary" (click)="node.isEdit = true;">
             <mat-icon>mode_edit</mat-icon>
           </button>
           <button mat-icon-button>
@@ -26,8 +26,17 @@
         </div>
       </div>
     </div>
-
-    <!-- {{node.name}} -->
+    <div class="edit-item" *ngIf="node.isEdit">
+      <div class="edit-name">
+        <mat-form-field floatLabel="never" class="full-width">
+          <input matInput type="text" autocomplete="off" placeholder="input memo">
+        </mat-form-field>
+      </div>
+      <div class="edit-option">
+        <button mat-raised-button color="primary">Confirm</button>
+        <button mat-raised-button (click)="node.isEdit = false">Cancel</button>
+      </div>
+    </div>
   </cdk-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
@@ -35,7 +44,7 @@
     <div style="width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px 20px 10px 0;">
+    padding: 10px 20px 10px 0;" *ngIf="!node.isEdit">
       <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
         (click)="node.isExpanded = !node.isExpanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
         <mat-icon class="mat-icon-rtl-mirror">
@@ -48,7 +57,7 @@
       justify-content: space-between;">
         <p>{{node.name}}</p>
         <div>
-          <button mat-icon-button color="primary" (click)="edit = true">
+          <button mat-icon-button color="primary" (click)="node.isEdit = true">
             <mat-icon>mode_edit</mat-icon>
           </button>
           <button mat-icon-button>
@@ -59,11 +68,18 @@
           </button>
         </div>
       </div>
-
     </div>
 
-
-
-
+    <div class="edit-item" *ngIf="node.isEdit">
+      <div class="edit-name">
+        <mat-form-field floatLabel="never" class="full-width">
+          <input matInput type="text" autocomplete="off" placeholder="input memo">
+        </mat-form-field>
+      </div>
+      <div class="edit-option">
+        <button mat-raised-button color="primary">Confirm</button>
+        <button mat-raised-button (click)="node.isEdit = false">Cancel</button>
+      </div>
+    </div>
   </cdk-tree-node>
 </cdk-tree>

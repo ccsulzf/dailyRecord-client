@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-data.component.scss']
 })
 export class BaseDataComponent implements OnInit {
-  edit = false;
+  currenBasedata;
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  onSelectBaseData(value) {
+    this.currenBasedata = value;
   }
 
 }

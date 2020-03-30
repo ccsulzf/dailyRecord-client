@@ -1,0 +1,30 @@
+<ng-container *ngFor="let item of baseDataService?.baseDataList">
+  <div class="list-item" *ngIf="!item.isEdit">
+    <div class="name">
+      {{item.name}}
+    </div>
+    <div class="option">
+      <button mat-icon-button color="primary" (click)="item.isEdit = true">
+        <mat-icon>mode_edit</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>visibility_off</mat-icon>
+      </button>
+      <button mat-icon-button color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="edit-item" *ngIf="item.isEdit">
+    <div class="edit-name">
+      <mat-form-field floatLabel="never" class="full-width">
+        <input matInput type="text" autocomplete="off" placeholder="input memo">
+      </mat-form-field>
+    </div>
+    <div class="edit-option">
+      <button mat-raised-button color="primary">Confirm</button>
+      <button mat-raised-button (click)="item.isEdit = false">Cancel</button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+</ng-container>

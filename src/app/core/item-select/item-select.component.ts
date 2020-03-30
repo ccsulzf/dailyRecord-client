@@ -35,10 +35,8 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
 
   private user = JSON.parse(localStorage.getItem('user'));
 
-  expenseBook$: Observable<any>;
   baseData$: Observable<any>;
 
-  originList = new Array();
   dataList = new Array();
   filteredOptions: Observable<any[]>;
 
@@ -48,11 +46,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     private baseDataService: BaseDataService,
     private store: Store<any>
   ) {
-    this.expenseBook$ = store.select(expense.getSelectedExpenseBook);
     this.baseData$ = store.select(baseData.getAddBaseData);
-    this.expenseBook$.subscribe((temp) => {
-      this.filterByExpenseBook(temp);
-    });
   }
 
   itemSelectControl = new FormControl();
@@ -62,7 +56,6 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     this.baseData$.subscribe((data: Object) => {
       for (let key in data) {
         if (key === this.model) {
-          this.originList = [...this.originList, data[key]];
           this.dataList = [...this.dataList, data[key]];
           this.itemSelectControl.setValue(data[key].name);
           this.propagateChange(data[key]);
@@ -85,45 +78,19 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     }
     this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
       this.dataList = data;
-      if (this.model === 'expenseCategory') {
-        this.originList = data;
-        this.expenseBook$.subscribe((temp) => {
-          this.filterByExpenseBook(temp);
-        });
-      } else {
-        if (this.model !== 'expenseStore' && this.model !== 'payChannel' && this.dataList.length) {
-          this.itemSelectControl.setValue(this.dataList[0].name);
-          this.propagateChange(this.dataList[0]);
-        }
-        this.filteredOptions = this.itemSelectControl.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => this._filter(value))
-          );
-      }
-
-    });
-  }
-
-  filterByExpenseBook(selectedExpenseBook) {
-    if (selectedExpenseBook && this.model === 'expenseCategory' && this.originList && this.originList.length) {
-      this.dataList = this.originList.filter((item: any) => {
-        return item.expenseBookId === selectedExpenseBook.id;
-      });
-      if (this.dataList && this.dataList.length) {
+      if (this.model !== 'expenseStore' && this.model !== 'payChannel' && this.dataList.length) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
-      } else {
-        this.itemSelectControl.setValue('');
       }
       this.filteredOptions = this.itemSelectControl.valueChanges
         .pipe(
           startWith(''),
           map(value => this._filter(value))
         );
-    }
 
+    });
   }
+
 
   propagateChange = (temp: any) => { };
 
@@ -174,14 +141,9 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
             userId: this.user.id
           });
         }
-
       });
       return [];
     }
-  }
-
-  getData() {
-
   }
 
 }

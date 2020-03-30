@@ -72,6 +72,7 @@ export class ExpenseComponent implements OnInit {
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
+    // console.log(body);
     this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addExpenseDetail(data.expenseDetail));

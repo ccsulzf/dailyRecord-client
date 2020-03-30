@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 
+import { BaseDataService } from '../../services';
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
@@ -10,52 +12,35 @@ interface ExampleFlatNode {
   isExpanded?: boolean;
 }
 
-const TREE_DATA: ExampleFlatNode[] = [
-  {
-    name: 'Fruit',
-    expandable: true,
-    level: 0,
-  }, {
-    name: 'Apple',
-    expandable: false,
-    level: 1,
-  }, {
-    name: 'Banana',
-    expandable: false,
-    level: 1,
-  }, {
-    name: 'Fruit loops',
-    expandable: false,
-    level: 1,
-  }
-];
-
 @Component({
   selector: 'book-manage',
   templateUrl: './book-manage.component.html',
   styleUrls: ['./book-manage.component.scss']
 })
 export class BookManageComponent implements OnInit {
-  constructor() { }
+  dataSource;
+  list = [];
 
-  ngOnInit() {
+  constructor(
+    private baseDataService: BaseDataService
+  ) { }
+
+  async ngOnInit() {
+    this.list = await this.baseDataService.getExpenseBookANDCategory();
+    this.dataSource = new ArrayDataSource(this.list);
   }
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
 
-  dataSource = new ArrayDataSource(TREE_DATA);
+  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   getParentNode(node: ExampleFlatNode) {
-    const nodeIndex = TREE_DATA.indexOf(node);
-
+    const nodeIndex = this.list.indexOf(node);
     for (let i = nodeIndex - 1; i >= 0; i--) {
-      if (TREE_DATA[i].level === node.level - 1) {
-        return TREE_DATA[i];
+      if (this.list[i].level === node.level - 1) {
+        return this.list[i];
       }
     }
-
     return null;
   }
 
@@ -63,6 +48,5 @@ export class BookManageComponent implements OnInit {
     const parent = this.getParentNode(node);
     return !parent || parent.isExpanded;
   }
-
 
 }

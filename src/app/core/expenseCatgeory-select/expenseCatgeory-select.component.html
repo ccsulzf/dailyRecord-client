@@ -1,0 +1,13 @@
+<mat-form-field class="full-width">
+    <input type="text" [placeholder]="'Pick '+name" aria-label="Number" required matInput
+      [formControl]="itemSelectControl" [matAutocomplete]="auto" [errorStateMatcher]="matcher">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
+      <mat-option *ngFor="let option of filterList" [value]="option">
+        {{option?.name}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="itemSelectControl.hasError('required') && (itemSelectControl.touched || itemSelectControl.dirty)">
+      {{name}} is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  
