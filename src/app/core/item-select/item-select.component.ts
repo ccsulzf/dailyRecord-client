@@ -73,6 +73,8 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
+    strObj.deletedAt = null;
+    strObj.isHide = false;
     if (this.type) {
       strObj.type = this.type;
     }

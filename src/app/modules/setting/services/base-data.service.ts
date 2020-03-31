@@ -43,9 +43,11 @@ export class BaseDataService {
     }
 
     async getExpenseBookANDCategory() {
-        const expenseBookList = await this.http.get(`${this.url}/expenseBook?s={"userId":${this.user.id}}`, this.httpOptions)
+        const expenseBookList = await this.http.get(`${this.url}/expenseBook?s={"userId":${this.user.id},"deletedAt":null}`,
+            this.httpOptions)
             .toPromise();
-        const expenseCatgeoryList = await this.http.get(`${this.url}/expenseCategory?s={"userId":${this.user.id}}`, this.httpOptions)
+        const expenseCatgeoryList = await this.http.get(`${this.url}/expenseCategory?s={"userId":${this.user.id},"deletedAt":null}`,
+            this.httpOptions)
             .toPromise();
         return this.composeBookAndCategory(expenseBookList, expenseCatgeoryList);
     }
@@ -73,7 +75,13 @@ export class BaseDataService {
         return list;
     }
 
-    updateORDelExpenseBook(expenseBook, expenseCategoryList) {
+    hideExpenseBook(expenseBook, expenseCategoryList) {
+        return this.http.post(`${this.url}/baseData/hideExpenseBook`, { expenseBook, expenseCategoryList }, this.httpOptions)
+            .toPromise();
+    }
 
+    delExpenseBook(expenseBook, expenseCategoryList) {
+        return this.http.post(`${this.url}/baseData/delExpenseBook`, { expenseBook, expenseCategoryList }, this.httpOptions)
+            .toPromise();
     }
 }

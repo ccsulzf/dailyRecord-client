@@ -41,7 +41,11 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   }
 
   getExpenseBookList() {
-    this.http.get(this.url + `/expenseBook?s={"userId":${this.user.id}}`, this.httpOptions).toPromise().then((data: Array<any>) => {
+    const strObj: any = {};
+    strObj.userId = this.user.id;
+    strObj.deletedAt = null;
+    strObj.isHide = false;
+    this.http.get(this.url + `/expenseBook?s=${JSON.stringify(strObj)}`, this.httpOptions).toPromise().then((data: Array<any>) => {
       if (data && data.length) {
         this.list = data;
         this.currenBook = this.list[0];
@@ -76,7 +80,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    if(data){
+    if (data) {
       this.currenBook = data;
     }
   }

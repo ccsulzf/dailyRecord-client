@@ -102,6 +102,8 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         const strObj: any = {};
         const user = JSON.parse(localStorage.getItem('user'));
         strObj.userId = user.id;
+        strObj.deletedAt = null;
+        strObj.isHide = false;
         this.allExpenseCategoryList = await this.baseDataService.getBaseData(this.model, JSON.stringify(strObj));
     }
 
@@ -109,7 +111,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         this.expenseBookCategoryList = this.allExpenseCategoryList.filter((item) => {
             return item.expenseBookId === this.expenseBookId;
         });
-        if(this.expenseBookCategoryList && this.expenseBookCategoryList.length){
+        if (this.expenseBookCategoryList && this.expenseBookCategoryList.length) {
             const item = this.expenseBookCategoryList[0];
             this.itemSelectControl.setValue(item.name);
             this.propagateChange(item);

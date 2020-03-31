@@ -51,7 +51,8 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
-
+    strObj.deletedAt = null;
+    strObj.isHide = false;
     this.baseDataService.getBaseData('label', JSON.stringify(strObj)).then((data: any) => {
       this.allLabels = data;
       this.filteredLabel = this.labelCtrl.valueChanges.pipe(

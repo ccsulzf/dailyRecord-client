@@ -76,14 +76,13 @@ export class BookManageComponent implements OnInit {
       _.remove(this.dataSource._data, (temp) => {
         return temp.id === item.id;
       });
-      // this.dataSource = new ArrayDataSource(this.list);
+      this.dataSource = new ArrayDataSource(this.list);
     }, (error) => {
       item.deletedAt = null;
     });
   }
 
   hideExpenseBook(item) {
-    // const expenseBook = item;
     const list = this.dataSource._data;
     item.isHide = !item.isHide;
     item.isExpanded = true;
@@ -97,20 +96,20 @@ export class BookManageComponent implements OnInit {
       }
     }
 
-    this.baseDataService.updateORDelExpenseBook(item, expenseCategooryList);
+    this.baseDataService.hideExpenseBook(item, expenseCategooryList).then((data) => {
 
-    // fail to reover
-    // setTimeout(() => {
-    //   item.isHide = !item.isHide;
-    //   for (const item of list) {
-    //     const find = _.find(originList, (temp) => {
-    //       return temp.id === item.id;
-    //     });
-    //     if (find) {
-    //       item.isHide = find.isHide;
-    //     }
-    //   }
-    // }, 5000);
+    }, (error) => {
+      item.isHide = !item.isHide;
+      for (const item of list) {
+        const find = _.find(originList, (temp) => {
+          return temp.id === item.id;
+        });
+        if (find) {
+          item.isHide = find.isHide;
+        }
+      }
+    });
+
   }
 
   delExpenseBook(item) {
@@ -123,16 +122,21 @@ export class BookManageComponent implements OnInit {
         expenseCategooryList.push(temp);
       }
     }
-    this.baseDataService.updateORDelExpenseBook(item, expenseCategooryList);
+    this.baseDataService.delExpenseBook(item, expenseCategooryList).then((data) => {
+      for (const temp of expenseCategooryList) {
+        _.remove(list, { id: temp.id });
+      }
+      _.remove(list, { id: item.id });
+      this.dataSource = new ArrayDataSource(list);
+      console.log(list);
+    }, (error) => {
+      item.deletedAt = null;
+      for (const temp of list) {
+        if (temp.expenseBookId === item.id) {
+          temp.deletedAt = null;
+        }
+      }
+    });
 
-    // fail to recovery
-    // setTimeout(() => {
-    //   item.deletedAt = null;
-    //   for (const temp of list) {
-    //     if (temp.expenseBookId === item.id) {
-    //       temp.deletedAt = null;
-    //     }
-    //   }
-    // }, 5000);
   }
 }

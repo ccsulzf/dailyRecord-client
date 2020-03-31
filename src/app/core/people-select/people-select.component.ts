@@ -52,7 +52,8 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
-
+    strObj.deletedAt = null;
+    strObj.isHide = false;
     this.baseDataService.getBaseData('people', JSON.stringify(strObj)).then((data: any) => {
       this.allPeoples = data;
       this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
