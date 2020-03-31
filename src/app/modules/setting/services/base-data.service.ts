@@ -26,7 +26,7 @@ export class BaseDataService {
     }
 
     getBaseData(modelName) {
-        this.http.get(`${this.url}/${modelName}?s={"userId":${this.user.id}}`, this.httpOptions).pipe(
+        this.http.get(`${this.url}/${modelName}?s={"userId":${this.user.id},"deletedAt":null}`, this.httpOptions).pipe(
             map((list: any) => {
                 for (let item of list) {
                     item.isEdit = false;
@@ -36,6 +36,10 @@ export class BaseDataService {
         ).toPromise().then((data) => {
             this.baseDataList = data;
         });
+    }
+
+    updateBaseData(item, model) {
+        return this.http.patch(`${this.url}/${model}/${item.id}`, { name: item.name }, this.httpOptions).toPromise();
     }
 
     async getExpenseBookANDCategory() {
@@ -52,6 +56,7 @@ export class BaseDataService {
             item.expandable = true;
             item.level = 0;
             item.isEdit = false;
+            item.isExpanded = false;
             list.push(item);
             const filterList = expenseCategoryList.filter((temp) => {
                 return temp.expenseBookId === item.id;
@@ -61,9 +66,14 @@ export class BaseDataService {
                 categoryItem.isEdit = false;
                 categoryItem.expandable = false;
                 categoryItem.level = 1;
+                categoryItem.isExpanded = false;
                 list.push(categoryItem);
             }
         }
         return list;
+    }
+
+    updateORDelExpenseBook(expenseBook, expenseCategoryList) {
+
     }
 }
