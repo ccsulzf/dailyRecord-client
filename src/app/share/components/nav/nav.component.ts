@@ -87,7 +87,7 @@ export class NavComponent implements OnInit, AfterViewInit {
     }.bind(this);
 
     this.router.events.subscribe((data) => {
-      if (data instanceof NavigationEnd) {
+      if (data instanceof NavigationStart) {
         find(TREE_DATA, data.url);
       }
     });

@@ -39,7 +39,7 @@ export class BaseDataService {
     }
 
     updateBaseData(item, model) {
-        return this.http.patch(`${this.url}/${model}/${item.id}`, { name: item.name }, this.httpOptions).toPromise();
+        return this.http.patch(`${this.url}/${model}/${item.id}`, item, this.httpOptions).toPromise();
     }
 
     async getExpenseBookANDCategory() {

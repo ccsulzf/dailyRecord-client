@@ -14,7 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { YearCalendarComponent } from './components/home/year-calendar/year-calendar.component';
 import { CurrentMonthComponent } from './components/home/current-month/current-month.component';
 
-
+import { HomeService } from './services';
 @NgModule({
   declarations: [DashboardComponent, HomeComponent, YearCalendarComponent, CurrentMonthComponent],
   imports: [
@@ -24,6 +24,7 @@ import { CurrentMonthComponent } from './components/home/current-month/current-m
     MatDividerModule,
     NgxEchartsModule,
     MatProgressSpinnerModule
-  ]
+  ],
+  providers: [HomeService]
 })
 export class DashboardModule { }
