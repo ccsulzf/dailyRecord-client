@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import *  as _ from 'lodash';
+import * as moment from 'moment';
 import { combineLatest, Observable, zip } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -22,6 +23,18 @@ export class HomeService {
         const expenseTotal = this.http.get(`${this.url}/chart/expenseTotal?userId=${this.user.id}`, this.httpOptions);
         const total = zip(incomeTotal, expenseTotal);
         return total;
+    }
+
+    getAnnualExpenseData(startDate, endDate) {
+        return this.http.get(`${this.url}/chart/annualExpenseData?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`, this.httpOptions).pipe(
+            map((list: any) => {
+                for (const item of list) {
+                    item.expenseDate = moment(item.expenseDate).format('YYYY-MM-DD');
+                    item.amount = Number(item.amount);
+                }
+                return list;
+            })
+        ).toPromise();
     }
 
 }

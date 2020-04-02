@@ -1,6 +1,70 @@
-<div class="month-content">
+<div class="month-content shadow">
 
-  <div echarts [options]="options" class="month-line-chart shadow">
+  <div class="choice-item">
+    <p class="choice-selected">
+      Expense
+    </p>
+    <p>
+      Income
+    </p>
+  </div>
+
+  <div class="choice-content">
+    <div class="chart">
+      <div echarts [options]="options" style="height:300px" class="month-line-chart">
+      </div>
+    </div>
+
+    <div class="list shadow">
+      <ul>
+        <li>
+          <span class="text-ellipsis">Three Meals of day</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="78" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+        <li>
+          <span class="text-ellipsis">Stationery</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="66" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+        <li>
+          <span class="text-ellipsis">Clothing</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="58" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+        <li>
+          <span class="text-ellipsis">Others</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="45" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+        <li>
+          <span class="text-ellipsis">Electrical appliances</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="32" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+        <li>
+          <span class="text-ellipsis">Traffic</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="12" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+
+        <li>
+          <span class="text-ellipsis">Traffic</span>
+          <mat-progress-spinner color="primary" mode="determinate" value="12" [diameter]="30">
+          </mat-progress-spinner>
+        </li>
+      </ul>
+      <div class="month-amount">
+        <span>Month of the expense:</span>
+        <p>
+          -1578.22RMB
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div echarts [options]="options" class="month-line-chart shadow">
   </div>
 
   <div class="month-situation shadow">
@@ -13,7 +77,7 @@
       </p>
     </div>
 
-    <!-- expense or income category  -->
+
     <div class="month">
       <ul>
         <li>
@@ -47,7 +111,6 @@
           </mat-progress-spinner>
         </li>
       </ul>
-      <!-- <mat-divider></mat-divider> -->
       <div class="month-amount">
         <span>Month of the expense:</span>
         <p>
@@ -55,6 +118,6 @@
         </p>
       </div>
     </div>
-  </div>
+  </div> -->
 
 </div>

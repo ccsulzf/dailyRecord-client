@@ -31,7 +31,7 @@ export class CurrentMonthComponent implements OnInit {
     title: {
       top: 5,
       left: 'center',
-      text: '2019/06 Expense & Income Line Chart',
+      text: '2019/06 Expense Line Chart',
       textStyle: {
         fontWeight: 400
       }
@@ -53,20 +53,10 @@ export class CurrentMonthComponent implements OnInit {
         type: 'line',
         showSymbol: false,
         data: this.data.map((item) => {
-          return -Math.floor(Math.random() * 100);
+          return Math.floor(Math.random() * 100);
         }),
         lineStyle: {
           color: '#673ab7'
-        }
-      }, {
-        name: 'Income',
-        type: 'line',
-        showSymbol: false,
-        data: this.data.map((item) => {
-          return Math.floor(Math.random() * 10000);
-        }),
-        lineStyle: {
-          color: '#f44336'
         }
       }
     ]
