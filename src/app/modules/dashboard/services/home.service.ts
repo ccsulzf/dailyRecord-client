@@ -25,11 +25,27 @@ export class HomeService {
         return total;
     }
 
-    getAnnualExpenseData(startDate, endDate) {
-        return this.http.get(`${this.url}/chart/annualExpenseData?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`, this.httpOptions).pipe(
+    getGroupExpenseData(startDate, endDate, isExpenseBook) {
+        return this.http.get(`${this.url}/chart/groupExpenseData?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}&isExpenseBook=${isExpenseBook}`, this.httpOptions).pipe(
             map((list: any) => {
                 for (const item of list) {
-                    item.expenseDate = moment(item.expenseDate).format('YYYY-MM-DD');
+                    if (!isExpenseBook) {
+                        item.date = moment(item.expenseDate).format('YYYY-MM-DD');
+                    }
+                    item.amount = Number(item.amount);
+                }
+                return list;
+            })
+        ).toPromise();
+    }
+
+    getGroupIncomeData(startDate, endDate, isIncomeCategory) {
+        return this.http.get(`${this.url}/chart/groupIncomeData?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}&isIncomeCategory=${isIncomeCategory}`, this.httpOptions).pipe(
+            map((list: any) => {
+                for (const item of list) {
+                    if (!isIncomeCategory) {
+                        item.date = moment(item.expenseDate).format('YYYY-MM-DD');
+                    }
                     item.amount = Number(item.amount);
                 }
                 return list;

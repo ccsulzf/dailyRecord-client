@@ -85,7 +85,7 @@ export class YearCalendarComponent implements OnInit {
   }
 
   getData() {
-    this.homeService.getAnnualExpenseData(moment().format('YYYY-01-01'), moment().format('YYYY-12-31')).then((list) => {
+    this.homeService.getGroupExpenseData(moment().format('YYYY-01-01'), moment().format('YYYY-12-31'),false).then((list) => {
       const maxItem = _.maxBy(list, 'amount');
       const minItem = _.minBy(list, 'amount');
       this.updateOptions = {
@@ -97,8 +97,6 @@ export class YearCalendarComponent implements OnInit {
           min: minItem.amount
         }
       };
-
-      console.log(this.updateOptions);
       // this.options.series.data = this.list;
     });
   }
@@ -108,16 +106,16 @@ export class YearCalendarComponent implements OnInit {
   }
 
   getVirtulData(year, list) {
-    const date = new Date(year + '-01-01').getTime();
+    const start = new Date(year + '-01-01').getTime();
 
     const end = new Date((+year + 1) + '-01-01').getTime();
 
     const dayTime = 3600 * 24 * 1000;
     const data = [];
 
-    for (let time = date; time < end; time += dayTime) {
+    for (let time = start; time < end; time += dayTime) {
       const findItem = _.find(list, (item) => {
-        return item.expenseDate === moment(new Date(time)).format('YYYY-MM-DD')
+        return item.expenseDate === moment(new Date(time)).format('YYYY-MM-DD');
       });
 
       if (findItem) {

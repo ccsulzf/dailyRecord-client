@@ -154,10 +154,9 @@ export class IncomeDetailComponent implements OnInit {
   }
 
   getIncomeDetailList(date) {
-    const startDate = moment(date).format('YYYY-MM-01');
-    const endDate = moment(date).format('YYYY-MM-31');
-    this.http.get(this.url + `/income/list?userId=${this.user.id}&startDate=${startDate}
-    &endDate=${endDate}`, this.httpOptions).toPromise().then((data) => {
+    const startDate = moment().startOf('month').format('YYYY-MM-DD');
+    const endDate = moment().endOf('month').format('YYYY-MM-DD');
+    this.http.get(this.url + `/income/list?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`, this.httpOptions).toPromise().then((data) => {
       this.list = this.composeData(data);
     });
   }

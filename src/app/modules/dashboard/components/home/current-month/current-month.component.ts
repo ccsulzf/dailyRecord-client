@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from '../../../services';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-current-month',
@@ -7,64 +10,142 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class CurrentMonthComponent implements OnInit {
-  private data = [
-    ['2000-06-04', 100],
-    ['2000-06-05', 116], ['2000-06-06', 129], ['2000-06-07', 135],
-    ['2000-06-08', 86], ['2000-06-09', 73], ['2000-06-10', 85],
-    ['2000-06-11', 73], ['2000-06-12', 68], ['2000-06-13', 92],
-    ['2000-06-14', 130], ['2000-06-15', 245], ['2000-06-16', 139],
-    ['2000-06-17', 115], ['2000-06-18', 111], ['2000-06-19', 309],
-    ['2000-06-20', 206], ['2000-06-21', 137], ['2000-06-22', 128],
-    ['2000-06-23', 85], ['2000-06-24', 94], ['2000-06-25', 71],
-    ['2000-06-26', 106], ['2000-06-27', 84], ['2000-06-28', 93],
-    ['2000-06-29', 85], ['2000-06-30', 73]
-  ];
 
-  public options = {
-    visualMap: [{
-      show: false,
-      type: 'continuous',
-      seriesIndex: 0,
-      min: 0,
-      max: 400
-    }],
-    title: {
-      top: 5,
-      left: 'center',
-      text: '2019/06 Expense Line Chart',
-      textStyle: {
-        fontWeight: 400
-      }
-    },
-    tooltip: {
-      trigger: 'axis'
-    },
-    xAxis: {
-      data: this.data.map((item) => {
-        return item[0];
-      })
-    },
-    yAxis: {
-      splitLine: { show: false },
-    },
-    series: [
-      {
-        name: 'Expense',
+  options: any;
+  updateOptions: any;
+
+
+  type = 'expense';
+
+  private monthStart = moment().startOf('month').format('YYYY-MM-DD');
+  private monthEnd = moment().endOf('month').format('YYYY-MM-DD');
+
+  public list = [];
+
+  public sum = 0;
+
+  constructor(
+    private homeService: HomeService
+  ) { }
+
+  ngOnInit() {
+    this.options = {
+      visualMap: [{
+        show: false,
+        type: 'continuous',
+        seriesIndex: 0,
+        min: 0,
+        max: 400
+      }],
+      title: {
+        top: 5,
+        left: 'center',
+        text: '',
+        textStyle: {
+          fontWeight: 400
+        }
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      xAxis: {
+        data: this.getVirtulData([]).map((item) => {
+          return item[0];
+        })
+      },
+      yAxis: {
+        splitLine: { show: false },
+      },
+      series: {
         type: 'line',
         showSymbol: false,
-        data: this.data.map((item) => {
-          return Math.floor(Math.random() * 100);
-        }),
+        data: this.getVirtulData([]),
         lineStyle: {
           color: '#673ab7'
         }
       }
-    ]
+    };
 
-  };
-  constructor() { }
-
-  ngOnInit() {
+    this.getExpenseData();
   }
 
+  getExpenseData() {
+    this.type = 'expense';
+    this.homeService.getGroupExpenseData(this.monthStart, this.monthEnd, false).then((list) => {
+      this.updateOptions = {
+        title: {
+          text: '2020/04 Month of Expense'
+        },
+        series: {
+          data: this.getVirtulData(list)
+        },
+      };
+    });
+
+    this.homeService.getGroupExpenseData(this.monthStart, this.monthEnd, true).then((list) => {
+      this.list = list;
+      this.sum = list.reduce((prev, item) => {
+        return item.amount + prev;
+      }, 0);
+
+      for (const item of list) {
+        item.percent = (item.amount / this.sum) * 100;
+      }
+    });
+  }
+
+  getIncomeData() {
+    this.type = 'income';
+    this.homeService.getGroupIncomeData(this.monthStart, this.monthEnd, false).then((list) => {
+      this.updateOptions = {
+        title: {
+          text: '2020/04 Month of Income'
+        },
+        series: {
+          data: this.getVirtulData(list),
+          lineStyle: {
+            color: '#f44336'
+          }
+        },
+      };
+    });
+
+    this.homeService.getGroupIncomeData(this.monthStart, this.monthEnd, true).then((list) => {
+      this.list = list;
+      this.sum = list.reduce((prev, item) => {
+        return item.amount + prev;
+      }, 0);
+
+      for (const item of list) {
+        item.percent = (item.amount / this.sum) * 100;
+      }
+    });
+  }
+
+  getVirtulData(list) {
+    const start = new Date(this.monthStart).getTime();
+    const end = new Date(this.monthEnd).getTime();
+
+    const dayTime = 3600 * 24 * 1000;
+    const data = [];
+
+    for (let time = start; time <= end; time += dayTime) {
+      const findItem = _.find(list, (item) => {
+        return item.date === moment(new Date(time)).format('YYYY-MM-DD');
+      });
+
+      if (findItem) {
+        data.push([
+          moment(new Date(time)).format('YYYY-MM-DD'),
+          findItem.amount
+        ]);
+      } else {
+        data.push([
+          moment(new Date(time)).format('YYYY-MM-DD'),
+          0
+        ]);
+      }
+    }
+    return data;
+  }
 }
