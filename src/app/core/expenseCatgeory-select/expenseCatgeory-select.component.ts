@@ -60,8 +60,11 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
     async ngOnInit() {
         await this.getList();
         this.expenseBook$.subscribe((temp) => {
-            this.expenseBookId = temp.id;
-            this.filterByExpenseBook();
+            if(temp){
+                this.expenseBookId = temp.id;
+                this.filterByExpenseBook();
+            }
+
         });
 
         this.itemSelectControl.valueChanges.pipe(

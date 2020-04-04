@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,13 +7,14 @@ import * as income from 'src/app/reducers/income.reducer';
 import * as moment from 'moment';
 
 import { addBaseData } from '../../../../actions/baseData.action';
-import { addIncomeDetail, editIncomeDetail, delIncomeDetail } from '../../../../actions/income.action';
+import { addIncomeDetail, editIncomeDetail, delIncomeDetail,resetIncomeDetail } from '../../../../actions/income.action';
+import { resetExpenseDetail } from 'src/app/actions/expense.action';
 @Component({
   selector: 'app-income',
   templateUrl: './income.component.html',
   styleUrls: ['./income.component.scss']
 })
-export class IncomeComponent implements OnInit {
+export class IncomeComponent implements OnInit, OnDestroy {
   private url = 'http://localhost:3000';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -38,7 +39,7 @@ export class IncomeComponent implements OnInit {
     incomeCategory: [''],
     incomeStore: [''],
     content: [''],
-    payChannel: [''],
+    account: [''],
     amount: [''],
     peoples: [[]],
     labels: [[]],
@@ -58,7 +59,7 @@ export class IncomeComponent implements OnInit {
           address: value.address,
           incomeStore: value.incomeStore,
           incomeCategory: value.incomeCategory,
-          payChannel: value.payChannel,
+          account: value.account,
           labels: value.labels,
           peoples: value.peoples
         });
@@ -85,7 +86,7 @@ export class IncomeComponent implements OnInit {
     });
   }
 
-  editIncome(){
+  editIncome() {
     this.http.post(this.url + '/income/edit', this.incomeForm.value, this.httpOptions).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(editIncomeDetail({
@@ -102,7 +103,7 @@ export class IncomeComponent implements OnInit {
     this.incomeForm.patchValue({
       incomeDate: new Date(),
       incomeStore: '',
-      payChannel: '',
+      account: '',
       peoples: [],
       labels: [],
       memo: '',
@@ -112,7 +113,7 @@ export class IncomeComponent implements OnInit {
     this.incomeForm.markAsPristine();
   }
 
-  deleteIncome(){
+  deleteIncome() {
     this.http.get(this.url + `/income/del?userId=${this.user.id}&id=${this.incomeForm.value.id}`).toPromise()
       .then((data) => {
         this.store.dispatch(delIncomeDetail({ id: this.incomeForm.value.id }));
@@ -125,6 +126,10 @@ export class IncomeComponent implements OnInit {
   cancel() {
     this.onReset();
     this.isAdd = true;
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(resetIncomeDetail(null));
   }
 
 }

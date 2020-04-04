@@ -15,11 +15,10 @@ import { IncomeComponent } from './components/income/income.component';
 import { ExpenseDetailComponent } from './components/expense/expense-detail/expense-detail.component';
 import { EpxenseBookListComponent } from './components/expense/epxense-book-list/epxense-book-list.component';
 import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
-import { ExpenseBookAddComponent } from './components/expense/expense-book-add/expense-book-add.component';
 @NgModule({
   declarations: [ExpenseComponent,
     IncomeComponent, MoneyRecordComponent,
-    ExpenseDetailComponent, EpxenseBookListComponent, IncomeDetailComponent, ExpenseBookAddComponent],
+    ExpenseDetailComponent, EpxenseBookListComponent, IncomeDetailComponent],
   imports: [
     CommonModule,
     FormsModule,

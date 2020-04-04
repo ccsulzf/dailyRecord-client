@@ -33,6 +33,9 @@ const createExpenseReducer = createReducer(
     }),
     on(ExpenseActions.delExpenseDetail, (state, value) => {
         return { ...state, deleteExpenseDetailId: value }
+    }),
+    on(ExpenseActions.resetExpenseDetail, (state) => {
+        return expenseState;
     })
 )
 

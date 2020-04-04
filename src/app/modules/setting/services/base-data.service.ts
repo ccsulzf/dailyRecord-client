@@ -42,6 +42,7 @@ export class BaseDataService {
         return this.http.patch(`${this.url}/${model}/${item.id}`, item, this.httpOptions).toPromise();
     }
 
+
     async getExpenseBookANDCategory() {
         const expenseBookList = await this.http.get(`${this.url}/expenseBook?s={"userId":${this.user.id},"deletedAt":null}`,
             this.httpOptions)
@@ -84,4 +85,25 @@ export class BaseDataService {
         return this.http.post(`${this.url}/baseData/delExpenseBook`, { expenseBook, expenseCategoryList }, this.httpOptions)
             .toPromise();
     }
+
+    hidePeople(item) {
+        return this.http.post(`${this.url}/baseData/hidePeople`, item, this.httpOptions)
+            .toPromise();
+    }
+    
+    delPeople(item) {
+        return this.http.post(`${this.url}/baseData/delPeople`, item, this.httpOptions)
+        .toPromise();
+    }
+
+    hideLabel(item) {
+        return this.http.post(`${this.url}/baseData/hideLabel`, item, this.httpOptions)
+            .toPromise();
+    }
+    
+    delLabel(item) {
+        return this.http.post(`${this.url}/baseData/delLabel`, item, this.httpOptions)
+        .toPromise();
+    }
+
 }

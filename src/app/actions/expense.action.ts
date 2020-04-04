@@ -24,4 +24,8 @@ export const delExpenseDetail =  createAction(
   props<object>()
 );
 
+export const  resetExpenseDetail =  createAction(
+  '[Expense Page] reset ExpenseDetail',
+  props<object>()
+);
 

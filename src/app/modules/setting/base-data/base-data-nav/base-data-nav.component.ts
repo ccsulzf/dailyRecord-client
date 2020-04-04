@@ -13,7 +13,7 @@ export class BaseDataNavComponent implements OnInit {
       group: 'Expense',
       list: [
         {
-          name: 'ExpenseBook',
+          name: 'ExpenseBook & Category',
           model: 'expenseBook'
         }, {
           name: 'ExpenseStore',
@@ -38,8 +38,8 @@ export class BaseDataNavComponent implements OnInit {
           name: 'Address',
           model: 'address'
         }, {
-          name: 'PayChannel',
-          model: 'payChannel'
+          name: 'Account',
+          model: 'account'
         }, {
           name: 'Peoples',
           model: 'people'

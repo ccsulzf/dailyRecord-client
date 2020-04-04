@@ -16,7 +16,12 @@ export const addIncomeDetail = createAction(
 );
 
 
-export const delIncomeDetail =  createAction(
+export const delIncomeDetail = createAction(
     '[Income Page] del IncomeDetail',
     props<object>()
-  );
+);
+
+export const resetIncomeDetail = createAction(
+    '[Income Page] reset IncomeDetail',
+    props<object>()
+);

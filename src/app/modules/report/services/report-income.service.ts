@@ -25,14 +25,7 @@ export class ReportIncomeService {
     }
 
     getList(data): Promise<any> {
-        return this.http.post(this.url + '/report/incomeData', data, this.httpOptions).pipe(
-            repeat(10),
-            toArray(),
-            map((value) => {
-                return _.flattenDeep(value);
-                // return [...value];
-            })
-        ).toPromise();
+        return this.http.post(this.url + '/report/incomeData', data, this.httpOptions).toPromise();
     }
 
     getTotal(data): Promise<any> {

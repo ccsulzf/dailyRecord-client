@@ -17,7 +17,7 @@ export const EXPENSEBOOK_ACCESSOR: any = {
   providers: [EXPENSEBOOK_ACCESSOR]
 })
 export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
-  list;
+  list = [];
   currenBook;
   private url = 'http://localhost:3000';
   private httpOptions = {

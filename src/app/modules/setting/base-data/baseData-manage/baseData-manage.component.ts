@@ -28,19 +28,49 @@ export class BaseDataManageComponent implements OnInit {
 
     hide(item, index) {
         item.isHide = !item.isHide;
-        this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
-            data.isEdit = false;
-        }, (error) => {
-            item.isHide = !item.isHide;
-        });
+
+        if (this.model === 'people') {
+            this.baseDataService.hidePeople(item).then((data: any) => {
+                item.isEdit = false;
+            }, (error) => {
+                item.isHide = !item.isHide;
+            });
+        } else if (this.model === 'label') {
+            this.baseDataService.hideLabel(item).then((data: any) => {
+                item.isEdit = false;
+            }, (error) => {
+                item.isHide = !item.isHide;
+            });
+        } else {
+            this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
+                data.isEdit = false;
+            }, (error) => {
+                item.isHide = !item.isHide;
+            });
+        }
     }
 
     del(item, index) {
         item.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
-        this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
-            this.baseDataService.baseDataList.splice(index, 1);
-        }, (error) => {
-            item.deletedAt = null;
-        });
+        if (this.model === 'people') {
+            this.baseDataService.delPeople(item).then((data: any) => {
+                this.baseDataService.baseDataList.splice(index, 1);
+            }, (error) => {
+                item.deletedAt = null;
+            });
+        } else if (this.model === 'label') {
+            this.baseDataService.delLabel(item).then((data: any) => {
+                this.baseDataService.baseDataList.splice(index, 1);
+            }, (error) => {
+                item.deletedAt = null;
+            });
+        } else {
+            this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
+                this.baseDataService.baseDataList.splice(index, 1);
+            }, (error) => {
+                item.deletedAt = null;
+            });
+        }
+       
     }
 }

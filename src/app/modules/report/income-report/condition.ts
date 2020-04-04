@@ -21,11 +21,10 @@ export const filterOption = [{
 }, {
     type: 'In',
     value: [],
-    field: 'payChannelId',
-    model: 'payChannel',
+    field: 'accountId',
+    model: 'account',
     component: 'select',
-    name: 'PayChannel',
-    payChannelType: 1
+    name: 'Account',
 }, {
     type: 'In',
     value: [],

@@ -31,7 +31,6 @@ export const ITEM_SELECT_ACCESSOR: any = {
 export class ItemSelectComponent implements OnInit, ControlValueAccessor {
   @Input() name;
   @Input() model;
-  @Input() type: string;
 
   private user = JSON.parse(localStorage.getItem('user'));
 
@@ -75,12 +74,9 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     strObj.userId = user.id;
     strObj.deletedAt = null;
     strObj.isHide = false;
-    if (this.type) {
-      strObj.type = this.type;
-    }
     this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
       this.dataList = data;
-      if (this.model !== 'expenseStore' && this.model !== 'payChannel' && this.dataList.length) {
+      if (this.model !== 'expenseStore' && this.model !== 'account' && this.dataList.length) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
       }
@@ -98,9 +94,6 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
 
   writeValue(data: any): void {
     data = data || { id: '', name: '', userId: this.user.id };
-    if (this.model === 'payChannel') {
-      data.type = this.type;
-    }
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
     this.propagateChange(data);
@@ -129,20 +122,11 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     } else {
       // 这里为啥要用这个，以后怎么解决
       setTimeout(() => {
-        if (this.model === 'payChannel') {
-          this.propagateChange({
-            id: '',
-            name: (value.name || value),
-            type: this.type,
-            userId: this.user.id
-          });
-        } else {
-          this.propagateChange({
-            id: '',
-            name: (value.name || value),
-            userId: this.user.id
-          });
-        }
+        this.propagateChange({
+          id: '',
+          name: (value.name || value),
+          userId: this.user.id
+        });
       });
       return [];
     }

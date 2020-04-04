@@ -25,9 +25,6 @@ export class SelectComponent implements OnInit {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
-    if (this.item.payChannelType) {
-      strObj.type = this.item.payChannelType;
-    }
 
     this.getlisttData(this.item.model, JSON.stringify(strObj));
 

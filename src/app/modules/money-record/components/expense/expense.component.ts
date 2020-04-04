@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
@@ -7,13 +7,13 @@ import { Store } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 
 import { addBaseData } from '../../../../actions/baseData.action';
-import { addExpenseDetail, editExpenseDetail, delExpenseDetail } from '../../../../actions/expense.action';
+import { addExpenseDetail, editExpenseDetail, delExpenseDetail,resetExpenseDetail } from '../../../../actions/expense.action';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
   styleUrls: ['./expense.component.scss']
 })
-export class ExpenseComponent implements OnInit {
+export class ExpenseComponent implements OnInit, OnDestroy {
   private url = 'http://localhost:3000';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,6 +22,7 @@ export class ExpenseComponent implements OnInit {
 
   isAdd = true;
   getExpenseDetail$: Observable<any>;
+  
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -39,7 +40,7 @@ export class ExpenseComponent implements OnInit {
     expenseCategory: [''],
     expenseStore: [''],
     content: [''],
-    payChannel: [''],
+    account: [''],
     amount: [''],
     peoples: [[]],
     labels: [[]],
@@ -61,7 +62,7 @@ export class ExpenseComponent implements OnInit {
           address: value.address,
           expenseStore: value.expenseStore,
           expenseCategory: value.expenseCategory,
-          payChannel: value.payChannel,
+          account: value.account,
           labels: value.labels,
           peoples: value.peoples
         });
@@ -128,7 +129,7 @@ export class ExpenseComponent implements OnInit {
     this.expenseForm.patchValue({
       expenseDate: new Date(),
       expenseStore: '',
-      payChannel: '',
+      account: '',
       peoples: [],
       labels: [],
       memo: '',
@@ -143,5 +144,9 @@ export class ExpenseComponent implements OnInit {
   cancel() {
     this.onReset();
     this.isAdd = true;
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(resetExpenseDetail(null));
   }
 }

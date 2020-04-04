@@ -29,6 +29,9 @@ const createIncomeReducer = createReducer(
     }),
     on(IncomeActions.delIncomeDetail, (state, value) => {
         return { ...state, deleteIncomeDetailId: value }
+    }),
+    on(IncomeActions.resetIncomeDetail, (state) => {
+        return incomeState;
     })
 )
 

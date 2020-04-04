@@ -55,7 +55,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
         },
       },
       {
-        headerName: 'PayChannel', field: 'payChannel',
+        headerName: 'Account', field: 'account',
         cellRenderer: (params) => {
           return params.value.name;
         },
