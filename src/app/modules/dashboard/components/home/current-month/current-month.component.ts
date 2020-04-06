@@ -83,13 +83,15 @@ export class CurrentMonthComponent implements OnInit {
     });
 
     this.homeService.getGroupExpenseData(this.monthStart, this.monthEnd, true).then((list) => {
-      this.list = list;
-      this.sum = list.reduce((prev, item) => {
-        return item.amount + prev;
-      }, 0);
+      if (list && list.length) {
+        this.list = list;
+        this.sum = list.reduce((prev, item) => {
+          return item.amount + prev;
+        }, 0);
 
-      for (const item of list) {
-        item.percent = (item.amount / this.sum) * 100;
+        for (const item of list) {
+          item.percent = (item.amount / this.sum) * 100;
+        }
       }
     });
   }
@@ -97,28 +99,34 @@ export class CurrentMonthComponent implements OnInit {
   getIncomeData() {
     this.type = 'income';
     this.homeService.getGroupIncomeData(this.monthStart, this.monthEnd, false).then((list) => {
-      this.updateOptions = {
-        title: {
-          text: '2020/04 Month of Income'
-        },
-        series: {
-          data: this.getVirtulData(list),
-          lineStyle: {
-            color: '#f44336'
-          }
-        },
-      };
+      if (list && list.length) {
+        this.updateOptions = {
+          title: {
+            text: '2020/04 Month of Income'
+          },
+          series: {
+            data: this.getVirtulData(list),
+            lineStyle: {
+              color: '#f44336'
+            }
+          },
+        };
+      }
+
     });
 
     this.homeService.getGroupIncomeData(this.monthStart, this.monthEnd, true).then((list) => {
-      this.list = list;
-      this.sum = list.reduce((prev, item) => {
-        return item.amount + prev;
-      }, 0);
+      if (list && list.length) {
+        this.list = list;
+        this.sum = list.reduce((prev, item) => {
+          return item.amount + prev;
+        }, 0);
 
-      for (const item of list) {
-        item.percent = (item.amount / this.sum) * 100;
+        for (const item of list) {
+          item.percent = (item.amount / this.sum) * 100;
+        }
       }
+
     });
   }
 
