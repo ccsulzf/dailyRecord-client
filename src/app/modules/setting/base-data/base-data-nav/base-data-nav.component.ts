@@ -8,7 +8,7 @@ import { BaseDataService } from '../../services';
 export class BaseDataNavComponent implements OnInit {
   @Output() selectBaseData = new EventEmitter<any>();
   currenBaseData = null
-  private baseDataModelList = [
+  public baseDataModelList = [
     {
       group: 'Expense',
       list: [

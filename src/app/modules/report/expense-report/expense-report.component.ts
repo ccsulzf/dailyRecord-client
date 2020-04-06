@@ -19,12 +19,12 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
   totalAmount = 0;
   totalCount = 0;
 
-  private gridApi;
-  private gridColumnApi;
-  private columnDefs;
-  private defaultColDef;
-  private frameworkComponents;
-  private rowData = [];
+  public gridApi;
+  public gridColumnApi;
+  public columnDefs;
+  public defaultColDef;
+  public frameworkComponents;
+  public rowData = [];
 
   constructor(
     private reportFilterService: ReportFilterService,

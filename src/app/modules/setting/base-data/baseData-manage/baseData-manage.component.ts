@@ -11,22 +11,21 @@ export class BaseDataManageComponent implements OnInit {
     list = [];
     name = '';
     constructor(
-        private baseDataService: BaseDataService
+        public baseDataService: BaseDataService
     ) { }
 
     ngOnInit() {
 
     }
 
-    update(item, index) {
+    update(item) {
         item.name = this.name;
         this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
             data.isEdit = false;
         });
-        // console.log(item);
     }
 
-    hide(item, index) {
+    hide(item) {
         item.isHide = !item.isHide;
 
         if (this.model === 'people') {

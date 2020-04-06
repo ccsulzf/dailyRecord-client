@@ -46,7 +46,7 @@ import { ITooltipAngularComp } from 'ag-grid-angular';
 })
 export class CustomTooltip implements ITooltipAngularComp {
   private params: any;
-  private data: any;
+  public data: any;
 
   agInit(params): void {
     this.params = params;

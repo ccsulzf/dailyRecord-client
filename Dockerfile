@@ -21,8 +21,6 @@
 # COPY dist  /usr/share/nginx/html
 # COPY  /nginx.conf /etc/nginx/conf.d/default.conf
 # docker build -t dailyrecord/dr_client .
-# docker run -d -p 80:80 dailyrecord/dr_client
-
 FROM nginx:1.15
 # WORKDIR /dr-client
 COPY dist /usr/share/nginx/html
