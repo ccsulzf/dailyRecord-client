@@ -1,5 +1,5 @@
 <mat-form-field floatLabel="always" class="full-width">
-  <input type="text" autocomplete="off" #input placeholder="Expense Content" required matInput
+  <input type="text" autocomplete="off" #input placeholder="Content" required matInput
     [formControl]="contentInputControl" [errorStateMatcher]="matcher">
   <button *ngIf="input.value.length" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
     <mat-icon>close</mat-icon>

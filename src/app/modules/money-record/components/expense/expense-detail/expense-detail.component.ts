@@ -47,12 +47,14 @@ export class ExpenseDetailComponent implements OnInit {
       let delExpenseDetail;
       for (const item of this.list) {
         delExpenseDetail = _.find(item.expenseDetailList, (temp) => {
-          return temp.id === data.id
+          return temp.id === data.id;
         });
-        this.totalAmount -= delExpenseDetail.amount;
-        item.subTotal -= delExpenseDetail.amount;
-        _.remove(item.expenseDetailList, delExpenseDetail);
-        break;
+        if (delExpenseDetail) {
+          this.totalAmount = this.optionAmount(this.totalAmount, delExpenseDetail.amount, 'cut');
+          item.subTotal = this.optionAmount(item.subTotal, delExpenseDetail.amount, 'cut');
+          _.remove(item.expenseDetailList, delExpenseDetail);
+          break;
+        }
       }
       _.remove(this.list, (item) => {
         return item.expenseDetailList.length === 0;
@@ -65,14 +67,16 @@ export class ExpenseDetailComponent implements OnInit {
         if (moment(this.date).isSame(expenseDetail.expenseDate)) {
           for (const item of this.list) {
             const oldItem = _.find(item.expenseDetailList, (temp) => {
-              return temp.id === data.oldId
+              return temp.id === data.oldId;
             });
-            this.totalAmount -= oldItem.amount;
-            item.subTotal -= oldItem.amount;
-            _.remove(item.expenseDetailList, oldItem);
-            break;
+            if (oldItem) {
+              this.totalAmount = this.optionAmount(this.totalAmount, oldItem.amount, 'cut');
+              item.subTotal = this.optionAmount(item.subTotal, oldItem.amount, 'cut');
+              _.remove(item.expenseDetailList, oldItem);
+              break;
+            }
           }
-          this.totalAmount += expenseDetail.amount;
+          this.totalAmount = this.optionAmount(this.totalAmount, expenseDetail.amount, 'plus');
           _.remove(this.list, (item) => {
             return item.expenseDetailList.length === 0;
           });
@@ -80,7 +84,7 @@ export class ExpenseDetailComponent implements OnInit {
             return temp['expenseBookName'] === expenseDetail['expenseBook'].name;
           });
           if (hasExpenseBook) {
-            hasExpenseBook.subTotal += expenseDetail.amount;
+            hasExpenseBook.subTotal = this.optionAmount(hasExpenseBook.subTotal, expenseDetail.amount, 'plus');
             const expenseDetailList = hasExpenseBook['hasExpenseBook'];
             expenseDetailList.push(expenseDetail);
           } else {
@@ -102,12 +106,12 @@ export class ExpenseDetailComponent implements OnInit {
     this.addExpenseDetail$.subscribe((expenseDetail: any) => {
       if (expenseDetail) {
         if (moment(this.date).isSame(expenseDetail.expenseDate)) {
-          this.totalAmount += expenseDetail.amount;
+          this.totalAmount = this.optionAmount(this.totalAmount, expenseDetail.amount, 'plus');
           const hasExpenseBook = _.find(this.list, (temp) => {
             return temp['expenseBookName'] === expenseDetail['expenseBook'].name;
           });
           if (hasExpenseBook) {
-            hasExpenseBook['subTotal'] += expenseDetail.amount;
+            hasExpenseBook['subTotal'] = this.optionAmount(hasExpenseBook['subTotal'], expenseDetail.amount, 'plus');
             hasExpenseBook['expenseDetailList'].push(expenseDetail);
           } else {
             this.list.push({
@@ -156,12 +160,12 @@ export class ExpenseDetailComponent implements OnInit {
     const dataList = [];
     this.totalAmount = 0;
     for (const item of list) {
-      this.totalAmount += item.amount;
+      this.totalAmount = this.optionAmount(this.totalAmount, item.amount, 'plus');
       const hasExpenseBook = _.find(dataList, (temp) => {
         return temp['expenseBookName'] === item['expenseBook'].name;
       });
       if (hasExpenseBook) {
-        hasExpenseBook['subTotal'] += item.amount;
+        hasExpenseBook['subTotal'] = this.optionAmount(hasExpenseBook['subTotal'], item.amount, 'plus');
         hasExpenseBook['expenseDetailList'].push(item);
       } else {
         dataList.push({
@@ -173,9 +177,16 @@ export class ExpenseDetailComponent implements OnInit {
         });
       }
     }
-
     return dataList;
   }
 
-
+  // + plus  - cut 
+  private optionAmount(valueA, valueB, type, precis = 2) {
+    const pow = Math.pow(10, precis);
+    if (type === 'plus') {
+      return (valueA * pow + valueB * pow) / pow;
+    } else {
+      return (valueA * pow - valueB * pow) / pow;
+    }
+  }
 }

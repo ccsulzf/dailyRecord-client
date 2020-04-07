@@ -40,8 +40,7 @@
     </div>
     <div class="report-content shadow">
       <ag-grid-angular #agGrid style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"
-        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowData]="rowData"
-        [frameworkComponents]="frameworkComponents" (gridReady)="onGridReady($event)">
+        [gridOptions]="gridoptions" (gridReady)="onGridReady($event)">
       </ag-grid-angular>
       <page [length]="totalCount" [pageIndex]="0"></page>
     </div>

@@ -12,7 +12,8 @@
         </div>
 
         <div class="category item">
-          <expenseCategory-select [name]="'Category'" [model]="'expenseCategory'" formControlName="expenseCategory"></expenseCategory-select>
+          <expenseCategory-select [name]="'Category'" [model]="'expenseCategory'" formControlName="expenseCategory">
+          </expenseCategory-select>
         </div>
 
         <div class="store item">
@@ -25,7 +26,7 @@
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Account'" [model]="'account'"  formControlName="account"></app-item-select>
+            <app-item-select [name]="'Account'" [model]="'account'" formControlName="account"></app-item-select>
           </div>
           <div class="moent-input">
             <app-money-input formControlName="amount"></app-money-input>
@@ -47,12 +48,12 @@
       <!-- 编辑的时候放一个删除的图标 -->
       <div class="btn-group" *ngIf="isAdd">
         <button mat-raised-button type="submit" color="primary">Add Expense</button>
-        <button mat-raised-button color="accent" type="button" (click)="onReset()" >Reset</button>
+        <button mat-raised-button color="accent" type="button" (click)="onReset()">Reset</button>
       </div>
       <div class="btn-group" *ngIf="!isAdd">
         <div>
           <button mat-raised-button type="button" color="primary" (click)="editExpense()">Edit Expense</button>
-          <button mat-raised-button color="accent" type="button" (click)="cancel()" >Cancel</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancel()">Cancel</button>
         </div>
         <button mat-icon-button type="button" (click)="deleteExpense()" color="warn">
           <mat-icon>delete</mat-icon>

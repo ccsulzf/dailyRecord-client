@@ -25,7 +25,8 @@ export class SelectComponent implements OnInit {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
-
+    strObj.deletedAt = null;
+    strObj.isHide = false;
     this.getlisttData(this.item.model, JSON.stringify(strObj));
 
   }

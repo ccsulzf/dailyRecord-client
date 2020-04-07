@@ -6,7 +6,7 @@
     </mat-datepicker>
   </div>
   <div class="detail-list">
-    <mat-list class="incomeDetail-list">
+    <mat-list class="incomeDetail-list" *ngIf="list && list.length">
       <ng-container *ngFor="let item of list">
         <h3 mat-subheader>{{item.incomeDate}}</h3>
         <mat-list-item *ngFor="let incomeDetail of item['incomeDetailList']" (click)="select(incomeDetail)">
@@ -15,9 +15,13 @@
             <span class="detail-number">+{{incomeDetail.amount}} RMB</span>
           </div>
         </mat-list-item>
-
       </ng-container>
     </mat-list>
+
+    <div class="no-data" *ngIf="!(list && list.length)">
+      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+      <p>No Income</p>
+    </div>
   </div>
 
   <mat-divider></mat-divider>

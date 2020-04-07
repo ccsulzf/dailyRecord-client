@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { SelectivePreloadingStrategyService } from './selective-preloading-strategy';
 const routes: Routes = [
   {
     path: '',
@@ -13,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: 'record',
-    loadChildren: () => import('./modules/money-record/money-record.module').then(mod => mod.MoneyRecordModule)
+    loadChildren: () => import('./modules/money-record/money-record.module').then(mod => mod.MoneyRecordModule),
+    data: { preload: true }
   },
   {
     path: 'report',
@@ -27,7 +28,10 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: SelectivePreloadingStrategyService
+  })],
+  exports: [RouterModule],
+  providers: [SelectivePreloadingStrategyService]
 })
 export class AppRoutingModule { }

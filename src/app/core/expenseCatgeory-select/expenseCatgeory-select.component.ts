@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, OnDestroy } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, Validators, ControlValueAccessor, NgForm, FormGroupDirective } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material';
 import { BaseDataService } from '../services/baseData.service';
@@ -31,7 +31,7 @@ export const EXPENSE_CATEGORY_SELECT_ACCESSOR: any = {
     providers: [EXPENSE_CATEGORY_SELECT_ACCESSOR]
 })
 
-export class ExpenseCategorySelectComponent implements OnInit, ControlValueAccessor {
+export class ExpenseCategorySelectComponent implements OnInit, ControlValueAccessor, OnDestroy {
     @Input() name;
     @Input() model;
 
@@ -44,6 +44,10 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     baseData$: Observable<any>;
     expenseBook$: Observable<any>;
+
+    baseDataSub: Subscription;
+    expenseBookSub: Subscription;
+
     allExpenseCategoryList = <any>[];
     expenseBookCategoryList = [];
 
@@ -59,8 +63,8 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     async ngOnInit() {
         await this.getList();
-        this.expenseBook$.subscribe((temp) => {
-            if(temp){
+        this.baseDataSub = this.expenseBook$.subscribe((temp) => {
+            if (temp) {
                 this.expenseBookId = temp.id;
                 this.filterByExpenseBook();
             }
@@ -73,7 +77,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
             this.filterByInput(data);
         });
 
-        this.baseData$.subscribe((data: Object) => {
+        this.baseDataSub = this.baseData$.subscribe((data: Object) => {
             for (let key in data) {
                 if (key === this.model) {
                     this.expenseBookCategoryList = [...this.expenseBookCategoryList, data[key]];
@@ -91,7 +95,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     }
 
-    propagateChange = (temp: any) => { };
+    propagateChange = (temp: any) => { console.log(temp) };
 
     writeValue(data: any): void {
         data = data || { id: '', name: '', userId: this.user.id };
@@ -132,6 +136,10 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     // 如果该值
     filterByInput(value) {
+        if (!value) {
+            return;
+        }
+
         const findItem = this.expenseBookCategoryList.find((item) => {
             return item.name === value;
         });
@@ -139,15 +147,26 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         this.filterList = this.expenseBookCategoryList.filter((item) => {
             return item.name.indexOf(value) > -1;
         });
+
         if (findItem) {
             this.propagateChange(findItem);
         } else {
             this.propagateChange({
                 id: '',
-                name: (value.name || value),
+                name: value,
                 userId: this.user.id,
                 expenseBookId: this.expenseBookId
             });
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.baseDataSub) {
+            this.baseDataSub.unsubscribe();
+        }
+
+        if (this.expenseBookSub) {
+            this.expenseBookSub.unsubscribe();
         }
     }
 

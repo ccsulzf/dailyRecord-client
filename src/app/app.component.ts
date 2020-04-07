@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
     };
     if (!localStorage.getItem('user')) {
       this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
+        console.log(data);
         localStorage.setItem('user', JSON.stringify(data));
       }, (error) => {
       });

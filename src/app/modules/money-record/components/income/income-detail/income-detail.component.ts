@@ -65,10 +65,11 @@ export class IncomeDetailComponent implements OnInit {
     this.addIncomeDetail$ = this.store.select(income.getAddIncomeDetail);
     this.editIncomeDetail$ = this.store.select(income.getEditIncomeDetail);
     this.delIncomeDetail$ = this.store.select(income.getDelIncomeDetailId);
+
     this.addIncomeDetail$.subscribe((incomeDetail) => {
       if (incomeDetail) {
         if (moment(incomeDetail.incomeDate).isSame(this.date.value, 'month')) {
-          this.totalAmount += incomeDetail.amount;
+          this.totalAmount = this.optionAmount(this.totalAmount, incomeDetail.amount, 'plus');
           const hasIncomeDate = _.find(this.list, (temp) => {
             return temp['incomeDate'] === incomeDetail['incomeDate'];
           });
@@ -97,12 +98,13 @@ export class IncomeDetailComponent implements OnInit {
             const oldItem = _.find(item.incomeDetailList, (temp) => {
               return temp.id === data.oldId;
             });
-            this.totalAmount -= oldItem.amount;
-            _.remove(item.incomeDetailList, oldItem);
-            break;
+            if (oldItem) {
+              this.totalAmount = this.optionAmount(this.totalAmount, oldItem.amount, 'cut');
+              _.remove(item.incomeDetailList, oldItem);
+              break;
+            }
           }
-
-          this.totalAmount += incomeDetail.amount;
+          this.totalAmount = this.optionAmount(this.totalAmount, incomeDetail.amount, 'plus');
           _.remove(this.list, (item) => {
             return item.incomeDetailList.length === 0;
           });
@@ -133,9 +135,12 @@ export class IncomeDetailComponent implements OnInit {
         delIncomeDetail = _.find(item.incomeDetailList, (temp) => {
           return temp.id === data.id;
         });
-        this.totalAmount -= delIncomeDetail.amount;
-        _.remove(item.incomeDetailList, delIncomeDetail);
-        break;
+        if (delIncomeDetail) {
+          this.totalAmount = this.optionAmount(this.totalAmount, delIncomeDetail.amount, 'cut');
+          _.remove(item.incomeDetailList, delIncomeDetail);
+          break;
+        }
+
       }
       _.remove(this.list, (item) => {
         return item.incomeDetailList.length === 0;
@@ -149,8 +154,6 @@ export class IncomeDetailComponent implements OnInit {
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
     datepicker.close();
-
-    console.log(this.date.value);
   }
 
   getIncomeDetailList(date) {
@@ -165,7 +168,7 @@ export class IncomeDetailComponent implements OnInit {
     const dataList = [];
     this.totalAmount = 0;
     for (const item of list) {
-      this.totalAmount += item.amount;
+      this.totalAmount = this.optionAmount(this.totalAmount, item.amount, 'plus');
       const hasIncomeDate = _.find(dataList, (temp) => {
         return temp['incomeDate'] === item['incomeDate'];
       });
@@ -187,5 +190,13 @@ export class IncomeDetailComponent implements OnInit {
     this.store.dispatch(selectIncomeDetail(item));
   }
 
+  private optionAmount(valueA, valueB, type, precis = 2) {
+    const pow = Math.pow(10, precis);
+    if (type === 'plus') {
+      return (valueA * pow + valueB * pow) / pow;
+    } else {
+      return (valueA * pow - valueB * pow) / pow;
+    }
+  }
 }
 

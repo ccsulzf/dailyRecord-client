@@ -21,6 +21,7 @@ export const CONTENT_INPUT_ACCESSOR: any = {
   styleUrls: ['./content-input.component.scss'],
   providers: [CONTENT_INPUT_ACCESSOR]
 })
+
 export class ContentInputComponent implements OnInit, ControlValueAccessor {
   matcher = new ContentInputErrorStateMatcher();
   contentInputControl = new FormControl();
@@ -44,11 +45,12 @@ export class ContentInputComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
+
   registerOnTouched(fn: any): void {
 
   }
 
-  clear(){
+  clear() {
     this.contentInputControl.setValue('');
   }
 }

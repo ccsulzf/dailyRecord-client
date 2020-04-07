@@ -1,14 +1,14 @@
 <div class="detail-content">
   <!-- date & total amount-->
   <div class="detail-header">
-    <mat-datepicker-toggle tabindex="-1"  matPrefix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
     <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="date">
     <mat-datepicker #picker disabled="false"></mat-datepicker>
   </div>
 
   <!--expense list -->
-  <div class="detail-list">   
-    <mat-list>
+  <div class="detail-list">
+    <mat-list *ngIf="list && list.length">
       <ng-container *ngFor="let item of list">
         <div mat-subheader class="detail-header">
           <span>
@@ -20,13 +20,17 @@
         </div>
         <mat-divider></mat-divider>
         <mat-list-item *ngFor="let expenseDetail of item['expenseDetailList']" (click)="select(expenseDetail)">
-          <div class="detail-item" mat-line >
+          <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{expenseDetail.content}}</span>
             <span class="detail-number">-{{expenseDetail.amount}} RMB</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
+    <div class="no-data" *ngIf="!(list && list.length)">
+      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+      <p>No Expense</p>
+    </div>
   </div>
   <mat-divider></mat-divider>
   <div class="day-expense" *ngIf="list && list.length">

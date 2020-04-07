@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ReportFilterService } from '../services';
 
 @Component({
@@ -6,7 +6,7 @@ import { ReportFilterService } from '../services';
   templateUrl: './report-filter.component.html',
   styleUrls: ['./report-filter.component.scss']
 })
-export class ReportFilterComponent implements OnInit {
+export class ReportFilterComponent implements OnInit, AfterViewInit {
   @Input() filterOption;
 
   constructor(
@@ -14,11 +14,15 @@ export class ReportFilterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.search();
+
   }
 
   search() {
     this.reportFilterService.updateFilterCondition(this.filterOption);
+  }
+
+  ngAfterViewInit() {
+    this.search();
   }
 
 }

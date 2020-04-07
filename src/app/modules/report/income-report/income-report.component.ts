@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { filterOption } from './condition';
 import { Subscription } from 'rxjs';
 import { ReportFilterService, ReportIncomeService } from '../services';
@@ -6,12 +6,13 @@ import { CustomTooltip } from '../grid-components/custom-tooltip/custom-tooltip.
 import { MatDrawer } from '@angular/material';
 import * as _ from 'lodash';
 import { LabelPeopleRenderer } from '../grid-components';
+import { GridOptions } from 'ag-grid-community';
 @Component({
   selector: 'app-income-report',
   templateUrl: './income-report.component.html',
   styleUrls: ['./income-report.component.scss']
 })
-export class IncomeReportComponent implements OnInit, OnDestroy {
+export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('drawer', { static: false }) public drawer: MatDrawer;
 
   getFilter: Subscription;
@@ -20,12 +21,15 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
   totalAmount = 0;
   totalCount = 0;
 
-  public gridApi;
-  public gridColumnApi;
+  gridoptions: GridOptions;
+
   public columnDefs;
   public defaultColDef;
   public frameworkComponents;
   public rowData = [];
+
+  private overlayLoadingTemplate;
+  private overlayNoRowsTemplate;
   constructor(
     private reportFilterService: ReportFilterService,
     private reportIncomeService: ReportIncomeService
@@ -70,13 +74,38 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
         headerName: 'Peoples', field: 'peoples',
         cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Labels', field: 'labels',
-      cellRenderer: 'labelPeopleRenderer', },
+      {
+        headerName: 'Labels', field: 'labels',
+        cellRenderer: 'labelPeopleRenderer',
+      },
       { headerName: 'Memo', field: 'memo' },
     ];
-    this.frameworkComponents = { 
+    this.frameworkComponents = {
       customTooltip: CustomTooltip,
       labelPeopleRenderer: LabelPeopleRenderer
+    };
+
+    this.overlayLoadingTemplate =
+      `<div>
+      <img style="height:160px" src="../../../../assets/images/loading.svg">
+      <p>Please wait while your rows are loading</p>
+    </div>
+  `;
+
+    this.overlayNoRowsTemplate =
+      `<div>
+      <img style="height:160px" src="../../../../assets/images/empty.svg">
+      <p>No Income Rows</p>
+    </div>
+    `;
+
+    this.gridoptions = {
+      columnDefs: this.columnDefs,
+      defaultColDef: this.defaultColDef,
+      frameworkComponents: this.frameworkComponents,
+      overlayLoadingTemplate: this.overlayLoadingTemplate,
+      overlayNoRowsTemplate: this.overlayNoRowsTemplate,
+      rowData: []
     };
   }
 
@@ -87,9 +116,13 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
       }
       this.init();
       this.reportIncomeService.getList(data).then((value) => {
-        this.gridApi.setRowData(value);
-        this.gridApi.sizeColumnsToFit();
-        this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
+        if (value && value.length) {
+          this.gridoptions.api.setRowData(value);
+          this.gridoptions.api.sizeColumnsToFit();
+          this.gridoptions.columnApi.autoSizeColumns(this.gridoptions.columnApi.getAllDisplayedColumns());
+        } else {
+          this.gridoptions.api.showNoRowsOverlay();
+        }
       });
       this.reportIncomeService.getTotal(data).then((value) => {
         this.totalAmount = value.totalAmount;
@@ -98,17 +131,23 @@ export class IncomeReportComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit() {
+    this.gridoptions.api.showLoadingOverlay();
+  }
+
+
   init() {
     this.totalAmount = 0;
     this.totalCount = 0;
+    if (this.gridoptions.api) {
+      this.gridoptions.api.setRowData([]);
+      this.gridoptions.api.showLoadingOverlay();
+    }
   }
 
 
   onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    this.gridApi.sizeColumnsToFit();
-    this.gridColumnApi.autoSizeColumns(this.gridColumnApi.getAllDisplayedColumns());
+
     try {
       (params.api as any).context.beanWrappers.tooltipManager.beanInstance.MOUSEOVER_SHOW_TOOLTIP_TIMEOUT = 0;
     } catch (e) {

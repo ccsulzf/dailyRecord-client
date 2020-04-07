@@ -1,5 +1,5 @@
 <mat-form-field class="full-width">
-  <mat-label>Pick expense label</mat-label>
+  <mat-label>Pick Label</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip *ngFor="let label of selectedLabels" [selectable]="selectable" [removable]="removable" (removed)="remove(label.name)">
       <mat-icon>label_outline</mat-icon>
