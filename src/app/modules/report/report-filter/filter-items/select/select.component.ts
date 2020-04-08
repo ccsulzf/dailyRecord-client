@@ -12,10 +12,7 @@ import * as _ from 'lodash';
 export class SelectComponent implements OnInit {
   @Input() item;
   list$: Observable<any>;
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+
   constructor(
     private reportFilterService: ReportFilterService,
     private http: HttpClient
@@ -32,7 +29,7 @@ export class SelectComponent implements OnInit {
   }
 
   getlisttData(model, searchStr) {
-    this.list$ = this.http.get(this.url + `/${model}?s=${searchStr}`, this.httpOptions).pipe(
+    this.list$ = this.http.get(`/${model}?s=${searchStr}`).pipe(
       map((data: any) => {
         for (let item of data) {
           item.selected = false;

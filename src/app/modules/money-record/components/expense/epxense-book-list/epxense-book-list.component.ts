@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, forwardRef } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { selectExpenseBook } from '../../../../../actions/expense.action';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -19,10 +19,6 @@ export const EXPENSEBOOK_ACCESSOR: any = {
 export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   list = [];
   currenBook;
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   private user = JSON.parse(localStorage.getItem('user'));
   showAddExpenseBook = false;
 
@@ -45,7 +41,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
     strObj.userId = this.user.id;
     strObj.deletedAt = null;
     strObj.isHide = false;
-    this.http.get(this.url + `/expenseBook?s=${JSON.stringify(strObj)}`, this.httpOptions).toPromise().then((data: Array<any>) => {
+    this.http.get(`/expenseBook?s=${JSON.stringify(strObj)}`).toPromise().then((data: Array<any>) => {
       if (data && data.length) {
         this.list = data;
         this.currenBook = this.list[0];
@@ -67,7 +63,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
       userId: this.user.id,
       name: value
     };
-    this.http.post(this.url + '/expenseBook', expenseBook, this.httpOptions).toPromise().then((data) => {
+    this.http.post('/expenseBook', expenseBook).toPromise().then((data) => {
       this.showAddExpenseBook = false;
       this.currenBook = data;
       this.list.push(data);

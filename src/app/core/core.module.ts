@@ -21,6 +21,8 @@ import { LabelSelectComponent } from './label-select/label-select.component';
 import { PeopleSelectComponent } from './people-select/people-select.component';
 import { ExpenseCategorySelectComponent } from './expenseCatgeory-select';
 import { BaseDataService } from './services';
+
+import { httpInterceptorProviders } from '../http-interceptors';
 @NgModule({
   declarations: [
     DatePickerComponent,
@@ -57,7 +59,8 @@ import { BaseDataService } from './services';
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
-    BaseDataService
+    BaseDataService,
+    httpInterceptorProviders
   ]
 })
 export class CoreModule { }

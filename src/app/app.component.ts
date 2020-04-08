@@ -1,12 +1,14 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, HostListener, OnInit, ViewContainerRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+export class AppComponent implements OnInit, AfterViewInit {
+  constructor(
+    private http: HttpClient
+  ) { }
   @HostListener('body:keydown', ['$event'])
   /**
    * ArrowDown 40
@@ -21,16 +23,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const url = 'http://localhost:3000';
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
     if (!localStorage.getItem('user')) {
-      this.http.get(url + '/user', httpOptions).toPromise().then((data) => {
+      this.http.get('/user').toPromise().then((data) => {
         console.log(data);
         localStorage.setItem('user', JSON.stringify(data));
       }, (error) => {
       });
     }
+  }
+
+  ngAfterViewInit() {
+
   }
 }

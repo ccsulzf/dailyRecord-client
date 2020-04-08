@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 @Component({
     selector: 'app-lable-people',
@@ -11,11 +11,6 @@ import * as _ from 'lodash';
 export class LabelPeopleComponent implements OnInit {
     @Input() item;
     list$: Observable<any>;
-
-    private url = 'http://localhost:3000';
-    private httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
 
     selectList = new FormControl([]);
 
@@ -33,7 +28,7 @@ export class LabelPeopleComponent implements OnInit {
     }
 
     getlisttData(model, searchStr) {
-        this.list$ = this.http.get(this.url + `/${model}?s=${searchStr}`, this.httpOptions);
+        this.list$ = this.http.get(`/${model}?s=${searchStr}`);
     }
 
     select(value) {

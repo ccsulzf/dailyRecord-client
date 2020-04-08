@@ -1,10 +1,10 @@
 {
-  "name": "test-ng",
+  "name": "dailyRecord",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 6200",
-    "build": "ng build --prod",
+    "build": "ng build --prod -c=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

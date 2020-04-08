@@ -18,10 +18,6 @@ export class ExpenseDetailComponent implements OnInit {
 
   @ViewChild('dateInputEle', { static: false }) private dateInputEle: ElementRef;
 
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   private user = JSON.parse(localStorage.getItem('user'));
 
   public date = new Date();
@@ -133,7 +129,7 @@ export class ExpenseDetailComponent implements OnInit {
 
   getExpenseDetailList(date) {
     date = moment(date).format('YYYY-MM-DD')
-    this.http.get(this.url + `/expense/getList?userId=${this.user.id}&expenseDate=${date}`, this.httpOptions).toPromise().then((data) => {
+    this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${date}`).toPromise().then((data) => {
       this.list = this.composeData(data);
     });
   }

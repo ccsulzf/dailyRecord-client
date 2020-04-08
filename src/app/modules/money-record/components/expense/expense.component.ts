@@ -7,22 +7,18 @@ import { Store } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 
 import { addBaseData } from '../../../../actions/baseData.action';
-import { addExpenseDetail, editExpenseDetail, delExpenseDetail,resetExpenseDetail } from '../../../../actions/expense.action';
+import { addExpenseDetail, editExpenseDetail, delExpenseDetail, resetExpenseDetail } from '../../../../actions/expense.action';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
   styleUrls: ['./expense.component.scss']
 })
 export class ExpenseComponent implements OnInit, OnDestroy {
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   private user = JSON.parse(localStorage.getItem('user'));
 
   isAdd = true;
   getExpenseDetail$: Observable<any>;
-  
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -73,7 +69,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
-    this.http.post(this.url + '/expense/add', body, this.httpOptions).toPromise().then((data: any) => {
+    this.http.post('/expense/add', body).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addExpenseDetail(data.expenseDetail));
       this.expenseForm.patchValue({
@@ -90,7 +86,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   editExpense() {
-    this.http.post(this.url + '/expense/edit', this.expenseForm.value, this.httpOptions).toPromise().then((data: any) => {
+    this.http.post('/expense/edit', this.expenseForm.value).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(editExpenseDetail({
         oldId: this.expenseForm.value.id,
@@ -115,7 +111,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
       id: this.expenseForm.value.id,
       userId: this.user.id
     };
-    this.http.get(this.url + `/expense/del?userId=${this.user.id}&id=${this.expenseForm.value.id}`).toPromise()
+    this.http.get(`/expense/del?userId=${this.user.id}&id=${this.expenseForm.value.id}`).toPromise()
       .then((data) => {
         this.store.dispatch(delExpenseDetail({ id: this.expenseForm.value.id }));
         this.cancel();

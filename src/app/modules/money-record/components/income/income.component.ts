@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as income from 'src/app/reducers/income.reducer';
 import * as moment from 'moment';
 
 import { addBaseData } from '../../../../actions/baseData.action';
-import { addIncomeDetail, editIncomeDetail, delIncomeDetail,resetIncomeDetail } from '../../../../actions/income.action';
+import { addIncomeDetail, editIncomeDetail, delIncomeDetail, resetIncomeDetail } from '../../../../actions/income.action';
 import { resetExpenseDetail } from 'src/app/actions/expense.action';
 @Component({
   selector: 'app-income',
@@ -15,10 +15,6 @@ import { resetExpenseDetail } from 'src/app/actions/expense.action';
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit, OnDestroy {
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   private user = JSON.parse(localStorage.getItem('user'));
 
   isAdd = true;
@@ -70,7 +66,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
   onSubmit() {
     const body = this.incomeForm.value;
     body.incomeDate = moment(body.incomeDate).format('YYYY-MM-DD');
-    this.http.post(this.url + '/income/add', body, this.httpOptions).toPromise().then((data: any) => {
+    this.http.post('/income/add', body).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addIncomeDetail(data.incomeDetail));
       this.incomeForm.patchValue({
@@ -87,7 +83,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   editIncome() {
-    this.http.post(this.url + '/income/edit', this.incomeForm.value, this.httpOptions).toPromise().then((data: any) => {
+    this.http.post('/income/edit', this.incomeForm.value).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(editIncomeDetail({
         oldId: this.incomeForm.value.id,
@@ -114,7 +110,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   deleteIncome() {
-    this.http.get(this.url + `/income/del?userId=${this.user.id}&id=${this.incomeForm.value.id}`).toPromise()
+    this.http.get(`/income/del?userId=${this.user.id}&id=${this.incomeForm.value.id}`).toPromise()
       .then((data) => {
         this.store.dispatch(delIncomeDetail({ id: this.incomeForm.value.id }));
         this.cancel();

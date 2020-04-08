@@ -137,6 +137,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
     // 如果该值
     filterByInput(value) {
         if (!value) {
+            this.filterList = _.cloneDeep(this.expenseBookCategoryList);
             return;
         }
 

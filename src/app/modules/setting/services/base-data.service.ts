@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import *  as _ from 'lodash';
 import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -14,10 +14,6 @@ interface Node {
 @Injectable()
 export class BaseDataService {
     private user = JSON.parse(localStorage.getItem('user'));
-    private url = 'http://localhost:3000';
-    private httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
     public getExpenseBookANDCategory$: Observable<any>;
     public baseDataList = [];
     constructor(
@@ -26,7 +22,7 @@ export class BaseDataService {
     }
 
     getBaseData(modelName) {
-        this.http.get(`${this.url}/${modelName}?s={"userId":${this.user.id},"deletedAt":null}`, this.httpOptions).pipe(
+        this.http.get(`/${modelName}?s={"userId":${this.user.id},"deletedAt":null}`).pipe(
             map((list: any) => {
                 for (let item of list) {
                     item.isEdit = false;
@@ -39,16 +35,14 @@ export class BaseDataService {
     }
 
     updateBaseData(item, model) {
-        return this.http.patch(`${this.url}/${model}/${item.id}`, item, this.httpOptions).toPromise();
+        return this.http.patch(`/${model}/${item.id}`, item).toPromise();
     }
 
 
     async getExpenseBookANDCategory() {
-        const expenseBookList = await this.http.get(`${this.url}/expenseBook?s={"userId":${this.user.id},"deletedAt":null}`,
-            this.httpOptions)
+        const expenseBookList = await this.http.get(`/expenseBook?s={"userId":${this.user.id},"deletedAt":null}`)
             .toPromise();
-        const expenseCatgeoryList = await this.http.get(`${this.url}/expenseCategory?s={"userId":${this.user.id},"deletedAt":null}`,
-            this.httpOptions)
+        const expenseCatgeoryList = await this.http.get(`/expenseCategory?s={"userId":${this.user.id},"deletedAt":null}`)
             .toPromise();
         return this.composeBookAndCategory(expenseBookList, expenseCatgeoryList);
     }
@@ -77,33 +71,33 @@ export class BaseDataService {
     }
 
     hideExpenseBook(expenseBook, expenseCategoryList) {
-        return this.http.post(`${this.url}/baseData/hideExpenseBook`, { expenseBook, expenseCategoryList }, this.httpOptions)
+        return this.http.post(`/baseData/hideExpenseBook`, { expenseBook, expenseCategoryList })
             .toPromise();
     }
 
     delExpenseBook(expenseBook, expenseCategoryList) {
-        return this.http.post(`${this.url}/baseData/delExpenseBook`, { expenseBook, expenseCategoryList }, this.httpOptions)
+        return this.http.post(`/baseData/delExpenseBook`, { expenseBook, expenseCategoryList })
             .toPromise();
     }
 
     hidePeople(item) {
-        return this.http.post(`${this.url}/baseData/hidePeople`, item, this.httpOptions)
+        return this.http.post(`/baseData/hidePeople`, item)
             .toPromise();
     }
-    
+
     delPeople(item) {
-        return this.http.post(`${this.url}/baseData/delPeople`, item, this.httpOptions)
-        .toPromise();
+        return this.http.post(`/baseData/delPeople`, item)
+            .toPromise();
     }
 
     hideLabel(item) {
-        return this.http.post(`${this.url}/baseData/hideLabel`, item, this.httpOptions)
+        return this.http.post(`/baseData/hideLabel`, item)
             .toPromise();
     }
-    
+
     delLabel(item) {
-        return this.http.post(`${this.url}/baseData/delLabel`, item, this.httpOptions)
-        .toPromise();
+        return this.http.post(`/baseData/delLabel`, item)
+            .toPromise();
     }
 
 }

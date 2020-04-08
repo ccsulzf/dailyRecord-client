@@ -15,6 +15,7 @@ import { IncomeComponent } from './components/income/income.component';
 import { ExpenseDetailComponent } from './components/expense/expense-detail/expense-detail.component';
 import { EpxenseBookListComponent } from './components/expense/epxense-book-list/epxense-book-list.component';
 import { IncomeDetailComponent } from './components/income/income-detail/income-detail.component';
+
 @NgModule({
   declarations: [ExpenseComponent,
     IncomeComponent, MoneyRecordComponent,
@@ -34,6 +35,7 @@ import { IncomeDetailComponent } from './components/income/income-detail/income-
     MatDatepickerModule,
     MatListModule,
     MatIconModule,
-  ]
+  ],
+
 })
 export class MoneyRecordModule { }

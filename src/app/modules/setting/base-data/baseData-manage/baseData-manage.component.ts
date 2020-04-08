@@ -10,8 +10,9 @@ export class BaseDataManageComponent implements OnInit {
     @Input() model;
     list = [];
     name = '';
+
     constructor(
-        public baseDataService: BaseDataService
+        public baseDataService: BaseDataService,
     ) { }
 
     ngOnInit() {
@@ -70,6 +71,6 @@ export class BaseDataManageComponent implements OnInit {
                 item.deletedAt = null;
             });
         }
-       
+
     }
 }

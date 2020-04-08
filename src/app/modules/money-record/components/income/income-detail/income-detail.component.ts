@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Moment } from 'moment';
 import { FormControl } from '@angular/forms';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -41,10 +41,6 @@ export const INCOME_FORMATS = {
 
 
 export class IncomeDetailComponent implements OnInit {
-  private url = 'http://localhost:3000';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   private user = JSON.parse(localStorage.getItem('user'));
   date = new FormControl(moment());
 
@@ -159,7 +155,7 @@ export class IncomeDetailComponent implements OnInit {
   getIncomeDetailList(date) {
     const startDate = moment().startOf('month').format('YYYY-MM-DD');
     const endDate = moment().endOf('month').format('YYYY-MM-DD');
-    this.http.get(this.url + `/income/list?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`, this.httpOptions).toPromise().then((data) => {
+    this.http.get(`/income/list?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`).toPromise().then((data) => {
       this.list = this.composeData(data);
     });
   }
