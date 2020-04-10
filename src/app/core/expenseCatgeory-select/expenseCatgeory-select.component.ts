@@ -80,6 +80,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         this.baseDataSub = this.baseData$.subscribe((data: Object) => {
             for (let key in data) {
                 if (key === this.model) {
+                    this.allExpenseCategoryList = [...this.allExpenseCategoryList, data[key]];
                     this.expenseBookCategoryList = [...this.expenseBookCategoryList, data[key]];
                     this.itemSelectControl.setValue(data[key].name);
                     this.propagateChange(data[key]);
