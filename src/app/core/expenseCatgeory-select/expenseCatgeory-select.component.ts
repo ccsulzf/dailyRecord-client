@@ -68,7 +68,6 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
                 this.expenseBookId = temp.id;
                 this.filterByExpenseBook();
             }
-
         });
 
         this.itemSelectControl.valueChanges.pipe(
@@ -96,7 +95,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     }
 
-    propagateChange = (temp: any) => { console.log(temp) };
+    propagateChange = (temp: any) => {  };
 
     writeValue(data: any): void {
         data = data || { id: '', name: '', userId: this.user.id };

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, OnDestroy } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, Validators, ControlValueAccessor, NgForm, FormGroupDirective } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material';
 import { BaseDataService } from '../services/baseData.service';
@@ -8,6 +8,8 @@ import { BaseDataService } from '../services/baseData.service';
 import { Store, select } from '@ngrx/store';
 import * as expense from 'src/app/reducers/expense.reducer';
 import * as baseData from 'src/app/reducers/baseData.reducer';
+
+import * as _ from 'lodash';
 
 export class ItemSelectErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -28,18 +30,19 @@ export const ITEM_SELECT_ACCESSOR: any = {
   styleUrls: ['./item-select.component.scss'],
   providers: [ITEM_SELECT_ACCESSOR]
 })
-export class ItemSelectComponent implements OnInit, ControlValueAccessor {
+export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Input() name;
   @Input() model;
-
+  matcher = new ItemSelectErrorStateMatcher();
   private user = JSON.parse(localStorage.getItem('user'));
 
   baseData$: Observable<any>;
+  baseDataSub: Subscription;
 
   dataList = new Array();
-  filteredOptions: Observable<any[]>;
 
-  matcher = new ItemSelectErrorStateMatcher();
+  filterList = new Array();
+
 
   constructor(
     private baseDataService: BaseDataService,
@@ -56,16 +59,19 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
       for (let key in data) {
         if (key === this.model) {
           this.dataList = [...this.dataList, data[key]];
+          this.filterList = [...this.filterList, data[key]];
           this.itemSelectControl.setValue(data[key].name);
           this.propagateChange(data[key]);
-          this.filteredOptions = this.itemSelectControl.valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filter(value))
-            );
         }
       }
     });
+
+    this.itemSelectControl.valueChanges.pipe(
+      startWith(''),
+    ).subscribe((data) => {
+      this.filterByInput(data);
+    });
+
   }
 
   getList() {
@@ -76,16 +82,11 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
     strObj.isHide = false;
     this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
       this.dataList = data;
-      if (this.model !== 'expenseStore' && this.model !== 'account' && this.dataList.length) {
+      if (this.dataList.length &&
+        (this.model !== 'expenseStore' || this.model !== 'accout' || this.model !== 'incomeStore')) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
       }
-      this.filteredOptions = this.itemSelectControl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filter(value))
-        );
-
     });
   }
 
@@ -114,22 +115,37 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor {
 
   }
 
-  private _filter(value: any): any[] {
-    const filterValue = (value.name || value).toLowerCase();
-    const list: any = this.dataList.filter((option: any) => option.name.toLowerCase().includes(filterValue));
-    if (list && list.length) {
-      return list;
+  // 如果该值
+  filterByInput(value) {
+    if (!value) {
+      this.filterList = _.cloneDeep(this.dataList);
+      return;
+    }
+
+    const findItem = this.dataList.find((item) => {
+      return item.name === value;
+    });
+
+    this.filterList = this.dataList.filter((item) => {
+      return item.name.indexOf(value) > -1;
+    });
+
+    if (findItem) {
+      this.propagateChange(findItem);
     } else {
-      // 这里为啥要用这个，以后怎么解决
-      setTimeout(() => {
-        this.propagateChange({
-          id: '',
-          name: (value.name || value),
-          userId: this.user.id
-        });
+      this.propagateChange({
+        id: '',
+        name: value,
+        userId: this.user.id,
       });
-      return [];
     }
   }
+
+  ngOnDestroy() {
+    if (this.baseDataSub) {
+      this.baseDataSub.unsubscribe();
+    }
+  }
+
 
 }

@@ -2,7 +2,7 @@
   <input type="text" [placeholder]="'Pick '+name" aria-label="Number" required matInput
     [formControl]="itemSelectControl" [matAutocomplete]="auto" [errorStateMatcher]="matcher">
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+    <mat-option *ngFor="let option of filterList" [value]="option">
       {{option?.name}}
     </mat-option>
   </mat-autocomplete>
