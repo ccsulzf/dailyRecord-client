@@ -86,7 +86,7 @@ export class CurrentMonthComponent implements OnInit {
       if (list && list.length) {
         this.list = list;
         this.sum = list.reduce((prev, item) => {
-          return item.amount + prev;
+          return (item.amount *1000 + prev *1000) / 1000;
         }, 0);
 
         for (const item of list) {
@@ -119,8 +119,9 @@ export class CurrentMonthComponent implements OnInit {
       if (list && list.length) {
         this.list = list;
         this.sum = list.reduce((prev, item) => {
-          return item.amount + prev;
+          return (item.amount *1000 + prev *1000) / 1000;
         }, 0);
+        
 
         for (const item of list) {
           item.percent = (item.amount / this.sum) * 100;

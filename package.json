@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 6200",
-    "start:dev": "ng serve --port 6200 -c=prod",
+    "start:dev": "ng serve --port 6200 -c=dev",
+    "start:prod": "ng serve --port 6200 -c=prod",
     "build": "ng build --prod -c=prod",
     "test": "ng test",
     "lint": "ng lint",
