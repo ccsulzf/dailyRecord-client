@@ -34,7 +34,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     private reportFilterService: ReportFilterService,
     private reportExpenseService: ReportExpenseService
   ) {
-    const item = _.find(filterOption, { field: 'expenseDate' });
+    const item = _.find(this.filterOption, { field: 'expenseDate' });
     this.reportExpenseService.setDefaultDate(item);
 
     this.columnDefs = [
@@ -85,7 +85,8 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         headerName: 'Labels', field: 'labels',
         cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Memo', field: 'memo' },
+      { headerName: 'Memo', field: 'memo',
+      tooltipField: 'memo', },
     ];
 
     this.defaultColDef = {
@@ -93,7 +94,6 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       sortable: false,
       filter: false,
       resizable: true,
-      tooltipComponent: 'customTooltip',
     };
 
     this.frameworkComponents = {
@@ -174,6 +174,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
   ngOnDestroy() {
+    this.reportFilterService.initFilterOption(this.filterOption);
     this.getFilter.unsubscribe();
   }
 

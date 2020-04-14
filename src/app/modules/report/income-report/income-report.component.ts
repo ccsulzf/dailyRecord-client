@@ -34,7 +34,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
     private reportFilterService: ReportFilterService,
     private reportIncomeService: ReportIncomeService
   ) {
-    const item = _.find(filterOption, { field: 'incomeDate' });
+    const item = _.find(this.filterOption, { field: 'incomeDate' });
     this.reportIncomeService.setDefaultDate(item);
     this.columnDefs = [
       { headerName: 'Date', field: 'incomeDate' },
@@ -78,7 +78,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
         headerName: 'Labels', field: 'labels',
         cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Memo', field: 'memo' },
+      { headerName: 'Memo', field: 'memo', tooltipField: 'memo', },
     ];
     this.frameworkComponents = {
       customTooltip: CustomTooltip,
@@ -156,6 +156,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.reportFilterService.initFilterOption(this.filterOption);
     this.getFilter.unsubscribe();
   }
 

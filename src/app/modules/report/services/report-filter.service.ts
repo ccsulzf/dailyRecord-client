@@ -62,4 +62,22 @@ export class ReportFilterService {
         }
         return true;
     }
+
+    initFilterOption(filterOption){
+        for(let item of filterOption){
+            switch(item.type){
+                case 'Between':
+                    item.value = ['',''];
+                    break;
+                case 'In':
+                    item.value = [];
+                    break;
+                case 'Like':
+                    item.value = '';
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
