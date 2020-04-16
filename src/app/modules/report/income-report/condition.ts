@@ -35,7 +35,7 @@ export const filterOption = [{
 }, {
     type: 'Like',
     value: '',
-    field: 'incomeContent',
+    field: 'content',
     component: 'input',
     name: 'Content'
 }, {
