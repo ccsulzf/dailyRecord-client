@@ -2,11 +2,11 @@ import { Action, createReducer, on, createSelector, createFeatureSelector } from
 import * as ExpenseActions from '../actions/expense.action';
 
 interface State {
-    selectedExpenseBook: object,
-    selectedExpenseDetail: object,
-    addedExpenseDetail: object,
-    editedExpenseDetail: object,
-    deleteExpenseDetailId: object,
+    selectedExpenseBook: object;
+    selectedExpenseDetail: object;
+    addedExpenseDetail: object;
+    editedExpenseDetail: object;
+    deleteExpenseDetailId: object;
 }
 
 export const expenseState: State = {
@@ -47,9 +47,9 @@ const selectExpenseDetail = (state: State) => state.selectedExpenseDetail;
 
 const addExpenseDetail = (state: State) => state.addedExpenseDetail;
 
-const editExpenseDetail = (state: State) => state.editedExpenseDetail
+const editExpenseDetail = (state: State) => state.editedExpenseDetail;
 
-const deleteExpenseDetail = (state: State) => state.deleteExpenseDetailId
+const deleteExpenseDetail = (state: State) => state.deleteExpenseDetailId;
 
 export const getSelectedExpenseBook = createSelector(expense, selectExpenseBook);
 
