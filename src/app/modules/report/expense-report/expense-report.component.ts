@@ -38,36 +38,40 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.reportExpenseService.setDefaultDate(item);
 
     this.columnDefs = [
-      { headerName: 'Date', field: 'expenseDate' },
-      { headerName: 'ExpenseContent', field: 'content', },
+      { headerName: 'Date', field: 'expenseDate', sortable: true },
+      { headerName: 'ExpenseContent', field: 'content', sortable: false },
       {
         headerName: 'Amount', field: 'amount',
         cellRenderer: (params) => {
           return params.value ? `- ${params.value}` : '';
         },
         cellStyle: { color: '#673ab7' },
+        sortable: true
       },
       {
         headerName: 'Address', field: 'address',
         cellRenderer: (params) => {
           return params.value.name;
         },
+        sortable: false
       },
       {
         headerName: 'ExpenseBook', field: 'expenseBook',
         cellRenderer: (params) => {
           return params.value.name;
         },
+        sortable: false
       },
       {
         headerName: 'ExpenseCategory', field: 'expenseCategory',
         cellRenderer: (params) => {
           return params.value.name;
         },
+        sortable: false
       },
       {
         headerName: 'Account',
-        sortable: true,
+        sortable: false,
         field: 'account',
         cellRenderer: (params) => {
           return params.value.name;
@@ -120,8 +124,8 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       `;
 
     this.gridoptions = {
-      columnDefs: this.columnDefs,
       defaultColDef: this.defaultColDef,
+      columnDefs: this.columnDefs,
       frameworkComponents: this.frameworkComponents,
       overlayLoadingTemplate: this.overlayLoadingTemplate,
       overlayNoRowsTemplate: this.overlayNoRowsTemplate,
