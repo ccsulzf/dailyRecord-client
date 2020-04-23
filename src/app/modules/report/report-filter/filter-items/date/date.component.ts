@@ -19,10 +19,10 @@ export class DateComponent implements OnInit {
   }
 
   startDateChange($event: MatDatepickerInputEvent<moment.Moment>) {
-    this.item.value[0] = moment($event.value).format('YYYY-MM-DD');
+    this.item.value[0] = moment($event.value).format('YYYY/MM/DD');
   }
 
   endDateChange($event: MatDatepickerInputEvent<moment.Moment>) {
-    this.item.value[1] = moment($event.value).format('YYYY-MM-DD');
+    this.item.value[1] = moment($event.value).format('YYYY/MM/DD');
   }
 }

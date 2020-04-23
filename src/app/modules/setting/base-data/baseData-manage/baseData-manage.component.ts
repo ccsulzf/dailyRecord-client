@@ -37,7 +37,7 @@ export class BaseDataManageComponent implements OnInit {
     }
 
     del(item, index) {
-        item.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
+        item.deletedAt = moment().format('YYYY/MM/DD HH:mm:ss');
 
         this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
             this.baseDataService.baseDataList.splice(index, 1);

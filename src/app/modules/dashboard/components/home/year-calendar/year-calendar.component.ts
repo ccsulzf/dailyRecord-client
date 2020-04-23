@@ -42,7 +42,7 @@ export class YearCalendarComponent implements OnInit {
       tooltip: {
       },
       visualMap: {
-        min: 0,
+        min: 1,
         max: 1000,
         type: 'piecewise',
         orient: 'horizontal',
@@ -87,15 +87,9 @@ export class YearCalendarComponent implements OnInit {
   getData() {
     this.homeService.getGroupExpenseData(moment().format('YYYY-01-01'), moment().format('YYYY-12-31'), false).then((list) => {
       if (list && list.length) {
-        const maxItem = _.maxBy(list, 'amount');
-        const minItem = _.minBy(list, 'amount');
         this.updateOptions = {
           series: {
             data: this.getVirtulData(2020, list)
-          },
-          visualMap: {
-            max: maxItem.amount,
-            min: minItem.amount
           }
         };
       }
@@ -118,17 +112,17 @@ export class YearCalendarComponent implements OnInit {
 
     for (let time = start; time < end; time += dayTime) {
       const findItem = _.find(list, (item) => {
-        return item.expenseDate === moment(new Date(time)).format('YYYY-MM-DD');
+        return item.expenseDate === moment(new Date(time)).format('YYYY/MM/DD');
       });
 
       if (findItem) {
         data.push([
-          moment(new Date(time)).format('YYYY-MM-DD'),
+          moment(new Date(time)).format('YYYY/MM/DD'),
           findItem.amount
         ]);
       } else {
         data.push([
-          moment(new Date(time)).format('YYYY-MM-DD'),
+          moment(new Date(time)).format('YYYY/MM/DD'),
           0
         ]);
       }

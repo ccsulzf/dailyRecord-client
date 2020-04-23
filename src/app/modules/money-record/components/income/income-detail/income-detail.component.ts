@@ -153,8 +153,8 @@ export class IncomeDetailComponent implements OnInit {
   }
 
   getIncomeDetailList(date) {
-    const startDate = moment().startOf('month').format('YYYY-MM-DD');
-    const endDate = moment().endOf('month').format('YYYY-MM-DD');
+    const startDate = moment().startOf('month').format('YYYY/MM/DD');
+    const endDate = moment().endOf('month').format('YYYY/MM/DD');
     this.http.get(`/income/list?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`).toPromise().then((data) => {
       this.list = this.composeData(data);
     });
@@ -186,7 +186,7 @@ export class IncomeDetailComponent implements OnInit {
     this.store.dispatch(selectIncomeDetail(item));
   }
 
-  private optionAmount(valueA, valueB, type, precis = 2) {
+  private optionAmount(valueA, valueB, type, precis = 3) {
     const pow = Math.pow(10, precis);
     if (type === 'plus') {
       return (valueA * pow + valueB * pow) / pow;
