@@ -66,7 +66,9 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         },
       },
       {
-        headerName: 'Account', field: 'account',
+        headerName: 'Account',
+        sortable: true,
+        field: 'account',
         cellRenderer: (params) => {
           return params.value.name;
         },
@@ -85,13 +87,15 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         headerName: 'Labels', field: 'labels',
         cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Memo', field: 'memo',
-      tooltipField: 'memo', },
+      {
+        headerName: 'Memo', field: 'memo',
+        tooltipField: 'memo',
+      },
     ];
 
     this.defaultColDef = {
       editable: false,
-      sortable: false,
+      sortable: true,
       filter: false,
       resizable: true,
     };

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import 'moment/locale/zh-cn';
 import * as moment from 'moment';
 import *  as _ from 'lodash';
@@ -15,8 +15,10 @@ export class ReportExpenseService {
     }
 
     setDefaultDate(item) {
-        item.value[0] = moment().week(moment().week()).startOf('week').format('YYYY-MM-DD');
-        item.value[1] = moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')
+        // item.value[0] = moment().week(moment().week()).startOf('week').format('YYYY-MM-DD');
+        // item.value[1] = moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')
+        item.value[0] = moment().startOf('month').format('YYYY-MM-DD');
+        item.value[1] = moment().endOf('month').format('YYYY-MM-DD');
     }
 
     getList(data): Promise<any> {

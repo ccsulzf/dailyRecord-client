@@ -186,7 +186,7 @@ export class IncomeDetailComponent implements OnInit {
     this.store.dispatch(selectIncomeDetail(item));
   }
 
-  private optionAmount(valueA, valueB, type, precis = 2) {
+  private optionAmount(valueA, valueB, type, precis = 3) {
     const pow = Math.pow(10, precis);
     if (type === 'plus') {
       return (valueA * pow + valueB * pow) / pow;
