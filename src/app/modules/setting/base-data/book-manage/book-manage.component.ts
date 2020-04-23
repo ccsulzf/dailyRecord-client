@@ -71,7 +71,7 @@ export class BookManageComponent implements OnInit {
   }
 
   del(item, model) {
-    item.deletedAt = moment().format('YYYY/MM/DD HH:mm:ss');
+    item.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
     this.baseDataService.updateBaseData(item, model).then((data: any) => {
       _.remove(this.dataSource._data, (temp) => {
         return temp.id === item.id;
@@ -114,11 +114,11 @@ export class BookManageComponent implements OnInit {
 
   delExpenseBook(item) {
     const list = this.dataSource._data;
-    item.deletedAt = moment().format('YYYY/MM/DD HH:mm:ss');
+    item.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
     const expenseCategooryList = [];
     for (const temp of list) {
       if (temp.expenseBookId === item.id) {
-        temp.deletedAt = moment().format('YYYY/MM/DD HH:mm:ss');
+        temp.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
         expenseCategooryList.push(temp);
       }
     }

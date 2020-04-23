@@ -68,7 +68,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const body = this.expenseForm.value;
-    body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
+    body.expenseDate = moment(body.expenseDate).format('YYYY-MM-DD');
     
     this.http.post('/expense/add', body).toPromise().then((data: any) => {
       this.store.dispatch(addBaseData(data.baseData));
