@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as income from 'src/app/reducers/income.reducer';
@@ -8,7 +8,7 @@ import * as moment from 'moment';
 
 import { addBaseData } from '../../../../actions/baseData.action';
 import { addIncomeDetail, editIncomeDetail, delIncomeDetail, resetIncomeDetail } from '../../../../actions/income.action';
-import { resetExpenseDetail } from 'src/app/actions/expense.action';
+import { MessageService } from '../../../../message.service';
 @Component({
   selector: 'app-income',
   templateUrl: './income.component.html',
@@ -22,7 +22,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private store: Store<any>
+    private store: Store<any>,
+    private messageService: MessageService
   ) {
     this.getIncomeDetail$ = store.select(income.getIncomeDetail);
   }
@@ -67,6 +68,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
     const body = this.incomeForm.value;
     body.incomeDate = moment(body.incomeDate).format('YYYY/MM/DD');
     this.http.post('/income/add', body).toPromise().then((data: any) => {
+      this.messageService.success('Add Income Succes!');
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addIncomeDetail(data.incomeDetail));
       this.incomeForm.patchValue({
@@ -78,7 +80,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
       });
       this.incomeForm.markAsPristine();
     }).catch((error) => {
-      console.log(error);
+      this.messageService.success('Add Income Failed!');
     });
   }
 

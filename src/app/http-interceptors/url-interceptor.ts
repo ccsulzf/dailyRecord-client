@@ -19,16 +19,13 @@ export class UrlHttpInterceptor implements HttpInterceptor {
 
         return next.handle(selfReq).pipe(
             mergeMap((event: any) => {
-                // 允许统一对请求错误处理
                 if (event instanceof HttpResponseBase) {
-                    // console.log(event);
                     return of(event);
                 }
                 // 若一切都正常，则后续操作
                 return of(event);
             }),
             catchError((err: HttpErrorResponse) => {
-
                 return of(err);
             }),
         );

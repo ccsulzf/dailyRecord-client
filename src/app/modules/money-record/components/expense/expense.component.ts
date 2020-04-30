@@ -8,6 +8,8 @@ import * as expense from 'src/app/reducers/expense.reducer';
 
 import { addBaseData } from '../../../../actions/baseData.action';
 import { addExpenseDetail, editExpenseDetail, delExpenseDetail, resetExpenseDetail } from '../../../../actions/expense.action';
+
+import { MessageService } from '../../../../message.service';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -22,7 +24,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private store: Store<any>
+    private store: Store<any>,
+    private messageService: MessageService
   ) {
     this.getExpenseDetail$ = store.select(expense.getExpenseDetail);
   }
@@ -69,8 +72,9 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   onSubmit() {
     const body = this.expenseForm.value;
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
-    
+
     this.http.post('/expense/add', body).toPromise().then((data: any) => {
+      this.messageService.success('Add Expense Succes!');
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addExpenseDetail(data.expenseDetail));
       this.expenseForm.patchValue({
@@ -82,7 +86,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
       });
       this.expenseForm.markAsPristine();
     }).catch((error) => {
-      console.log(error);
+      this.messageService.error('Add Expense Failed!');
     });
   }
 

@@ -130,7 +130,9 @@ export class ExpenseDetailComponent implements OnInit {
   getExpenseDetailList(date) {
     date = moment(date).format('YYYY/MM/DD');
     this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${date}`).toPromise().then((data) => {
-      this.list = this.composeData(data);
+      if (data) {
+        this.list = this.composeData(data);
+      }
     });
   }
 

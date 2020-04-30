@@ -6,8 +6,13 @@
     <header>
       <app-top></app-top>
     </header>
-    <div class="content">
+    <div class="content" #content>
       <router-outlet></router-outlet>
+      <ng-template #overlayMessage let-messageObj="messageObj">
+        <p class="overlay" [style.background]="messageObj.bgColor" [style.color]="messageObj.color">
+          {{messageObj.message}}
+        </p>
+      </ng-template>
     </div>
   </section>
 </main>

@@ -54,10 +54,12 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
     strObj.deletedAt = null;
     strObj.isHide = false;
     this.baseDataService.getBaseData('label', JSON.stringify(strObj)).then((data: any) => {
-      this.allLabels = data;
-      this.filteredLabel = this.labelCtrl.valueChanges.pipe(
-        startWith(null),
-        map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+      if (data) {
+        this.allLabels = data;
+        this.filteredLabel = this.labelCtrl.valueChanges.pipe(
+          startWith(null),
+          map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+      }
     });
   }
 

@@ -45,6 +45,9 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
           return params.value ? `+ ${params.value}` : '';
         },
         cellStyle: { color: '#f44336' },
+        comparator: function (valueA, valueB) {
+          return valueA - valueB;
+        }
       },
       {
         headerName: 'Address', field: 'address',

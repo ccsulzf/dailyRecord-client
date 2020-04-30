@@ -46,7 +46,10 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
           return params.value ? `- ${params.value}` : '';
         },
         cellStyle: { color: '#673ab7' },
-        sortable: true
+        sortable: true,
+        comparator: function (valueA, valueB) {
+          return valueA - valueB;
+        }
       },
       {
         headerName: 'Address', field: 'address',

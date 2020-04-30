@@ -36,7 +36,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor(
-    private baseDataService:BaseDataService
+    private baseDataService: BaseDataService
   ) {
     this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
       startWith(null),
@@ -48,17 +48,20 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
     this.getList()
   }
 
-  getList(){
+  getList() {
     const strObj: any = {};
     const user = JSON.parse(localStorage.getItem('user'));
     strObj.userId = user.id;
     strObj.deletedAt = null;
     strObj.isHide = false;
     this.baseDataService.getBaseData('people', JSON.stringify(strObj)).then((data: any) => {
-      this.allPeoples = data;
-      this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
-        startWith(null),
-        map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+      if (data) {
+        this.allPeoples = data;
+        this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
+          startWith(null),
+          map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+      }
+
     });
   }
 
@@ -71,7 +74,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
-  
+
   registerOnTouched(fn: any): void {
 
   }

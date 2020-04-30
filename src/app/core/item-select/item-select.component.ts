@@ -82,7 +82,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
     strObj.isHide = false;
     this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
       this.dataList = data;
-      if (this.dataList.length &&
+      if (this.dataList && this.dataList.length &&
         (this.model !== 'expenseStore' || this.model !== 'accout' || this.model !== 'incomeStore')) {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
