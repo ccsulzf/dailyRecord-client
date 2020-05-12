@@ -41,7 +41,7 @@ export const INCOME_FORMATS = {
 
 
 export class IncomeDetailComponent implements OnInit {
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
   date = new FormControl(moment());
 
   list = [];

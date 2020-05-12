@@ -1,0 +1,68 @@
+<main>
+  <!-- 宣传部分 -->
+  <section>
+    <div class="title">
+      <p>DailyRecord</p>
+      <span>accurate, efficient and simple</span>
+    </div>
+
+    <div class="dailyRecord-ad">
+      <p class="info">
+        We always protect your private data.
+      </p>
+      <img src="../../../assets/images/login/safty.svg">
+    </div>
+
+    <div class="dailyRecord-ad">
+      <img src="../../../assets/images/login/income-expense.svg">
+      <p class="info">
+        Unprecedented clarity of expenses and income.
+      </p>
+    </div>
+
+    <div class="dailyRecord-ad">
+      <p class="info">
+        Professional reports, Professional analysis.
+      </p>
+      <img src="../../../assets/images/login/profile_analysis.svg">
+    </div>
+  </section>
+
+  <!-- 登录部分 -->
+  <aside>
+    <div class="welcome">
+      <p>Welcome!</p>
+      <p>Let's get your Started.</p>
+    </div>
+    <form>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>UserName Or Email</mat-label>
+        <input type="text" autocomplete="off" name="name" [(ngModel)]="name"
+          placeholder="Please input your userName or Email" matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>Your Password</mat-label>
+        <input type="password" autocomplete="off" name="password" [(ngModel)]="password"
+          placeholder="Please input your password" matInput>
+      </mat-form-field>
+
+      <button type="button" (click)="login()" mat-raised-button color="primary">Login</button>
+    </form>
+
+    <div class="other-way">
+      <mat-divider></mat-divider>
+      <div class="way-sign">
+        <div>
+          <img src="../../../assets/images/login/google.svg">
+          <p>sign up with Google</p>
+        </div>
+        <div>
+          <img src="../../../assets/images/login/github.svg">
+          <p>sign up with Github</p>
+        </div>
+      </div>
+    </div>
+
+
+  </aside>
+</main>

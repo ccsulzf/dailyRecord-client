@@ -20,7 +20,7 @@ export class LabelPeopleComponent implements OnInit {
 
     ngOnInit(): void {
         const strObj: any = {};
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('dr_user'));
         strObj.userId = user.id;
         strObj.deletedAt = null;
         strObj.isHide = false;

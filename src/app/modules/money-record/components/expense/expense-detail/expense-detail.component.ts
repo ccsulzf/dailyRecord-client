@@ -18,7 +18,7 @@ export class ExpenseDetailComponent implements OnInit {
 
   @ViewChild('dateInputEle', { static: false }) private dateInputEle: ElementRef;
 
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
 
   public date = new Date();
 

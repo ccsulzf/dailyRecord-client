@@ -15,7 +15,7 @@ import { MessageService } from '../../../../message.service';
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit, OnDestroy {
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
 
   isAdd = true;
   getIncomeDetail$: Observable<any>;

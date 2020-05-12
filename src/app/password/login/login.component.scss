@@ -1,0 +1,138 @@
+main {
+  width: 950px;
+  height: 700px;
+  background: #fff;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap: 10px;
+}
+
+
+section {
+  grid-column: span 7;
+  background: #673ab7;
+  box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  position: relative;
+  padding-top: 40px;
+
+  .title {
+    position: absolute;
+    font-size: 1.8em;
+    padding: 10px 0 10px 20px;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    align-items: baseline;
+
+    span {
+      font-size: .6em;
+      margin-left: 10px;
+    }
+  }
+}
+
+.dailyRecord-ad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #efefef;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .info {
+    font-size: 1.2em;
+    color: #efefef;
+    margin: 0 10px;
+    width: 50%;
+  }
+
+  img {
+    width: 50%;
+    height: 100%;
+  }
+}
+
+aside {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+  padding-top: 60px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      font-size: 1.2em;
+      line-height: 2.4;
+      width: 80%;
+    }
+  }
+
+  .welcome {
+    font-size: 2em;
+    color: #673ab7;
+
+    p {
+      margin: 10px 0;
+    }
+  }
+
+  .other-way {
+    margin: 24px 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    mat-divider::before {
+      content: "OR";
+      position: absolute;
+      left: 50%;
+      top: -9px;
+      background: #fff;
+      color: rgba(0, 0, 0, .12);
+    }
+  }
+
+  .way-sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    div {
+      display: flex;
+      padding: 10px 0;
+      background: #efefef;
+      margin: 10px 0;
+      width: 80%;
+      justify-content: center;
+      border-radius: 40px;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      p {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+
+input::-webkit-input-placeholder {
+  font-size: .6em;
+}

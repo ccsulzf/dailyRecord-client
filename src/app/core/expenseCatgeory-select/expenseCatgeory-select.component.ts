@@ -35,7 +35,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
     @Input() name;
     @Input() model;
 
-    private user = JSON.parse(localStorage.getItem('user'));
+    private user = JSON.parse(localStorage.getItem('dr_user'));
     itemSelectControl = new FormControl();
 
     matcher = new ExpenseCategorySelectErrorStateMatcher();
@@ -107,7 +107,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
     async getList() {
         const strObj: any = {};
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('dr_user'));
         strObj.userId = user.id;
         strObj.deletedAt = null;
         strObj.isHide = false;

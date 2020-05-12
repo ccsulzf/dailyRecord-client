@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -23,7 +24,8 @@ import { HomeService } from './services';
     MatTabsModule,
     MatDividerModule,
     NgxEchartsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule
   ],
   providers: [HomeService]
 })

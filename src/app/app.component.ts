@@ -34,12 +34,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!localStorage.getItem('user')) {
-      this.http.get('/user').toPromise().then((data) => {
-        localStorage.setItem('user', JSON.stringify(data));
-      }, (error) => {
-      });
-    }
+
+    // if (!localStorage.getItem('dr_user')) {
+    //   this.http.get('/user').toPromise().then((data) => {
+    //     localStorage.setItem('user', JSON.stringify(data));
+    //   }, (error) => {
+    //   });
+    // } else {
+      
+    // }
   }
 
 

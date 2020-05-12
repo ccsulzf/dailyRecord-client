@@ -9,7 +9,7 @@ import { map, startWith } from 'rxjs/operators';
 
 @Injectable()
 export class HomeService {
-    private user = JSON.parse(localStorage.getItem('user'));
+    private user = JSON.parse(localStorage.getItem('dr_user'));
 
     constructor(
         private http: HttpClient

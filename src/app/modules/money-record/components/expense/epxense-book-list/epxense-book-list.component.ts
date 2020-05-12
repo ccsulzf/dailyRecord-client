@@ -19,7 +19,7 @@ export const EXPENSEBOOK_ACCESSOR: any = {
 export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   list = [];
   currenBook;
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
   showAddExpenseBook = false;
 
   ngOnInit() {

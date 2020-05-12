@@ -34,7 +34,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
   @Input() name;
   @Input() model;
   matcher = new ItemSelectErrorStateMatcher();
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
 
   baseData$: Observable<any>;
   baseDataSub: Subscription;
@@ -76,7 +76,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
 
   getList() {
     const strObj: any = {};
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('dr_user'));
     strObj.userId = user.id;
     strObj.deletedAt = null;
     strObj.isHide = false;

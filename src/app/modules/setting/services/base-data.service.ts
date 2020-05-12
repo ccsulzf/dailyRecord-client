@@ -13,7 +13,7 @@ interface Node {
 }
 @Injectable()
 export class BaseDataService {
-    private user = JSON.parse(localStorage.getItem('user'));
+    private user = JSON.parse(localStorage.getItem('dr_user'));
     public getExpenseBookANDCategory$: Observable<any>;
     public baseDataList = [];
     constructor(

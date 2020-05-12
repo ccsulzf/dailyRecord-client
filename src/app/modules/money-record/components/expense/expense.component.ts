@@ -16,7 +16,7 @@ import { MessageService } from '../../../../message.service';
   styleUrls: ['./expense.component.scss']
 })
 export class ExpenseComponent implements OnInit, OnDestroy {
-  private user = JSON.parse(localStorage.getItem('user'));
+  private user = JSON.parse(localStorage.getItem('dr_user'));
 
   isAdd = true;
   getExpenseDetail$: Observable<any>;

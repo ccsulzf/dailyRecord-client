@@ -50,7 +50,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
 
   getList() {
     const strObj: any = {};
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('dr_user'));
     strObj.userId = user.id;
     strObj.deletedAt = null;
     strObj.isHide = false;
