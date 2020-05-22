@@ -19,11 +19,17 @@ import { expenseReducer, baseDataReducer, incomeReducer } from './reducers';
 import { httpInterceptorProviders } from './http-interceptors';
 import { MessageService } from './message.service';
 import { LoginComponent } from './password/login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MonthCalendarComponent } from './dashboard/month-calendar/month-calendar.component';
+import { MonthCategoryComponent } from './dashboard/month-category/month-category.component';
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    MonthCalendarComponent,
+    MonthCategoryComponent
   ],
   imports: [
     BrowserModule,

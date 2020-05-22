@@ -3,7 +3,7 @@
     <app-nav></app-nav>
   </nav>
   <section>
-    <header>
+    <header *ngIf="router?.url !== '/dashboard'">
       <app-top></app-top>
     </header>
     <div class="content" #content>

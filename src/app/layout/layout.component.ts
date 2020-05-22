@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, ViewContainerRef, AfterViewInit, ViewChild, ElementRef, TemplateRef, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { OverlayRef, Overlay } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -18,7 +19,8 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         private http: HttpClient,
         private overlay: Overlay,
         private viewContainerRef: ViewContainerRef,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private router: Router
     ) { }
     @HostListener('body:keydown', ['$event'])
     /**
@@ -34,7 +36,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-      
+        console.log(this.router.url);
     }
 
 

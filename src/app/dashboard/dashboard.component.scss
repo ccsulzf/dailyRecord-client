@@ -1,0 +1,33 @@
+@import 'color';
+
+main {
+  height: 100%;
+  padding: 10px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 150px calc(100% - 150px);
+  box-sizing: border-box;
+  grid-row-gap: 10px;
+}
+
+.income-expense {
+  grid-column: span 12;
+  grid-row: span 1;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+}
+
+.calendar-category {
+  grid-column: span 12;
+  grid-row: span 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+
+  .calendar {
+    grid-column: span 9;
+  }
+
+  .category {
+    grid-column: span 3;
+  }
+}

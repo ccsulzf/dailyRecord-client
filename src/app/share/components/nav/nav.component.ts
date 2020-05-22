@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 interface FoodNode {
@@ -69,7 +69,7 @@ export class NavComponent implements OnInit, AfterViewInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private router: Router,
+    private router: Router
   ) {
     this.dataSource.data = TREE_DATA;
   }
@@ -86,11 +86,7 @@ export class NavComponent implements OnInit, AfterViewInit {
       });
     }.bind(this);
 
-    this.router.events.subscribe((data) => {
-      if (data instanceof NavigationStart) {
-        find(TREE_DATA, data.url);
-      }
-    });
+    find(TREE_DATA, this.router.url);
   }
 
   ngAfterViewInit() {
