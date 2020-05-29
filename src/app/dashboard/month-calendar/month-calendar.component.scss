@@ -3,9 +3,70 @@ table {
   height: 100%;
 }
 
+.today {
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  border-bottom: 2px solid #673ab7;
+  border-top: none !important;
+  color: #673ab7;
+}
+
 .td-item {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-top: 2px solid rgba(0, 0, 0, .1);
+  flex-direction: column;
+  padding: 0 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .1);
+    border-top: none;
+  }
+
+  p {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    margin-bottom: 5px;
+  }
+
+  .td-income,
+  .td-expense {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0;
+
+    span:first-of-type {
+      margin: 5px;
+      width: 5px;
+      height: 5px;
+      display: inline-block;
+    }
+
+    span:last-of-type {
+      flex: 1;
+    }
+  }
+
+  .td-expense {
+    color: #673ab7;
+
+    span:first-of-type {
+      background: #673ab7;
+    }
+  }
+
+  .td-income {
+    color: #f44336;
+
+    span:first-of-type {
+      background: #f44336;
+    }
+  }
+
+
 }

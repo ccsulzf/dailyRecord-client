@@ -7,6 +7,8 @@ import * as moment from 'moment';
 })
 export class MonthCalendarComponent implements OnInit {
   public tableList = [];
+
+  public today = moment().format('YYYY-MM-DD');
   constructor() { }
 
   ngOnInit() {
@@ -19,7 +21,6 @@ export class MonthCalendarComponent implements OnInit {
     const endDayWeek = moment(moment(date).endOf('month')).weekday() || 7;
     const monthDasys = moment(date).daysInMonth();
 
-    console.log(endDayWeek);
     let dateList = [];
 
     for (let i = (startDayWeek); i >= 1; i--) {
@@ -34,7 +35,10 @@ export class MonthCalendarComponent implements OnInit {
       dateList.push({
         isInMonth: true,
         date: moment(`${date}-${i}`).format('YYYY-MM-DD'),
-        day: i
+        day: i,
+        incomeAmount: parseInt(100 * Math.random()),
+        expenseAmount: parseInt(100 * Math.random()),
+        isToday: moment(`${date}-${i}`).format('YYYY-MM-DD') === this.today
       });
     }
 
@@ -56,7 +60,6 @@ export class MonthCalendarComponent implements OnInit {
     }
 
     console.log(this.tableList);
-    console.log(dateList);
   }
 
 

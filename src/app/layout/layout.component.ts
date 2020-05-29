@@ -20,7 +20,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
         private overlay: Overlay,
         private viewContainerRef: ViewContainerRef,
         private messageService: MessageService,
-        private router: Router
+        public router: Router
     ) { }
     @HostListener('body:keydown', ['$event'])
     /**

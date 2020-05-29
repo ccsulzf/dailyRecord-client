@@ -14,14 +14,80 @@ main {
 .income-expense {
   grid-column: span 12;
   grid-row: span 1;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  display: grid;
+
+  .month-item {
+    border-radius: 6px 6px 0 0;
+    border-top-width: 6px;
+    border-top-style: solid;
+  }
 }
+
+.month-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    // flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 1.4em;
+    font-weight: 500;
+  }
+}
+
+.month-expense,
+.month-income {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    // flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+
+    &:last-of-type {
+      font-size: 1.4em;
+      font-weight: 500;
+    }
+  }
+}
+
+.month-expense {
+  border-top-color: $expense;
+
+  p {
+    &:last-of-type {
+      color: $expense;
+    }
+  }
+}
+
+.month-income {
+  border-top-color: $income;
+
+  p {
+    &:last-of-type {
+      color: $income;
+    }
+  }
+}
+
 
 .calendar-category {
   grid-column: span 12;
   grid-row: span 1;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  column-gap: 20px;
 
   .calendar {
     grid-column: span 9;

@@ -15,8 +15,18 @@
     <ng-container *ngFor="let trItem of tableList">
       <tr>
         <td *ngFor="let tdItem of trItem">
-          <div class="td-item" *ngIf="tdItem?.isInMonth">
-            {{tdItem.day}}
+          <div class="td-item" [class.today]="tdItem.isToday" *ngIf="tdItem?.isInMonth">
+            <p>
+              {{tdItem.day}}
+            </p>
+            <div class="td-expense">
+              <span></span>
+              <span>{{tdItem.expenseAmount}}</span>
+            </div>
+            <div class="td-income">
+              <span></span>
+              <span>{{tdItem.incomeAmount}}</span>
+            </div>
           </div>
         </td>
       </tr>
