@@ -15,13 +15,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { expenseReducer, baseDataReducer, incomeReducer } from './reducers';
 
+import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
 import { httpInterceptorProviders } from './http-interceptors';
 import { MessageService } from './message.service';
 import { LoginComponent } from './password/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MonthCalendarComponent } from './dashboard/month-calendar/month-calendar.component';
-import { MonthCategoryComponent } from './dashboard/month-category/month-category.component';
+
+import { DashboardService } from './services';
+import { MonthCategoryExpenseComponent } from './dashboard/month-category-expense/month-category-expense.component';
+import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/month-category-income.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +34,8 @@ import { MonthCategoryComponent } from './dashboard/month-category/month-categor
     LoginComponent,
     DashboardComponent,
     MonthCalendarComponent,
-    MonthCategoryComponent
+    MonthCategoryExpenseComponent,
+    MonthCategoryIncomeComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +53,10 @@ import { MonthCategoryComponent } from './dashboard/month-category/month-categor
     MatInputModule,
     MatDividerModule,
     MatIconModule,
-    StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer, income: incomeReducer })
+    StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer, income: incomeReducer }),
+    CdkTreeModule
   ],
-  providers: [httpInterceptorProviders, MessageService],
+  providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef,DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

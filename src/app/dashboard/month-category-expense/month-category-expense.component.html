@@ -1,0 +1,45 @@
+<div class="category-main">
+    <div class="category-choice">
+        <p>
+            支出
+        </p>
+        <ng-container *ngIf="isHide">
+            <mat-icon style="color: #ececec;">visibility</mat-icon>
+        </ng-container>
+        <ng-container *ngIf="!isHide">
+            <mat-icon style="color: #ececec;">visibility_off</mat-icon>
+        </ng-container>
+    </div>
+    <div class="category-content">
+        <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+                [style.display]="shouldRender(node) ? 'flex' : 'none'" class="tree-node">
+                <div class="node-item">
+                    <!-- <button mat-icon-button disabled></button> -->
+                    <div class="node-content">
+                        <p>{{node.name}}</p>
+                        <!-- <p>2000</p> -->
+                    </div>
+                </div>
+            </cdk-tree-node>
+
+            <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+                [style.display]="shouldRender(node) ? 'flex' : 'none'" class="tree-node">
+                <div class="node-item">
+                    <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                        (click)="node.isExpanded = !node.isExpanded"
+                        [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    <div class="node-content">
+                        <p>{{node.name}}</p>
+                        <!-- <p>20000</p> -->
+                    </div>
+                </div>
+            </cdk-tree-node>
+        </cdk-tree>
+    </div>
+
+</div>

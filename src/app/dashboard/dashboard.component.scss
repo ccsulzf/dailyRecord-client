@@ -86,14 +86,15 @@ main {
   grid-column: span 12;
   grid-row: span 1;
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(24, 1fr);
   column-gap: 20px;
 
   .calendar {
-    grid-column: span 9;
+    grid-column: span 17;
   }
 
   .category {
-    grid-column: span 3;
+    grid-column: span 7;
+    overflow-y: auto;
   }
 }

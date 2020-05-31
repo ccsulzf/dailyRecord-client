@@ -10,27 +10,27 @@ interface FoodNode {
 
 const TREE_DATA: FoodNode[] = [
   {
-    name: 'Index',
+    name: '首页',
     path: '/dashboard'
   }, {
-    name: 'Money Record',
+    name: '收支',
     children: [
-      { name: 'Expense', path: '/record/expense' },
-      { name: 'Income', path: '/record/income' }
+      { name: '支出', path: '/record/expense' },
+      { name: '收入', path: '/record/income' }
     ]
   }, {
-    name: 'Report',
+    name: '报表',
     children: [
-      { name: 'Expense Report', path: '/report/expense' },
-      { name: 'Income Report', path: '/report/income' },
+      { name: '支出报表', path: '/report/expense' },
+      { name: '收入报表', path: '/report/income' },
       // { name: 'Money Report' }
     ]
   },
   {
-    name: 'Setting',
+    name: '设置',
     children: [
       // { name: 'Person Info' },
-      { name: 'BaseData', path: '/setting/baseData' }
+      { name: '基础数据', path: '/setting/baseData' }
     ]
   }
 ];

@@ -2,8 +2,8 @@
   <!-- 当月支出和收入信息 -->
   <div class="income-expense">
     <div class="month-date">
-      <p>2019年</p>
-      <p>5月</p>
+      <p>{{year}}年</p>
+      <p>{{month}}月</p>
     </div>
 
     <div class="month-item month-expense shadow">
@@ -11,7 +11,7 @@
         支出
       </p>
       <p>
-        - 3200.58
+        - {{dashboardService?.monthTotalExpense}}
       </p>
     </div>
 
@@ -20,7 +20,7 @@
         收入
       </p>
       <p>
-        + 60000.00
+        + {{dashboardService?.monthTotalIncome}}
       </p>
     </div>
 
@@ -32,7 +32,8 @@
       <app-month-calendar></app-month-calendar>
     </div>
     <div class="category">
-      <app-month-category></app-month-category>
+      <app-month-category-expense></app-month-category-expense>
+      <app-month-category-income></app-month-category-income>
     </div>
   </div>
 </main>

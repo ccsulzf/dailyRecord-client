@@ -16,7 +16,7 @@ import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
 import { BaseDataService } from './services';
 @NgModule({
-  declarations: [BaseDataComponent, SettingComponent, BaseDataNavComponent, BookManageComponent,BaseDataManageComponent],
+  declarations: [BaseDataComponent, SettingComponent, BaseDataNavComponent, BookManageComponent, BaseDataManageComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
