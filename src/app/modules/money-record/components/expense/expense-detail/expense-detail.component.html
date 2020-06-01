@@ -15,28 +15,28 @@
             {{item.expenseBookName}}
           </span>
           <span>
-            -{{item.subTotal}}RMB
+            -{{item.subTotal}}元
           </span>
         </div>
         <mat-divider></mat-divider>
         <mat-list-item *ngFor="let expenseDetail of item['expenseDetailList']" (click)="select(expenseDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{expenseDetail.content}}</span>
-            <span class="detail-number">-{{expenseDetail.amount}} RMB</span>
+            <span class="detail-number">-{{expenseDetail.amount}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
     <div class="no-data" *ngIf="!(list && list.length)">
       <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>No Expense</p>
+      <p>暂无支出数据</p>
     </div>
   </div>
   <mat-divider></mat-divider>
   <div class="day-expense" *ngIf="list && list.length">
-    <span>Day of the expense:</span>
+    <span>今日支出:</span>
     <p>
-      -{{totalAmount}}RMB
+      -{{totalAmount}}元
     </p>
   </div>
 </div>

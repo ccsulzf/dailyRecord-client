@@ -10,7 +10,7 @@
       <router-outlet></router-outlet>
       <ng-template #overlayMessage let-messageObj="messageObj">
         <p class="overlay" [style.background]="messageObj.bgColor" [style.color]="messageObj.color">
-          {{messageObj.message}}
+          {{messageObj.message}} {{messageObj?.emoji}}
         </p>
       </ng-template>
     </div>

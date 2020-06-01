@@ -16,27 +16,21 @@
       <div class="report-summary" *ngIf="totalAmount && totalCount">
         <div>
           <mat-icon>keyboard_arrow_left</mat-icon>
-          TotalExpenseAmount
+          当 前 金 额
           <mat-icon>keyboard_arrow_right</mat-icon>:
           <p>
-            -{{totalAmount}} RMB
+            -{{totalAmount}}
           </p>
         </div>
         <div>
           <mat-icon>keyboard_arrow_left</mat-icon>
-          TotalExpenseCount
+          当 前 数 量
           <mat-icon>keyboard_arrow_right</mat-icon>:
           <p>
-            {{totalCount}} ROWS
+            {{totalCount}}
           </p>
         </div>
       </div>
-      <!-- <div class="btn-group">
-        <button mat-button>
-          <mat-icon>library_books</mat-icon>
-          Export
-        </button>
-      </div> -->
     </div>
     <div class="report-content shadow">
       <ag-grid-angular #agGrid style="width: 100%; height: calc(100% - 50px)" class="ag-theme-material"

@@ -3,65 +3,65 @@ export const filterOption = [{
     value: ['', ''],
     field: 'incomeDate',
     component: 'date',
-    name: 'IncomeDate'
+    name: '日期'
 }, {
     type: 'In',
     value: [],
     field: 'addressId',
     model: 'address',
     component: 'select',
-    name: 'Address'
+    name: '地点'
 }, {
     type: 'In',
     value: [],
     field: 'incomeCategoryId',
     model: 'incomeCategory',
     component: 'select',
-    name: 'IncomeCategory'
+    name: '类别'
 }, {
     type: 'In',
     value: [],
     field: 'accountId',
     model: 'account',
     component: 'select',
-    name: 'Account',
+    name: '账户',
 }, {
     type: 'In',
     value: [],
     field: 'incomeStoreId',
     model: 'incomeStore',
     component: 'select',
-    name: 'IncomeStore'
+    name: '来源'
 }, {
     type: 'Like',
     value: '',
     field: 'content',
     component: 'input',
-    name: 'Content'
+    name: '收入'
 }, {
     type: 'Between',
     value: ['', ''],
     field: 'amount',
     component: 'range',
-    name: 'Amount'
+    name: '金额'
 }, {
     type: 'In',
     value: [],
     field: 'peopleId',
     model: 'people',
     component: 'label-people',
-    name: 'People'
+    name: '参与人'
 }, {
     type: 'In',
     value: [],
     field: 'lableId',
     model: 'label',
     component: 'label-people',
-    name: 'Label'
+    name: '标签'
 }, {
     type: 'Like',
     value: '',
     field: 'memo',
     component: 'input',
-    name: 'Memo'
+    name: '备注'
 }];

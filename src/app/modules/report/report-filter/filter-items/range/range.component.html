@@ -4,12 +4,12 @@
   </p>
   <div class="range-content">
     <mat-form-field floatLabel="always" appearance="outline">
-      <mat-label>Min Value</mat-label>
-      <input matInput type="number" [(ngModel)]="item.value[0]" placeholder="min value">
+      <mat-label>最小{{item.name}}</mat-label>
+      <input matInput type="number" [(ngModel)]="item.value[0]" placeholder="请输入">
     </mat-form-field>
     <mat-form-field floatLabel="always" appearance="outline">
-      <mat-label>Max Value</mat-label>
-      <input matInput type="number" [(ngModel)]="item.value[1]" placeholder="max value">
+      <mat-label>最大{{item.name}}</mat-label>
+      <input matInput type="number" [(ngModel)]="item.value[1]" placeholder="请输入">
     </mat-form-field>
   </div>
 </div>

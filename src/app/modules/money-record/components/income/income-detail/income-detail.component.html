@@ -12,7 +12,7 @@
         <mat-list-item *ngFor="let incomeDetail of item['incomeDetailList']" (click)="select(incomeDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{incomeDetail.content}}</span>
-            <span class="detail-number">+{{incomeDetail.amount}} RMB</span>
+            <span class="detail-number">+{{incomeDetail.amount}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
@@ -20,15 +20,15 @@
 
     <div class="no-data" *ngIf="!(list && list.length)">
       <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>No Income</p>
+      <p>暂无收入数据</p>
     </div>
   </div>
 
   <mat-divider></mat-divider>
   <div class="month-income" *ngIf="list && list.length">
-    <span>Month of the income:</span>
+    <span>本月收入:</span>
     <p>
-      +{{totalAmount}}RMB
+      +{{totalAmount}}元
     </p>
   </div>
 </div>

@@ -3,6 +3,6 @@
     {{item?.name}}:
   </p>
   <mat-form-field floatLabel="never" class="full-width">
-    <input matInput type="text" [(ngModel)]="item.value" autocomplete="off" placeholder="input memo" >
+    <input matInput type="text" [(ngModel)]="item.value" autocomplete="off" [placeholder]="item.name+'内容'" >
   </mat-form-field>
 </div>

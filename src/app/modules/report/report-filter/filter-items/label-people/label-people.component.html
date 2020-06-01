@@ -3,7 +3,7 @@
     {{item?.name}}:
   </p>
   <mat-form-field floatLabel="never" class="full-width">
-    <mat-select [formControl]="selectList" multiple placeholder="please select" (selectionChange)="select($event)">
+    <mat-select [formControl]="selectList" multiple placeholder="请选择" (selectionChange)="select($event)">
       <mat-select-trigger>
         {{selectList.value ? selectList.value[0]?.name : ''}}
         <span *ngIf="selectList.value?.length > 1" class="example-additional-selection">

@@ -1,8 +1,12 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Welcome!</span>
-    <span class="mat-spacer"></span>
-    <mat-icon matBadge="15" matBadgeSize="small" matBadgeColor="accent">mail</mat-icon>
+  <mat-toolbar-row class="">
+    <span>欢迎!</span>
+    <p>
+      <mat-icon>person</mat-icon>
+      <span>
+        {{user?.name}}
+      </span>
+    </p>
   </mat-toolbar-row>
 
 </mat-toolbar>

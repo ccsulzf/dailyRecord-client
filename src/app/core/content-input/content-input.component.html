@@ -1,10 +1,10 @@
 <mat-form-field floatLabel="always" class="full-width">
-  <input type="text" autocomplete="off" #input placeholder="Content" required matInput
+  <input type="text" autocomplete="off" #input [placeholder]="name" required matInput
     [formControl]="contentInputControl" [errorStateMatcher]="matcher">
   <button *ngIf="input.value.length" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
     <mat-icon>close</mat-icon>
   </button>
   <mat-error *ngIf="contentInputControl.hasError('required')">
-    ContentInput is <strong>required</strong>
+    {{name}}是<strong>必填项</strong>
   </mat-error>
 </mat-form-field>

@@ -8,25 +8,25 @@
         </div>
 
         <div class="address item">
-          <app-item-select [name]="'Address'" [model]="'address'" formControlName="address"></app-item-select>
+          <app-item-select [name]="'地点'" [model]="'address'" formControlName="address"></app-item-select>
         </div>
 
         <div class="category item">
-          <expenseCategory-select [name]="'Category'" [model]="'expenseCategory'" formControlName="expenseCategory">
+          <expenseCategory-select [name]="'类别'" [model]="'expenseCategory'" formControlName="expenseCategory">
           </expenseCategory-select>
         </div>
 
         <div class="store item">
-          <app-item-select [name]="'Store'" [model]="'expenseStore'" formControlName="expenseStore"></app-item-select>
+          <app-item-select [name]="'收款方'" [model]="'expenseStore'" formControlName="expenseStore"></app-item-select>
         </div>
 
         <div class="content">
-          <app-content-input formControlName="content"></app-content-input>
+          <app-content-input [name]="'支出'" formControlName="content"></app-content-input>
         </div>
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Account'" [model]="'account'" formControlName="account"></app-item-select>
+            <app-item-select [name]="'账户'" [model]="'account'" formControlName="account"></app-item-select>
           </div>
           <div class="moent-input">
             <app-money-input formControlName="amount"></app-money-input>
@@ -47,13 +47,13 @@
       </div>
       <!-- 编辑的时候放一个删除的图标 -->
       <div class="btn-group" *ngIf="isAdd">
-        <button mat-raised-button type="submit" color="primary">Add Expense</button>
-        <button mat-raised-button color="accent" type="button" (click)="onReset()">Reset</button>
+        <button mat-raised-button type="submit" color="primary">新 增 支 出</button>
+        <button mat-raised-button color="accent" type="button" (click)="onReset()">重 置</button>
       </div>
       <div class="btn-group" *ngIf="!isAdd">
         <div>
-          <button mat-raised-button type="button" color="primary" (click)="editExpense()">Edit Expense</button>
-          <button mat-raised-button color="accent" type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button type="button" color="primary" (click)="editExpense()">编 辑</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancel()">取 消</button>
         </div>
         <button mat-icon-button type="button" (click)="deleteExpense()" color="warn">
           <mat-icon>delete</mat-icon>

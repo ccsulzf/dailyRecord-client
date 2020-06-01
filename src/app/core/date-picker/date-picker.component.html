@@ -1,9 +1,9 @@
   <mat-form-field class="full-width">
-    <input matInput [formControl]="dateFormControl" disabled autocomplete="off" [errorStateMatcher]="matcher"
-      [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="dateSelect($event)">
+    <input matInput [formControl]="dateFormControl" required disabled autocomplete="off" [errorStateMatcher]="matcher"
+      [matDatepicker]="picker" placeholder="日期" (dateChange)="dateSelect($event)">
     <mat-datepicker-toggle tabindex="-1" matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker disabled="false"></mat-datepicker>
     <mat-error *ngIf="dateFormControl.hasError('required')">
-      Date is <strong>required</strong>
+      日期是<strong>必填项</strong>
     </mat-error>
   </mat-form-field>

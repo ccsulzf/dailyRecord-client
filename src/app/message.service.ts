@@ -15,16 +15,18 @@ export class MessageService {
             bgColor: 'rgba(109, 56, 181, .9)',
             color: '#fff',
             message,
-            time
+            time,
+            emoji:'👻'
         });
     }
 
-    public warn(message, time = 3000) {
+    public warn(message, time = 3000000) {
         this.message$.next({
             bgColor: 'rgba(255, 213, 63, .9)',
-            color: '#000',
+            color: '#fff',
             message,
-            time
+            time,
+            emoji:'🤔'
         });
     }
 
@@ -33,7 +35,8 @@ export class MessageService {
             bgColor: 'rgba(255, 44, 22, .9)',
             color: '#fff',
             message,
-            time
+            time,
+            emoji:'😱'
         });
     }
 }

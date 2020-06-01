@@ -74,7 +74,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
 
     this.http.post('/expense/add', body).toPromise().then((data: any) => {
-      this.messageService.success('Add Expense Succes!');
+      this.messageService.success('新增成功!');
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addExpenseDetail(data.expenseDetail));
       this.expenseForm.patchValue({
@@ -86,7 +86,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
       });
       this.expenseForm.markAsPristine();
     }).catch((error) => {
-      this.messageService.error('Add Expense Failed!');
+      this.messageService.error('新增失败');
     });
   }
 

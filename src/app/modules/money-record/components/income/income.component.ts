@@ -68,7 +68,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
     const body = this.incomeForm.value;
     body.incomeDate = moment(body.incomeDate).format('YYYY/MM/DD');
     this.http.post('/income/add', body).toPromise().then((data: any) => {
-      this.messageService.success('Add Income Succes!');
+      this.messageService.success('新增成功!');
       this.store.dispatch(addBaseData(data.baseData));
       this.store.dispatch(addIncomeDetail(data.incomeDetail));
       this.incomeForm.patchValue({
@@ -80,7 +80,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
       });
       this.incomeForm.markAsPristine();
     }).catch((error) => {
-      this.messageService.success('Add Income Failed!');
+      this.messageService.error('新增失败');
     });
   }
 

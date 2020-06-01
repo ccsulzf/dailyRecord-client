@@ -6,17 +6,17 @@
     </li>
   </ul>
   <div class="add-book-item">
-    <p (click)="openAddBook()">Add Book</p>
+    <p (click)="openAddBook()">新增</p>
     <ng-container *ngIf="showAddExpenseBook">
       <div class="add-book-content">
         <div class="edit-name">
           <mat-form-field floatLabel="never" class="full-width">
-            <input matInput type="text" #input autocomplete="off" placeholder="input expense book name">
+            <input matInput type="text" #input autocomplete="off" placeholder="账本名">
           </mat-form-field>
         </div>
         <div class="edit-option">
-          <button mat-raised-button (click)="addBook(input.value)" type="button" color="primary">Confirm</button>
-          <button mat-raised-button type="button" (click)="showAddExpenseBook = false">Cancel</button>
+          <button mat-raised-button (click)="addBook(input.value)" type="button" color="primary">确 认</button>
+          <button mat-raised-button type="button" (click)="showAddExpenseBook = false">取 消</button>
         </div>
       </div>
     </ng-container>
