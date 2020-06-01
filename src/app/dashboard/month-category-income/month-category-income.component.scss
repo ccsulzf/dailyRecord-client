@@ -1,13 +1,15 @@
 @import 'color';
-.category-main{
-    display: flex;
-    flex-direction: column;
-    height: 250px;
-    margin-top: 10px;
-    .category-content{
-        height: calc(100% - 28px);
-        overflow-y: auto;
-    }
+
+.category-main {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 10px;
+
+  .category-content {
+    height: calc(100% - 28px);
+    overflow-y: auto;
+  }
 }
 
 .category-choice {
@@ -18,17 +20,28 @@
   padding: 0 10px;
   align-items: center;
   background: $income;
-    p {
-      display: flex;
-      align-items: center;
-      letter-spacing: 2px;
-      justify-content: center;
-      color: #ececec;
-      cursor: pointer;
-      font-size: .8em;
-      position: relative;
 
-    }
-  
+  p {
+    display: flex;
+    align-items: center;
+    letter-spacing: 2px;
+    justify-content: center;
+    color: #ececec;
+    cursor: pointer;
+    font-size: .8em;
+    position: relative;
+
   }
-  
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    &:last-of-type {
+      color: $income;
+    }
+  }
+}

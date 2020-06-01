@@ -3,9 +3,11 @@ import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DashboardService } from '../../services';
 interface ExampleFlatNode {
+  id: number;
   expandable: boolean;
   name: string;
   level: number;
+  amount: number;
   isExpanded?: boolean;
 }
 @Component({
@@ -27,8 +29,10 @@ export class MonthCategoryExpenseComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.list = await this.dashboardService.getExpenseBookANDCategory();
+    // this.list = await this.dashboardService.getExpenseBookANDCategory();
+    this.list = await this.dashboardService.getMonthExpenseCategroyData();
     this.dataSource = new ArrayDataSource(this.list);
+
   }
 
   shouldRender(node: ExampleFlatNode) {

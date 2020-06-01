@@ -50,7 +50,7 @@ export class MonthCalendarComponent implements OnInit, OnDestroy {
 
     for (let i = 1; i <= (7 - endDayWeek); i++) {
       dateList.push({
-        isInMonth: true,
+        isInMonth: false,
         date: moment(moment(moment(date).endOf('month')).add(i, 'days')).format('YYYY-MM-DD'),
         day: i
       });

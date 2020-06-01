@@ -7,9 +7,11 @@ import * as moment from 'moment';
 import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 interface Node {
+    id: number;
     expandable: boolean;
     name: string;
     level: number;
+    amount: number;
     isExpanded?: boolean;
 }
 @Injectable({ providedIn: 'root' })
@@ -54,6 +56,7 @@ export class DashboardService {
                 list.push(categoryItem);
             }
         }
+
         return list;
     }
 
@@ -67,11 +70,64 @@ export class DashboardService {
             this.monthTotalIncome = monthData.reduce((prev, item) => {
                 return (+item.incomeAmount * 1000 + prev * 1000) / 1000;
             }, 0);
+        }
+        return monthData;
+    }
 
-            console.log(this.monthTotalIncome);
+    async getMonthExpenseCategroyData() {
+        const monthCategoryData: any = await this.http.get(`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`)
+            .toPromise();
+
+        const list = [];
+
+        for (const item of monthCategoryData) {
+            const hasExpenseBook = _.find(list, temp => temp.id === item.expenseBookId);
+            if (hasExpenseBook) {
+                const temp = {
+                    id: item.expenseCategoryId,
+                    expandable: false,
+                    level: 1,
+                    isExpanded: false,
+                    name: item.expenseCategoryName,
+                    amount: item.amount
+                };
+                hasExpenseBook.amount = (hasExpenseBook.amount * 10000 + item.amount * 10000) / 10000;
+                hasExpenseBook['child'].push(temp);
+            } else {
+                const expenseBook = {
+                    id: item.expenseBookId,
+                    expandable: true,
+                    level: 0,
+                    isExpanded: false,
+                    name: item.expenseBookName,
+                    amount: item.amount,
+                    child: []
+                };
+                list.push(expenseBook);
+                const expenseCategory = {
+                    id: item.expenseCategoryId,
+                    expandable: false,
+                    level: 1,
+                    isExpanded: false,
+                    name: item.expenseCategoryName,
+                    amount: item.amount
+                };
+                expenseBook['child'].push(expenseCategory);
+            }
         }
 
-        return monthData;
+        let nodeList = [];
+        for (let item of list) {
+            const child = item['child'];
+            delete item.child;
+            nodeList.push(item);
+            nodeList = [...nodeList, ...child];
+        }
+        return nodeList;
+    }
+
+    getIncomeMonthCategoryData() {
+        return this.http.get(`/dashboard/getIncomeMonthCategoryData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`).toPromise();
     }
 
 }

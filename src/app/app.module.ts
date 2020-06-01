@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import {
   MatSliderModule, MatButtonModule, MatSnackBarModule, MatFormFieldModule,
-  MatInputModule, MatDividerModule, MatIconModule
+  MatInputModule, MatDividerModule, MatIconModule,MatListModule
 } from '@angular/material';
 import { ShareModule } from './share/share.module';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -54,7 +54,8 @@ import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/
     MatDividerModule,
     MatIconModule,
     StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer, income: incomeReducer }),
-    CdkTreeModule
+    CdkTreeModule,
+    MatListModule
   ],
   providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef,DashboardService],
   bootstrap: [AppComponent]
