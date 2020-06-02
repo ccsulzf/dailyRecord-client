@@ -7,9 +7,9 @@ import { DashboardService } from '../services';
 })
 export class DashboardComponent implements OnInit {
   public year = new Date().getFullYear();
-  public month = new Date().getMonth()+1;
+  public month = new Date().getMonth() + 1;
   constructor(
-    private dashboardService:DashboardService
+    public dashboardService: DashboardService
   ) { }
 
   ngOnInit() {
