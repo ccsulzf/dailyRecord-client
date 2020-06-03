@@ -8,7 +8,7 @@ import * as moment from 'moment';
 
 import { addBaseData } from '../../../../actions/baseData.action';
 import { addIncomeDetail, editIncomeDetail, delIncomeDetail, resetIncomeDetail } from '../../../../actions/income.action';
-import { MessageService } from '../../../../message.service';
+import { MessageService } from '../../../../services/message.service';
 @Component({
   selector: 'app-income',
   templateUrl: './income.component.html',

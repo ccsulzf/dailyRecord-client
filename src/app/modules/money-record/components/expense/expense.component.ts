@@ -9,7 +9,7 @@ import * as expense from 'src/app/reducers/expense.reducer';
 import { addBaseData } from '../../../../actions/baseData.action';
 import { addExpenseDetail, editExpenseDetail, delExpenseDetail, resetExpenseDetail } from '../../../../actions/expense.action';
 
-import { MessageService } from '../../../../message.service';
+import { MessageService } from '../../../../services/message.service';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
