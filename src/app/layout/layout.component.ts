@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { OverlayRef, Overlay } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { MessageService } from '../message.service';
+import { MessageService } from '../services/message.service';
 import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-layout',

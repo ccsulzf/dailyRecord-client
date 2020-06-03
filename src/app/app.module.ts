@@ -18,7 +18,7 @@ import { expenseReducer, baseDataReducer, incomeReducer } from './reducers';
 import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
 import { httpInterceptorProviders } from './http-interceptors';
-import { MessageService } from './message.service';
+import { MessageService } from './services/message.service';
 import { LoginComponent } from './password/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MonthCalendarComponent } from './dashboard/month-calendar/month-calendar.component';
