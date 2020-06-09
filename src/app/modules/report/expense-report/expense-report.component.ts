@@ -43,7 +43,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
       {
         headerName: '金额', field: 'amount',
         cellRenderer: (params) => {
-          return params.value ? `- ${params.value}` : '';
+          return params.value ? `- ${params.value / 100}` : '';
         },
         cellStyle: { color: '#673ab7' },
         sortable: true,

@@ -42,7 +42,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         headerName: '金额', field: 'amount',
         cellRenderer: (params) => {
-          return params.value ? `+ ${params.value}` : '';
+          return params.value ? `+ ${params.value / 100}` : '';
         },
         cellStyle: { color: '#f44336' },
         comparator: function (valueA, valueB) {

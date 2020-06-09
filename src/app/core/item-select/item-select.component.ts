@@ -3,11 +3,7 @@ import { FormControl, NG_VALUE_ACCESSOR, Validators, ControlValueAccessor, NgFor
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material';
-import { BaseDataService } from '../services/baseData.service';
-
-import { Store, select } from '@ngrx/store';
-import * as expense from 'src/app/reducers/expense.reducer';
-import * as baseData from 'src/app/reducers/baseData.reducer';
+import { BaseDataService } from '../../services';
 
 import * as _ from 'lodash';
 
@@ -46,16 +42,14 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
 
   constructor(
     private baseDataService: BaseDataService,
-    private store: Store<any>
   ) {
-    this.baseData$ = store.select(baseData.getAddBaseData);
   }
 
   itemSelectControl = new FormControl();
 
   ngOnInit() {
     this.getList();
-    this.baseData$.subscribe((data: Object) => {
+    this.baseDataService.getAddBaseData().subscribe((data: Object) => {
       for (let key in data) {
         if (key === this.model) {
           this.dataList = [...this.dataList, data[key]];
@@ -75,15 +69,9 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
   }
 
   getList() {
-    const strObj: any = {};
-    const user = JSON.parse(localStorage.getItem('dr_user'));
-    strObj.userId = user.id;
-    strObj.deletedAt = null;
-    strObj.isHide = false;
-    this.baseDataService.getBaseData(this.model, JSON.stringify(strObj)).then((data: any) => {
+    this.baseDataService.getBaseData(this.model).then((data: any) => {
       this.dataList = data;
-      if (this.dataList && this.dataList.length &&
-        (this.model !== 'expenseStore' || this.model !== 'accout' || this.model !== 'incomeStore')) {
+      if (this.model === 'address') {
         this.itemSelectControl.setValue(this.dataList[0].name);
         this.propagateChange(this.dataList[0]);
       }

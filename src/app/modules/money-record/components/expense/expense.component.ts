@@ -1,15 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as moment from 'moment';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as expense from 'src/app/reducers/expense.reducer';
-
-import { addBaseData } from '../../../../actions/baseData.action';
-import { addExpenseDetail, editExpenseDetail, delExpenseDetail, resetExpenseDetail } from '../../../../actions/expense.action';
-
-import { MessageService } from '../../../../services/message.service';
+import { Observable, Subscription } from 'rxjs';
+import { MessageService, BaseDataService } from '../../../../services';
+import { ExpenseService } from '../../services';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -19,15 +12,15 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   private user = JSON.parse(localStorage.getItem('dr_user'));
 
   isAdd = true;
-  getExpenseDetail$: Observable<any>;
+  getExpenseDetailSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private store: Store<any>,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private expenseService: ExpenseService,
+    private baseDataService: BaseDataService
   ) {
-    this.getExpenseDetail$ = store.select(expense.getExpenseDetail);
+
   }
 
   expenseForm = this.fb.group({
@@ -48,7 +41,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.getExpenseDetail$.subscribe((value) => {
+    this.getExpenseDetailSub = this.expenseService.getDetail().subscribe((value: any) => {
       if (value) {
         this.isAdd = false;
         this.expenseForm.patchValue({
@@ -70,13 +63,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const body = this.expenseForm.value;
-    body.expenseDate = moment(body.expenseDate).format('YYYY/MM/DD');
-
-    this.http.post('/expense/add', body).toPromise().then((data: any) => {
+    this.expenseService.add(this.expenseForm.value).then((data: any) => {
       this.messageService.success('新增成功!');
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(addExpenseDetail(data.expenseDetail));
       this.expenseForm.patchValue({
         peoples: [],
         labels: [],
@@ -91,13 +79,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   editExpense() {
-    this.http.post('/expense/edit', this.expenseForm.value).toPromise().then((data: any) => {
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(editExpenseDetail({
-        oldId: this.expenseForm.value.id,
-        expenseDetail: data.expenseDetail
-      }));
-      this.cancel();
+    this.expenseService.edit(this.expenseForm.value).then((data: any) => {
+      this.messageService.success('编辑成功!');
       this.expenseForm.patchValue({
         peoples: [],
         labels: [],
@@ -107,22 +90,16 @@ export class ExpenseComponent implements OnInit, OnDestroy {
       });
       this.expenseForm.markAsPristine();
     }).catch((error) => {
-      console.log(error);
+      this.messageService.error('编辑失败');
     });
   }
 
   deleteExpense() {
-    const query = {
-      id: this.expenseForm.value.id,
-      userId: this.user.id
-    };
-    this.http.get(`/expense/del?userId=${this.user.id}&id=${this.expenseForm.value.id}`).toPromise()
-      .then((data) => {
-        this.store.dispatch(delExpenseDetail({ id: this.expenseForm.value.id }));
-        this.cancel();
-      }).catch((error) => {
-        console.log(error);
-      })
+    this.expenseService.del(this.expenseForm.value.id).then((data: any) => {
+      this.cancel();
+    }).catch((error) => {
+      this.messageService.error('删除失败');
+    });
   }
 
   onReset() {
@@ -146,6 +123,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(resetExpenseDetail(null));
+    if (this.getExpenseDetailSub) {
+      this.getExpenseDetailSub.unsubscribe();
+    }
   }
 }

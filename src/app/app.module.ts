@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import {
   MatSliderModule, MatButtonModule, MatSnackBarModule, MatFormFieldModule,
-  MatInputModule, MatDividerModule, MatIconModule,MatListModule
+  MatInputModule, MatDividerModule, MatIconModule, MatListModule
 } from '@angular/material';
 import { ShareModule } from './share/share.module';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -12,8 +12,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { expenseReducer, baseDataReducer, incomeReducer } from './reducers';
 
 import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
@@ -53,11 +51,10 @@ import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/
     MatInputModule,
     MatDividerModule,
     MatIconModule,
-    StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer, income: incomeReducer }),
     CdkTreeModule,
     MatListModule
   ],
-  providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef,DashboardService],
+  providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef, DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

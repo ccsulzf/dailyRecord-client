@@ -8,35 +8,37 @@
 
   <!--expense list -->
   <div class="detail-list">
-    <mat-list *ngIf="list && list.length">
-      <ng-container *ngFor="let item of list">
+    <mat-list *ngIf="expenseService?.list && expenseService?.list.length;else noList">
+      <ng-container *ngFor="let item of expenseService?.list">
         <div mat-subheader class="detail-header">
           <span>
             {{item.expenseBookName}}
           </span>
           <span>
-            -{{item.subTotal}}元
+            -{{item.subTotal / 100 }}元
           </span>
         </div>
         <mat-divider></mat-divider>
         <mat-list-item *ngFor="let expenseDetail of item['expenseDetailList']" (click)="select(expenseDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{expenseDetail.content}}</span>
-            <span class="detail-number">-{{expenseDetail.amount}} 元</span>
+            <span class="detail-number">-{{expenseDetail.amount / 100}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
-    <div class="no-data" *ngIf="!(list && list.length)">
-      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>暂无支出数据</p>
-    </div>
+    <ng-template #noList>
+      <div class="no-data">
+        <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+        <p>暂无支出数据</p>
+      </div>
+    </ng-template>
   </div>
   <mat-divider></mat-divider>
   <div class="day-expense" *ngIf="list && list.length">
     <span>今日支出:</span>
     <p>
-      -{{totalAmount}}元
+      -{{expenseService?.totalAmount / 100}}元
     </p>
   </div>
 </div>

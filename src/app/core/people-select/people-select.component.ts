@@ -6,7 +6,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { BaseDataService } from '../services/baseData.service';
+import { BaseDataService } from '../../services';
 
 export const PEOPLE_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -45,25 +45,23 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
 
 
   ngOnInit() {
-    this.getList()
-  }
+    this.baseDataService.getBaseData('label').then((data: any) => {
+      this.allPeoples = data;
+      this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
+        startWith(null),
+        map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+    });
 
-  getList() {
-    const strObj: any = {};
-    const user = JSON.parse(localStorage.getItem('dr_user'));
-    strObj.userId = user.id;
-    strObj.deletedAt = null;
-    strObj.isHide = false;
-    this.baseDataService.getBaseData('people', JSON.stringify(strObj)).then((data: any) => {
-      if (data) {
-        this.allPeoples = data;
-        this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
-          startWith(null),
-          map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+    this.baseDataService.getAddBaseData().subscribe((data: any) => {
+      for (let key in data) {
+        if (key === 'people') {
+          this.allPeoples = [...this.allPeoples, data[key]];
+        }
       }
-
     });
   }
+
+
 
   propagateChange = (temp: any) => { };
 
@@ -125,6 +123,5 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
   private _filter(value: string): string[] {
     return this.allPeoples.filter(item => item.name.indexOf(value) === 0);
   }
-
 
 }

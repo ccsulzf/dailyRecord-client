@@ -6,29 +6,30 @@
     </mat-datepicker>
   </div>
   <div class="detail-list">
-    <mat-list class="incomeDetail-list" *ngIf="list && list.length">
+    <mat-list class="incomeDetail-list" *ngIf="incomeService?.list && incomeService?.list.length; else noList">
       <ng-container *ngFor="let item of list">
         <h3 mat-subheader>{{item.incomeDate}}</h3>
         <mat-list-item *ngFor="let incomeDetail of item['incomeDetailList']" (click)="select(incomeDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{incomeDetail.content}}</span>
-            <span class="detail-number">+{{incomeDetail.amount}} 元</span>
+            <span class="detail-number">+{{incomeDetail.amount / 100}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
-
-    <div class="no-data" *ngIf="!(list && list.length)">
-      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>暂无收入数据</p>
-    </div>
+    <ng-template #noList>
+      <div class="no-data" *ngIf="!(list && list.length)">
+        <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+        <p>暂无收入数据</p>
+      </div>
+    </ng-template>
   </div>
 
   <mat-divider></mat-divider>
   <div class="month-income" *ngIf="list && list.length">
     <span>本月收入:</span>
     <p>
-      +{{totalAmount}}元
+      +{{incomeService?.totalAmount / 100}}元
     </p>
   </div>
 </div>
