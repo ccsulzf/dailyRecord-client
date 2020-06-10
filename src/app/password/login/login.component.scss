@@ -1,3 +1,5 @@
+@import "color";
+
 main {
   width: 930px;
   height: 680px;
@@ -11,7 +13,7 @@ main {
 
 section {
   grid-column: span 7;
-  background: #673ab7;
+  background: $primary;
   box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -83,7 +85,7 @@ aside {
 
   .welcome {
     font-size: 2em;
-    color: #673ab7;
+    color: $primary;
 
     p {
       margin: 10px 0;
@@ -130,6 +132,21 @@ aside {
         margin-left: 15px;
       }
     }
+  }
+}
+
+.goto-register {
+  margin-top: 20px;
+  text-align: center;
+
+  span {
+    color: #ccc;
+  }
+
+  a {
+    margin-left: 5px;
+    color: $primary;
+    cursor: pointer;
   }
 }
 

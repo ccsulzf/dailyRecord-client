@@ -34,35 +34,52 @@
       <p>记账，</p>
       <p>从现在开始。</p>
     </div>
-    <form>
+    <form [style.display]="!isLoginForm ? 'none':'flex'" [formGroup]="loginForm" (ngSubmit)="login()">
       <mat-form-field floatLabel="always" appearance="outline">
-        <mat-label>用户名或邮箱</mat-label>
-        <input type="text" autocomplete="off" name="name" [(ngModel)]="name"
-          placeholder="请输入用户名或邮箱" matInput>
+        <mat-label>昵称或邮箱</mat-label>
+        <input type="text" autocomplete="off" required formControlName="nameOrEmail" placeholder="请输入昵称或邮箱" matInput>
       </mat-form-field>
       <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>密码</mat-label>
-        <input type="password" autocomplete="off" name="password" [(ngModel)]="password"
-          placeholder="请输入你的密码" matInput>
+        <input type="password" autocomplete="off" required formControlName="password" placeholder="请输入你的密码" matInput>
       </mat-form-field>
-
-      <button type="button" (click)="login()" mat-raised-button color="primary">登 录</button>
+      <button type="submit" mat-raised-button color="primary">登 录</button>
     </form>
 
-    <div class="other-way">
-      <mat-divider></mat-divider>
-      <div class="way-sign">
-        <div>
-          <img src="../../../assets/images/login/google.svg">
-          <p>Google账户登录</p>
-        </div>
-        <div>
-          <img src="../../../assets/images/login/github.svg">
-          <p>Github账户登录</p>
-        </div>
-      </div>
-    </div>
+    <form [style.display]="isLoginForm ? 'none':'flex'" [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>昵称</mat-label>
+        <input type="text" autocomplete="off" required formControlName="name" placeholder="请输入昵称" matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>邮箱</mat-label>
+        <input type="email" autocomplete="off" required formControlName="email" placeholder="请输入邮箱" matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>密码</mat-label>
+        <input type="password" autocomplete="off" required formControlName="password" placeholder="请输入你的密码" matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>确认密码</mat-label>
+        <input type="password" autocomplete="off" required formControlName="confirmPWD" placeholder="请再次输入你的密码"
+          matInput>
+        <mat-error>
+          两次密码不相同
+        </mat-error>
+      </mat-form-field>
 
+      <button type="submit" mat-raised-button color="primary">注 册</button>
+    </form>
+
+    <p class="goto-register" *ngIf="isLoginForm">
+      <span>还没账号?</span>
+      <a (click)="isLoginForm = false">立即注册</a>
+    </p>
+
+    <p class="goto-register" *ngIf="!isLoginForm">
+      <span>已有账号?</span>
+      <a (click)="isLoginForm = true">立即登录</a>
+    </p>
 
   </aside>
 </main>
