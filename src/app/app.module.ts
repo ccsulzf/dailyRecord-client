@@ -24,7 +24,6 @@ import { MonthCalendarComponent } from './dashboard/month-calendar/month-calenda
 import { DashboardService } from './services';
 import { MonthCategoryExpenseComponent } from './dashboard/month-category-expense/month-category-expense.component';
 import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/month-category-income.component';
-import { EqualPWDDirective } from './password/login/equal.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,8 +32,7 @@ import { EqualPWDDirective } from './password/login/equal.directive';
     DashboardComponent,
     MonthCalendarComponent,
     MonthCategoryExpenseComponent,
-    MonthCategoryIncomeComponent,
-    EqualPWDDirective
+    MonthCategoryIncomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, ValidatorFn, AbstractControl, FormGroup } from '@angular/forms';
 import { equalValidator } from './equal.directive';
 
 @Component({
@@ -25,22 +25,35 @@ export class LoginComponent implements OnInit {
   });
 
   registerForm = this.fb.group({
-    name: ['', Validators.required],
+    name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-    confirmPWD: ['', [
-      Validators.required,
-      equalValidator(123)
-    ]],
+    password: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
+    confirmPWD: ['', [Validators.required]],
+  }, {
+    validator: this.checkIfMatchingPasswords('password', 'confirmPWD')
   });
 
-
+  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      const passwordInput = group.controls[passwordKey];
+      const passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({ notEquivalent: true });
+      } else {
+        if (passwordConfirmationInput.value) {
+          return passwordConfirmationInput.setErrors(null);
+        } else {
+          return passwordConfirmationInput.setErrors({ required: true });
+        }
+      }
+    }
+  }
   ngOnInit() {
 
   }
 
   login() {
-    console.log(this.loginForm.valid);
+
     // this.http.post('/login', { name: this.name, password: this.password }).toPromise().then((data) => {
     //   if (data) {
     //     localStorage.setItem('dr_user', JSON.stringify(data));
@@ -52,7 +65,7 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    console.log(this.registerForm.valid);
+    console.log(this.registerForm);
   }
 
 }
