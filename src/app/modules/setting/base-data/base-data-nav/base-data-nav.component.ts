@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { BaseDataService } from '../../services';
+import { BaseDataService } from '../../../../services';
 @Component({
   selector: 'base-data-nav',
   templateUrl: './base-data-nav.component.html',
@@ -57,7 +57,7 @@ export class BaseDataNavComponent implements OnInit {
   select(item) {
     this.currenBaseData = item;
     this.selectBaseData.emit(item);
-    this.baseDataService.getBaseData(item.model);
+    this.baseDataService.getBaseData(item.model, false);
   }
 
   ngOnInit() {

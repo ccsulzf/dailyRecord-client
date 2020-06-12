@@ -14,7 +14,7 @@
           <!-- <button mat-icon-button disabled></button> -->
           <div class="node-content" style="font-size: .8em;">
             <p>{{node.name}}</p>
-            <p [hidden]="isHide">{{node.amount}}</p>
+            <p [hidden]="isHide">{{node.amount / 100 }}</p>
           </div>
         </div>
       </cdk-tree-node>
@@ -30,7 +30,7 @@
           </button>
           <div class="node-content" style="font-size: 1em;">
             <p>{{node.name}}</p>
-            <p [hidden]="isHide">{{node.amount}}</p>
+            <p [hidden]="isHide">{{node.amount / 100}}</p>
           </div>
         </div>
       </cdk-tree-node>

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { BaseDataService } from '../../../../../services';
 import * as _ from 'lodash';
 @Component({
     selector: 'app-lable-people',
@@ -10,26 +11,19 @@ import * as _ from 'lodash';
 })
 export class LabelPeopleComponent implements OnInit {
     @Input() item;
-    list$: Observable<any>;
+    list$: Promise<any>;
 
     selectList = new FormControl([]);
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private baseDataService: BaseDataService
     ) { }
 
     ngOnInit(): void {
-        const strObj: any = {};
-        const user = JSON.parse(localStorage.getItem('dr_user'));
-        strObj.userId = user.id;
-        strObj.deletedAt = null;
-        strObj.isHide = false;
-        this.getlisttData(this.item.model, JSON.stringify(strObj));
+        this.list$ = this.baseDataService.getBaseData(this.item.model);
     }
 
-    getlisttData(model, searchStr) {
-        this.list$ = this.http.get(`/${model}?s=${searchStr}`);
-    }
 
     select(value) {
         this.item.value = _.map(this.selectList.value, 'id');

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, ValidatorFn, AbstractControl, FormGroup } from '@angular/forms';
-import { equalValidator } from './equal.directive';
 
 @Component({
   selector: 'app-login',

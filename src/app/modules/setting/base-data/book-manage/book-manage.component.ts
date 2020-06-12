@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 
-import { BaseDataService } from '../../services';
+import { BaseDataService } from '../../../../services';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -58,6 +58,8 @@ export class BookManageComponent implements OnInit {
     this.baseDataService.updateBaseData(item, model).then((data: any) => {
       item.name = data.name;
       item.isEdit = false;
+      const index = _.findIndex(this.baseDataService.baseData[model], { id: item.id });
+      this.baseDataService.baseData[model].splice(index, 1, data);
     });
   }
 
@@ -65,9 +67,20 @@ export class BookManageComponent implements OnInit {
     item.isHide = !item.isHide;
     this.baseDataService.updateBaseData(item, model).then((data: any) => {
       data.isEdit = false;
+      this.hideBaseData(data, 'expenseCategory');
     }, (error) => {
       item.isHide = !item.isHide;
     });
+  }
+
+  hideBaseData(item, model) {
+    const index = _.findIndex(this.baseDataService.baseData[model], { id: item.id });
+    this.baseDataService.baseData[model].splice(index, 1, item);
+  }
+
+  delBaseData(item, model) {
+    const index = _.findIndex(this.baseDataService.baseData[model], { id: item.id });
+    this.baseDataService.baseData[model].splice(index, 1);
   }
 
   del(item, model) {
@@ -76,6 +89,7 @@ export class BookManageComponent implements OnInit {
       _.remove(this.dataSource._data, (temp) => {
         return temp.id === item.id;
       });
+      this.delBaseData(item, 'expenseCategory');
       this.dataSource = new ArrayDataSource(this.list);
     }, (error) => {
       item.deletedAt = null;
@@ -83,6 +97,7 @@ export class BookManageComponent implements OnInit {
   }
 
   hideExpenseBook(item) {
+    console.log(item);
     const list = this.dataSource._data;
     item.isHide = !item.isHide;
     item.isExpanded = true;
@@ -95,9 +110,14 @@ export class BookManageComponent implements OnInit {
         expenseCategooryList.push(temp);
       }
     }
-
     this.baseDataService.hideExpenseBook(item, expenseCategooryList).then((data) => {
-
+      this.hideBaseData(item, 'expenseBook');
+      for (const temp of list) {
+        if (temp.expenseBookId === item.id) {
+          temp.isHide = item.isHide;
+          this.hideBaseData(temp, 'expenseCategory');
+        }
+      }
     }, (error) => {
       item.isHide = !item.isHide;
       for (const item of list) {
@@ -123,12 +143,13 @@ export class BookManageComponent implements OnInit {
       }
     }
     this.baseDataService.delExpenseBook(item, expenseCategooryList).then((data) => {
+      this.delBaseData(item, 'expenseBook');
       for (const temp of expenseCategooryList) {
         _.remove(list, { id: temp.id });
+        this.delBaseData(temp, 'expenseCategory');
       }
       _.remove(list, { id: item.id });
       this.dataSource = new ArrayDataSource(list);
-      console.log(list);
     }, (error) => {
       item.deletedAt = null;
       for (const temp of list) {
