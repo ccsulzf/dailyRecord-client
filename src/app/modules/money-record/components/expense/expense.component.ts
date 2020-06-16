@@ -43,12 +43,13 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getExpenseDetailSub = this.expenseService.getDetail().subscribe((value: any) => {
       if (value) {
+        console.log(value);
         this.isAdd = false;
         this.expenseForm.patchValue({
           id: value.id,
           expenseBook: value.expenseBook,
           expenseDate: value.expenseDate,
-          amount: value.amount,
+          amount: value.amount / 100,
           content: value.content,
           memo: value.memo,
           address: value.address,

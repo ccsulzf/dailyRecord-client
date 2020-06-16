@@ -2,7 +2,7 @@
   <!-- date & total amount-->
   <div class="detail-header">
     <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
-    <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="date">
+    <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="expenseService.expenseDetailDate">
     <mat-datepicker #picker disabled="false"></mat-datepicker>
   </div>
 
@@ -35,7 +35,7 @@
     </ng-template>
   </div>
   <mat-divider></mat-divider>
-  <div class="day-expense" *ngIf="list && list.length">
+  <div class="day-expense" *ngIf="expenseService?.list && expenseService?.list.length">
     <span>今日支出:</span>
     <p>
       -{{expenseService?.totalAmount / 100}}元

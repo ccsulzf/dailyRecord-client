@@ -45,7 +45,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
       this.incomeForm.patchValue({
         id: value.id,
         incomeDate: value.incomeDate,
-        amount: value.amount,
+        amount: value.amount / 100,
         content: value.content,
         memo: value.memo,
         address: value.address,
@@ -76,7 +76,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   editIncome() {
-    this.http.post('/income/edit', this.incomeForm.value).toPromise().then((data: any) => {
+    this.incomeService.edit(this.incomeForm.value).then((data: any) => {
       this.messageService.success('编辑成功!');
       this.incomeForm.patchValue({
         peoples: [],

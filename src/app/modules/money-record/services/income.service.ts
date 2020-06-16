@@ -15,6 +15,7 @@ export class IncomeService {
     public list = [];
     public totalAmount = 0;
 
+    public incomeDetailDate = moment();
     constructor(
         private http: HttpClient,
         private baseDataService: BaseDataService
@@ -22,11 +23,17 @@ export class IncomeService {
 
     add(incomeDetail) {
         incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY/MM/DD');
+        const isInMonth = moment(incomeDetail.incomeDate).isBetween(moment(this.incomeDetailDate).startOf('month'), moment(this.incomeDetailDate).endOf('month'));
         return this.http.post('/income/add', incomeDetail).pipe(
             map((data: any) => {
                 this.baseDataService.addBaseData(data.baseData);
-                this.originIncomeDetailList.push(data.incomeDetail);
-                this.list = this.composeData();
+                if (isInMonth) {
+                    this.originIncomeDetailList.push(data.incomeDetail);
+                    this.list = this.composeData();
+                } else {
+                    this.incomeDetailDate = moment(incomeDetail.incomeDate);
+                    this.getList();
+                }
                 return data;
             })
         ).toPromise();
@@ -34,12 +41,18 @@ export class IncomeService {
 
     edit(incomeDetail) {
         incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY/MM/DD');
+        const isInMonth = moment(incomeDetail.incomeDate).isBetween(moment(this.incomeDetailDate).startOf('month'), moment(this.incomeDetailDate).endOf('month'));
         return this.http.post('/income/edit', incomeDetail).pipe(
             map((data: any) => {
                 this.baseDataService.addBaseData(data.baseData);
-                _.remove(this.originIncomeDetailList, item => item.id === incomeDetail.id);
-                this.originIncomeDetailList.push(data.expenseDetail);
-                this.list = this.composeData();
+                if (isInMonth) {
+                    _.remove(this.originIncomeDetailList, item => item.id === incomeDetail.id);
+                    this.originIncomeDetailList.push(data.expenseDetail);
+                    this.list = this.composeData();
+                } else {
+                    this.incomeDetailDate = moment(incomeDetail.incomeDate);
+                    this.getList();
+                }
                 return data;
             })
         ).toPromise();
@@ -63,9 +76,9 @@ export class IncomeService {
         return this.selectDetail$;
     }
 
-    getList(date) {
-        const startDate = moment(date).startOf('month').format('YYYY/MM/DD');
-        const endDate = moment(date).endOf('month').format('YYYY/MM/DD');
+    getList() {
+        const startDate = moment(this.incomeDetailDate).startOf('month').format('YYYY/MM/DD');
+        const endDate = moment(this.incomeDetailDate).endOf('month').format('YYYY/MM/DD');
         this.http.get(`/income/list?userId=${this.user.id}&startDate=${startDate}&endDate=${endDate}`).toPromise().then((data) => {
             this.originIncomeDetailList = data;
             this.list = this.composeData();

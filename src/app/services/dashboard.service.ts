@@ -78,7 +78,7 @@ export class DashboardService {
         const monthCategoryData: any = await this.http.get(`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`)
             .toPromise();
 
-        const list = [];
+        let list = [];
 
         for (const item of monthCategoryData) {
             const hasExpenseBook = _.find(list, temp => temp.id === item.expenseBookId);
@@ -117,6 +117,8 @@ export class DashboardService {
         }
 
         let nodeList = [];
+        
+        list = _.reverse(_.sortBy(list,'amount'));
         for (let item of list) {
             const child = item['child'];
             delete item.child;

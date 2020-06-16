@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-
-
 import { ExpenseService } from '../../../services';
 @Component({
   selector: 'app-expense-detail',
@@ -14,14 +12,12 @@ export class ExpenseDetailComponent implements OnInit {
 
   @ViewChild('dateInputEle', { static: false }) private dateInputEle: ElementRef;
 
-  public date = new Date();
-
   constructor(
     public expenseService: ExpenseService
   ) { }
 
   ngOnInit() {
-    this.expenseService.getList(this.date);
+    this.expenseService.getList();
   }
 
   select(item) {
@@ -29,7 +25,8 @@ export class ExpenseDetailComponent implements OnInit {
   }
 
   dateSelect(event: MatDatepickerInputEvent<Date>) {
-    this.expenseService.getList(event.value);
+    this.expenseService.expenseDetailDate = event.value;
+    this.expenseService.getList();
   }
 
 }

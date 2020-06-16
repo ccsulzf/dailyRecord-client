@@ -34,22 +34,20 @@ export const INCOME_FORMATS = {
   ],
 })
 export class IncomeDetailComponent implements OnInit {
-  date = new FormControl(moment());
+
 
   constructor(
-    private incomeService: IncomeService
+    public incomeService: IncomeService
   ) { }
 
   ngOnInit() {
-    this.incomeService.getList(this.date.value);
-
+    this.incomeService.getList();
   }
 
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.date.value;
-    ctrlValue.month(normalizedMonth.month());
-    this.date.setValue(ctrlValue);
     datepicker.close();
+    this.incomeService.incomeDetailDate = normalizedMonth;
+    this.incomeService.getList();
   }
 
   select(item) {
