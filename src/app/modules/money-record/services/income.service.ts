@@ -22,7 +22,7 @@ export class IncomeService {
     ) { }
 
     add(incomeDetail) {
-        incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY/MM/DD');
+        incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY-MM-DD');
         const isInMonth = moment(incomeDetail.incomeDate).isBetween(moment(this.incomeDetailDate).startOf('month'), moment(this.incomeDetailDate).endOf('month'));
         return this.http.post('/income/add', incomeDetail).pipe(
             map((data: any) => {
@@ -40,7 +40,7 @@ export class IncomeService {
     }
 
     edit(incomeDetail) {
-        incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY/MM/DD');
+        incomeDetail.incomeDate = moment(incomeDetail.incomeDate).format('YYYY-MM-DD');
         const isInMonth = moment(incomeDetail.incomeDate).isBetween(moment(this.incomeDetailDate).startOf('month'), moment(this.incomeDetailDate).endOf('month'));
         return this.http.post('/income/edit', incomeDetail).pipe(
             map((data: any) => {

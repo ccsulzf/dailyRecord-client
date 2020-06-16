@@ -65,10 +65,10 @@ export class DashboardService {
             .toPromise();
         if (monthData && monthData.length) {
             this.monthTotalExpense = monthData.reduce((prev, item) => {
-                return (+item.expenseAmount * 1000 + prev * 1000) / 1000;
+                return +item.expenseAmount + prev;
             }, 0);
             this.monthTotalIncome = monthData.reduce((prev, item) => {
-                return (+item.incomeAmount * 1000 + prev * 1000) / 1000;
+                return +item.incomeAmount + prev;
             }, 0);
         }
         return monthData;
@@ -91,7 +91,7 @@ export class DashboardService {
                     name: item.expenseCategoryName,
                     amount: item.amount
                 };
-                hasExpenseBook.amount = (hasExpenseBook.amount * 10000 + item.amount * 10000) / 10000;
+                hasExpenseBook.amount += item.amount;
                 hasExpenseBook['child'].push(temp);
             } else {
                 const expenseBook = {
@@ -117,8 +117,8 @@ export class DashboardService {
         }
 
         let nodeList = [];
-        
-        list = _.reverse(_.sortBy(list,'amount'));
+
+        list = _.reverse(_.sortBy(list, 'amount'));
         for (let item of list) {
             const child = item['child'];
             delete item.child;

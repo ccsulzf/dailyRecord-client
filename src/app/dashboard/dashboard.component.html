@@ -10,7 +10,7 @@
       <p>
         支出
       </p>
-      <p>
+      <p *ngIf="dashboardService?.monthTotalExpense">
         - {{dashboardService?.monthTotalExpense / 100}}
       </p>
     </div>
@@ -19,7 +19,7 @@
       <p>
         收入
       </p>
-      <p>
+      <p *ngIf="dashboardService?.monthTotalIncome">
         + {{dashboardService?.monthTotalIncome / 100 }}
       </p>
     </div>

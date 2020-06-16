@@ -70,6 +70,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
 
   getList() {
     this.baseDataService.getBaseData(this.model).then((data: any) => {
+      this.filterList = data;
       this.dataList = data;
       if (this.model === 'address') {
         this.itemSelectControl.setValue(this.dataList[0].name);

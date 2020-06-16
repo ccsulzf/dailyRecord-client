@@ -36,8 +36,9 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
+    console.log(data);
     this.dateFormControl.setValidators(Validators.required);
-    this.dateFormControl.setValue(data);
+    this.dateFormControl.patchValue(data);
   }
 
   registerOnChange(fn: any): void {
