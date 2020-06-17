@@ -23,13 +23,11 @@ const TREE_DATA: FoodNode[] = [
     children: [
       { name: '支出报表', path: '/report/expense' },
       { name: '收入报表', path: '/report/income' },
-      // { name: 'Money Report' }
     ]
   },
   {
     name: '设置',
     children: [
-      // { name: 'Person Info' },
       { name: '基础数据', path: '/setting/baseData' }
     ]
   }
@@ -100,5 +98,11 @@ export class NavComponent implements OnInit, AfterViewInit {
       this.currenNodeName = node.name;
       this.router.navigateByUrl(node.path);
     }
+  }
+
+
+  logout() {
+    localStorage.removeItem('dr_user');
+    this.router.navigateByUrl('/login');
   }
 }

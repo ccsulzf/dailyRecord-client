@@ -91,7 +91,7 @@ export class DashboardService {
                     name: item.expenseCategoryName,
                     amount: item.amount
                 };
-                hasExpenseBook.amount += item.amount;
+                hasExpenseBook.amount += (+item.amount);
                 hasExpenseBook['child'].push(temp);
             } else {
                 const expenseBook = {
@@ -100,7 +100,7 @@ export class DashboardService {
                     level: 0,
                     isExpanded: false,
                     name: item.expenseBookName,
-                    amount: item.amount,
+                    amount: +item.amount,
                     child: []
                 };
                 list.push(expenseBook);
@@ -110,7 +110,7 @@ export class DashboardService {
                     level: 1,
                     isExpanded: false,
                     name: item.expenseCategoryName,
-                    amount: item.amount
+                    amount: +item.amount
                 };
                 expenseBook['child'].push(expenseCategory);
             }
@@ -125,6 +125,7 @@ export class DashboardService {
             nodeList.push(item);
             nodeList = [...nodeList, ...child];
         }
+        console.log(nodeList);
         return nodeList;
     }
 

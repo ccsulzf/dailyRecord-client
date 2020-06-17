@@ -3,6 +3,7 @@
 // @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ag-grid-community/dist/styles/ag-theme-material.css";
 
+
 html,
 body {
   height: 100vh;
@@ -11,7 +12,6 @@ body {
 .pre-line {
   white-space: pre-line;
 }
-
 
 * {
   box-sizing: border-box;
@@ -71,5 +71,12 @@ body:not(.dark) ::-webkit-scrollbar-thumb {
   background-clip: content-box;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

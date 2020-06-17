@@ -10,7 +10,7 @@ import { FormBuilder, Validators, ValidatorFn, AbstractControl, FormGroup } from
 })
 export class LoginComponent implements OnInit {
 
-  isLoginForm = false;
+  isLoginForm = true;
 
   constructor(
     private http: HttpClient,
@@ -52,15 +52,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.http.post('/login', this.loginForm.value).toPromise().then((data) => {
+      if (data) {
+        localStorage.setItem('dr_user', JSON.stringify(data));
+        this.router.navigateByUrl('/dashboard');
+      }
+    }, (error) => {
 
-    // this.http.post('/login', { name: this.name, password: this.password }).toPromise().then((data) => {
-    //   if (data) {
-    //     localStorage.setItem('dr_user', JSON.stringify(data));
-    //     this.router.navigateByUrl('/dashboard');
-    //   }
-    // }, (error) => {
-
-    // });
+    });
   }
 
   register() {
