@@ -16,22 +16,21 @@ export class ExpenseService {
     public list = [];
     public totalAmount = 0;
 
-    public expenseDetailDate = new Date();
+    public expenseDetailDate = moment(new Date()).format('YYYY-MM-DD');
     constructor(
         private http: HttpClient,
         private baseDataService: BaseDataService
     ) { }
 
     add(expenseDetail) {
-        expenseDetail.expenseDate = moment(expenseDetail.expenseDate).format('YYYY/MM/DD');
         return this.http.post('/expense/add', expenseDetail).pipe(
             map((data: any) => {
                 this.baseDataService.addBaseData(data.baseData);
-                if (expenseDetail.expenseDate ===  moment(this.expenseDetailDate).format('YYYY/MM/DD')) {
+                if (expenseDetail.expenseDate === this.expenseDetailDate) {
                     this.originExpenseDetailList.push(data.expenseDetail);
                     this.list = this.composeData();
                 } else {
-                    this.expenseDetailDate = new Date(expenseDetail.expenseDate);
+                    this.expenseDetailDate = expenseDetail.expenseDate;
                     this.getList();
                 }
                 return data;
@@ -40,16 +39,15 @@ export class ExpenseService {
     }
 
     edit(expenseDetail) {
-        expenseDetail.expenseDate = moment(expenseDetail.expenseDate).format('YYYY/MM/DD');
         return this.http.post('/expense/edit', expenseDetail).pipe(
             map((data: any) => {
                 this.baseDataService.addBaseData(data.baseData);
-                if (expenseDetail.expenseDate ===  moment(this.expenseDetailDate).format('YYYY/MM/DD')) {
+                if (expenseDetail.expenseDate === this.expenseDetailDate) {
                     _.remove(this.originExpenseDetailList, item => item.id === expenseDetail.id);
                     this.originExpenseDetailList.push(data.expenseDetail);
                     this.list = this.composeData();
                 } else {
-                    this.expenseDetailDate = new Date(expenseDetail.expenseDate);
+                    this.expenseDetailDate = expenseDetail.expenseDate;
                     this.getList();
                 }
                 return data;
@@ -84,8 +82,7 @@ export class ExpenseService {
     }
 
     getList() {
-        const date =  moment(this.expenseDetailDate).format('YYYY/MM/DD');
-        this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${date}`).toPromise().then((data) => {
+        this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${this.expenseDetailDate}`).toPromise().then((data) => {
             if (data) {
                 this.originExpenseDetailList = data;
                 this.list = this.composeData();
@@ -116,7 +113,4 @@ export class ExpenseService {
         }
         return dataList;
     }
-
-
-
 }

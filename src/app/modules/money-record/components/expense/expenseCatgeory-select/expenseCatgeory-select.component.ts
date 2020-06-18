@@ -91,7 +91,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    data = data || { id: '', name: '', userId: this.user.id };
+    data = data || { id: '', name: '', userId: this.user.id, isHide: false };
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
     this.itemSelectControl.markAsPristine();
@@ -142,7 +142,8 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         id: '',
         name: value,
         userId: this.user.id,
-        expenseBookId: this.expenseBookId
+        expenseBookId: this.expenseBookId,
+        isHide: false
       });
     }
   }

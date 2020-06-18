@@ -24,6 +24,9 @@ import { MonthCalendarComponent } from './dashboard/month-calendar/month-calenda
 import { DashboardService } from './services';
 import { MonthCategoryExpenseComponent } from './dashboard/month-category-expense/month-category-expense.component';
 import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/month-category-income.component';
+import { VerifyEmailComponent } from './password/verify-email/verify-email.component';
+import { RegisterComponent } from './password/register/register.component';
+import { DailyRecordAdComponent } from './password/daily-record-ad/daily-record-ad.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,10 @@ import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/
     DashboardComponent,
     MonthCalendarComponent,
     MonthCategoryExpenseComponent,
-    MonthCategoryIncomeComponent
+    MonthCategoryIncomeComponent,
+    VerifyEmailComponent,
+    RegisterComponent,
+    DailyRecordAdComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,7 @@ import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/
     CdkTreeModule,
     MatListModule
   ],
+  exports: [DailyRecordAdComponent],
   providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef, DashboardService],
   bootstrap: [AppComponent]
 })

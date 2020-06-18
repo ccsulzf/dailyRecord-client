@@ -1,0 +1,60 @@
+@import "color";
+
+.verify-success {
+  text-align: center;
+  color: $expense;
+}
+
+.verify-fail {
+  text-align: center;
+
+  p {
+    &:first-of-type {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    &:last-of-type {
+      color: $expense;
+    }
+  }
+
+}
+
+p {
+  span {
+    &:first-of-type {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    &:last-of-type {
+      cursor: pointer;
+    }
+  }
+}
+
+img {
+  width: 500px;
+  height: 500px;
+}
+
+
+@media screen and (max-width: 600px) {
+  img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .verify-success {
+    p {
+      span {
+
+        &:last-of-type {
+          display: none;
+        }
+      }
+    }
+  }
+
+}

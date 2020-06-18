@@ -36,9 +36,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    console.log(data);
     this.dateFormControl.setValidators(Validators.required);
-    this.dateFormControl.patchValue(data);
+    this.dateFormControl.patchValue(moment(data).format('YYYY-MM-DD'));
   }
 
   registerOnChange(fn: any): void {
@@ -51,7 +50,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   dateSelect(event: MatDatepickerInputEvent<Date>) {
     // this.dateFormControl.setValue(moment(event.value).format('YYYY/MM/DD'));
     this.dateFormControl.setValue(event.value);
-    this.propagateChange(moment(event.value).format('YYYY/MM/DD'));
+    this.propagateChange(moment(event.value).format('YYYY-MM-DD'));
   }
 
 

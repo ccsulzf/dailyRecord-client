@@ -36,7 +36,6 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log(this.router.url);
     }
 
 

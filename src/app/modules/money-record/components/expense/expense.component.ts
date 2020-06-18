@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { MessageService, BaseDataService } from '../../../../services';
 import { ExpenseService } from '../../services';
+import * as moment from 'moment';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -27,7 +28,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     id: [''],
     userId: [this.user.id],
     expenseBook: [''],
-    expenseDate: [new Date()],
+    expenseDate: [moment(new Date()).format('YYYY-MM-DD')],
     address: [''],
     expenseCategory: [''],
     expenseStore: [''],
@@ -43,7 +44,6 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getExpenseDetailSub = this.expenseService.getDetail().subscribe((value: any) => {
       if (value) {
-        console.log(value);
         this.isAdd = false;
         this.expenseForm.patchValue({
           id: value.id,
@@ -105,7 +105,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
 
   onReset() {
     this.expenseForm.patchValue({
-      expenseDate: new Date(),
+      expenseDate: moment(new Date()).format('YYYY-MM-DD'),
       expenseStore: '',
       account: '',
       peoples: [],

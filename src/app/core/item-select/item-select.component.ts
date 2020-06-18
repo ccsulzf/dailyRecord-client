@@ -83,7 +83,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    data = data || { id: '', name: '', userId: this.user.id };
+    data = data || { id: '', name: '', userId: this.user.id, isHide: false };
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
     this.propagateChange(data);
@@ -126,6 +126,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
         id: '',
         name: value,
         userId: this.user.id,
+        isHide: false
       });
     }
   }

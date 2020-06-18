@@ -5,4 +5,7 @@
   <mat-error *ngIf="moenyInputControl.hasError('required')">
     金额是<strong>必填项</strong>
   </mat-error>
+  <mat-error *ngIf="moenyInputControl.hasError('pattern')">
+    金额精度<strong>分</strong>
+  </mat-error>
 </mat-form-field>

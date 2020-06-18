@@ -1,31 +1,7 @@
 <main>
   <!-- 宣传部分 -->
   <section>
-    <div class="title">
-      <p>DailyRecord</p>
-      <!-- <span>accurate, efficient and simple</span> -->
-    </div>
-
-    <div class="dailyRecord-ad">
-      <p class="info">
-        隐私数据，超级保护。
-      </p>
-      <img src="../../../assets/images/login/safty.svg">
-    </div>
-
-    <div class="dailyRecord-ad">
-      <img src="../../../assets/images/login/income-expense.svg">
-      <p class="info">
-        记账，从此更有意义。
-      </p>
-    </div>
-
-    <div class="dailyRecord-ad">
-      <p class="info">
-        报表，更是头头是道。
-      </p>
-      <img src="../../../assets/images/login/profile_analysis.svg">
-    </div>
+    <dailyRecord-ad></dailyRecord-ad>
   </section>
 
   <!-- 登录部分 -->
@@ -34,7 +10,7 @@
       <p>记账，</p>
       <p>从现在开始。</p>
     </div>
-    <form [style.display]="!isLoginForm ? 'none':'flex'" [formGroup]="loginForm" (ngSubmit)="login()">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
       <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>昵称或邮箱</mat-label>
         <input type="text" autocomplete="off" required formControlName="nameOrEmail" placeholder="请输入昵称或邮箱" matInput>
@@ -46,46 +22,9 @@
       <button type="submit" mat-raised-button color="primary">登 录</button>
     </form>
 
-    <form [style.display]="isLoginForm ? 'none':'flex'" [formGroup]="registerForm" (ngSubmit)="register()">
-      <mat-form-field floatLabel="always" appearance="outline">
-        <mat-label>昵称</mat-label>
-        <input type="text" autocomplete="off" maxlength="30" required formControlName="name" placeholder="请输入昵称"
-          matInput>
-      </mat-form-field>
-      <mat-form-field floatLabel="always" appearance="outline">
-        <mat-label>邮箱</mat-label>
-        <input type="email" autocomplete="off" required formControlName="email" placeholder="请输入邮箱" matInput>
-      </mat-form-field>
-      <mat-form-field floatLabel="always" appearance="outline">
-        <mat-label>密码</mat-label>
-        <input type="password" autocomplete="off" minlength="6" maxlength="20" required formControlName="password"
-          placeholder="请输入你的密码" matInput>
-        <mat-error *ngIf="registerForm.get('password').errors && registerForm.get('password').errors.minlength">
-          密码不少于6位
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field floatLabel="always" appearance="outline">
-        <mat-label>确认密码</mat-label>
-        <input type="password" autocomplete="off" required formControlName="confirmPWD" placeholder="请再次输入你的密码"
-          matInput>
-        <mat-error
-          *ngIf="registerForm.get('confirmPWD').errors && registerForm.get('confirmPWD').errors.notEquivalent ">
-          两次密码不相同
-        </mat-error>
-      </mat-form-field>
-
-      <button type="submit" mat-raised-button color="primary">注 册</button>
-    </form>
-
-    <p class="goto-register" *ngIf="isLoginForm">
+    <p class="goto-register">
       <span>还没账号?</span>
-      <a (click)="isLoginForm = false">立即注册</a>
+      <a (click)="gotoRegister()">立即注册</a>
     </p>
-
-    <p class="goto-register" *ngIf="!isLoginForm">
-      <span>已有账号?</span>
-      <a (click)="isLoginForm = true">立即登录</a>
-    </p>
-
   </aside>
 </main>

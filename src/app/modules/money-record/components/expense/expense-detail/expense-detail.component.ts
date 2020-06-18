@@ -25,7 +25,7 @@ export class ExpenseDetailComponent implements OnInit {
   }
 
   dateSelect(event: MatDatepickerInputEvent<Date>) {
-    this.expenseService.expenseDetailDate = event.value;
+    this.expenseService.expenseDetailDate = moment(event.value).format('YYYY-MM-DD');
     this.expenseService.getList();
   }
 

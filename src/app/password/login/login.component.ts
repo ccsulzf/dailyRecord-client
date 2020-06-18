@@ -10,8 +10,6 @@ import { FormBuilder, Validators, ValidatorFn, AbstractControl, FormGroup } from
 })
 export class LoginComponent implements OnInit {
 
-  isLoginForm = true;
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -23,30 +21,8 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-  registerForm = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
-    confirmPWD: ['', [Validators.required]],
-  }, {
-    validator: this.checkIfMatchingPasswords('password', 'confirmPWD')
-  });
 
-  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    return (group: FormGroup) => {
-      const passwordInput = group.controls[passwordKey];
-      const passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({ notEquivalent: true });
-      } else {
-        if (passwordConfirmationInput.value) {
-          return passwordConfirmationInput.setErrors(null);
-        } else {
-          return passwordConfirmationInput.setErrors({ required: true });
-        }
-      }
-    }
-  }
+
   ngOnInit() {
 
   }
@@ -62,8 +38,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  register() {
-    console.log(this.registerForm);
-  }
 
+  gotoRegister() {
+    this.router.navigateByUrl('/register');
+  }
 }
