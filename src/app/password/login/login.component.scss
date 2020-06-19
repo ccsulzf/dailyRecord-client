@@ -8,6 +8,7 @@ main {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 10px;
+  border-radius: 4px;
 }
 
 
@@ -17,6 +18,11 @@ section {
   box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
 }
 
+mat-error {
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: .9em;
+}
 
 aside {
   grid-column: span 5;
@@ -122,5 +128,5 @@ aside {
 }
 
 input::-webkit-input-placeholder {
-  font-size: .6em;
+  font-size: .9em;
 }

@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'verify-email/:code',
     component: VerifyEmailComponent
+  },
+  {
+    path: '**',
+    component: LoginComponent
   }
 ];
 

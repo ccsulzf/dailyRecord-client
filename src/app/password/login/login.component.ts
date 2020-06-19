@@ -9,7 +9,7 @@ import { FormBuilder, Validators, ValidatorFn, AbstractControl, FormGroup } from
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  isLoginError = false;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -21,17 +21,19 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-
-
   ngOnInit() {
 
   }
 
   login() {
     this.http.post('/login', this.loginForm.value).toPromise().then((data) => {
+      console.log(data);
       if (data) {
         localStorage.setItem('dr_user', JSON.stringify(data));
         this.router.navigateByUrl('/dashboard');
+        this.isLoginError = false;
+      } else {
+        this.isLoginError = true;
       }
     }, (error) => {
 

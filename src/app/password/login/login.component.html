@@ -11,6 +11,7 @@
       <p>从现在开始。</p>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-error *ngIf="isLoginError">用户名或密码不匹配</mat-error>
       <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>昵称或邮箱</mat-label>
         <input type="text" autocomplete="off" required formControlName="nameOrEmail" placeholder="请输入昵称或邮箱" matInput>
