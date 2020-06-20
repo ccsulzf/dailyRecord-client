@@ -10,7 +10,7 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-hint *ngIf="selectedLabels && selectedLabels.length" align="end">total {{selectedLabels?.length}} label selected</mat-hint>
+  <mat-hint *ngIf="selectedLabels && selectedLabels.length" align="end">已选{{selectedLabels?.length}}个标签</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let label of filteredLabel | async" [value]="label">

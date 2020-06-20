@@ -54,7 +54,7 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
     this.baseDataService.getAddBaseData().subscribe((data: any) => {
       for (let key in data) {
         if (key === 'label') {
-          this.allLabels = [...this.allLabels, data[key]];
+          this.allLabels = [...this.allLabels, ...data[key]];
         }
       }
     });
@@ -86,7 +86,8 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
       if ((value || '').trim()) {
         this.selectedLabels.push({
           id: '',
-          name: value.trim()
+          name: value.trim(),
+          isHide: false
         });
       }
 

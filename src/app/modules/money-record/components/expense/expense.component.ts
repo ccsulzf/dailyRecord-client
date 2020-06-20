@@ -35,8 +35,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     content: [''],
     account: [''],
     amount: [''],
-    peoples: [[]],
-    labels: [[]],
+    people: [[]],
+    label: [[]],
     memo: ['']
   });
 
@@ -56,8 +56,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
           expenseStore: value.expenseStore,
           expenseCategory: value.expenseCategory,
           account: value.account,
-          labels: value.labels,
-          peoples: value.peoples
+          label: value.label,
+          people: value.people
         });
       }
     });
@@ -67,8 +67,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     this.expenseService.add(this.expenseForm.value).then((data: any) => {
       this.messageService.success('新增成功!');
       this.expenseForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
@@ -83,8 +83,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     this.expenseService.edit(this.expenseForm.value).then((data: any) => {
       this.messageService.success('编辑成功!');
       this.expenseForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
@@ -108,8 +108,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
       expenseDate: moment(new Date()).format('YYYY-MM-DD'),
       expenseStore: '',
       account: '',
-      peoples: [],
-      labels: [],
+      people: [],
+      label: [],
       memo: '',
       amount: '',
       content: ''

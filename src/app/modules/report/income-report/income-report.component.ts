@@ -74,11 +74,11 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
         },
       },
       {
-        headerName: 'Peoples', field: 'peoples',
+        headerName: 'Peoples', field: 'people',
         cellRenderer: 'labelPeopleRenderer',
       },
       {
-        headerName: '参与人', field: 'labels',
+        headerName: '参与人', field: 'label',
         cellRenderer: 'labelPeopleRenderer',
       },
       { headerName: '标签', field: 'memo', tooltipField: 'memo', },

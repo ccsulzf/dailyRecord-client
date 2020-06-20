@@ -45,7 +45,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
 
 
   ngOnInit() {
-    this.baseDataService.getBaseData('label').then((data: any) => {
+    this.baseDataService.getBaseData('people').then((data: any) => {
       this.allPeoples = data;
       this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
         startWith(null),
@@ -55,7 +55,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
     this.baseDataService.getAddBaseData().subscribe((data: any) => {
       for (let key in data) {
         if (key === 'people') {
-          this.allPeoples = [...this.allPeoples, data[key]];
+          this.allPeoples = [...this.allPeoples, ...data[key]];
         }
       }
     });
@@ -89,7 +89,8 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
       if ((value || '').trim()) {
         this.selectedPeoples.push({
           id: '',
-          name: value.trim()
+          name: value.trim(),
+          isHide:false
         });
       }
 

@@ -87,11 +87,11 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         },
       },
       {
-        headerName: '参与人', field: 'peoples',
+        headerName: '参与人', field: 'people',
         cellRenderer: 'labelPeopleRenderer',
       },
       {
-        headerName: '标签', field: 'labels',
+        headerName: '标签', field: 'label',
         cellRenderer: 'labelPeopleRenderer',
       },
       {

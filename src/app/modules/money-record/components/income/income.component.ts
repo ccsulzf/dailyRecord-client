@@ -34,8 +34,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
     content: [''],
     account: [''],
     amount: [''],
-    peoples: [[]],
-    labels: [[]],
+    people: [[]],
+    label: [[]],
     memo: ['']
   });
 
@@ -52,8 +52,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
         incomeStore: value.incomeStore,
         incomeCategory: value.incomeCategory,
         account: value.account,
-        labels: value.labels,
-        peoples: value.peoples
+        label: value.label,
+        people: value.people
       });
     });
 
@@ -63,8 +63,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.incomeService.add(this.incomeForm.value).then((data: any) => {
       this.messageService.success('新增成功!');
       this.incomeForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
@@ -79,8 +79,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
     this.incomeService.edit(this.incomeForm.value).then((data: any) => {
       this.messageService.success('编辑成功!');
       this.incomeForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
@@ -96,8 +96,8 @@ export class IncomeComponent implements OnInit, OnDestroy {
       incomeDate: moment(new Date()).format('YYYY-MM-DD'),
       incomeStore: '',
       account: '',
-      peoples: [],
-      labels: [],
+      people: [],
+      label: [],
       memo: '',
       amount: '',
       content: ''
