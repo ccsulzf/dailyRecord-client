@@ -17,6 +17,7 @@ export class ExpenseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.expenseService.expenseDetailDate = moment(new Date()).format('YYYY-MM-DD');
     this.expenseService.getList();
   }
 

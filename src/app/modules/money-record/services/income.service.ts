@@ -92,7 +92,8 @@ export class IncomeService {
     composeData() {
         const dataList = [];
         this.totalAmount = 0;
-        for (const item of this.originIncomeDetailList) {
+        const list = _.sortBy(this.originIncomeDetailList,[function(o) { return o.incomeDetailDate; }]);
+        for (const item of list) {
             this.totalAmount += item.amount;
             const hasIncomeDate = _.find(dataList, (temp) => {
                 return temp['incomeDate'] === item['incomeDate'];

@@ -63,7 +63,21 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * 总是发现账本和类别的对应不上
+   */
+  debugExpense() {
+    const expenseBook = this.expenseForm.value['expenseBook'];
+    const expenseCategory = this.expenseForm.value['expenseCategory'];
+
+    if(expenseBook.id !== expenseCategory['expenseBook'].id){
+      alert('出现BUG,请到控制台查看输出');
+      console.log(this.expenseForm.value);
+    }
+  }
+
   onSubmit() {
+   this.debugExpense();
     this.expenseService.add(this.expenseForm.value).then((data: any) => {
       this.messageService.success('新增成功!');
       this.expenseForm.patchValue({
@@ -80,6 +94,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   editExpense() {
+    this.debugExpense();
     this.expenseService.edit(this.expenseForm.value).then((data: any) => {
       this.messageService.success('编辑成功!');
       this.expenseForm.patchValue({
@@ -90,6 +105,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
         content: ''
       });
       this.expenseForm.markAsPristine();
+      this.isAdd = true;
     }).catch((error) => {
       this.messageService.error('编辑失败');
     });
