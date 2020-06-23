@@ -23,6 +23,7 @@ export const CONTENT_INPUT_ACCESSOR: any = {
 })
 
 export class ContentInputComponent implements OnInit, ControlValueAccessor {
+  @Input() name;
   matcher = new ContentInputErrorStateMatcher();
   contentInputControl = new FormControl();
   constructor() { }

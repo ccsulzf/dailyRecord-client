@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 interface FoodNode {
@@ -10,27 +10,25 @@ interface FoodNode {
 
 const TREE_DATA: FoodNode[] = [
   {
-    name: 'Index',
+    name: '首页',
     path: '/dashboard'
   }, {
-    name: 'Money Record',
+    name: '收支',
     children: [
-      { name: 'Expense', path: '/record/expense' },
-      { name: 'Income', path: '/record/income' }
+      { name: '支出', path: '/record/expense' },
+      { name: '收入', path: '/record/income' }
     ]
   }, {
-    name: 'Report',
+    name: '报表',
     children: [
-      { name: 'Expense Report', path: '/report/expense' },
-      { name: 'Income Report', path: '/report/income' },
-      // { name: 'Money Report' }
+      { name: '支出报表', path: '/report/expense' },
+      { name: '收入报表', path: '/report/income' },
     ]
   },
   {
-    name: 'Setting',
+    name: '设置',
     children: [
-      // { name: 'Person Info' },
-      { name: 'BaseData', path: '/setting/baseData' }
+      { name: '基础数据', path: '/setting/baseData' }
     ]
   }
 ];
@@ -69,7 +67,7 @@ export class NavComponent implements OnInit, AfterViewInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private router: Router,
+    private router: Router
   ) {
     this.dataSource.data = TREE_DATA;
   }
@@ -86,11 +84,7 @@ export class NavComponent implements OnInit, AfterViewInit {
       });
     }.bind(this);
 
-    this.router.events.subscribe((data) => {
-      if (data instanceof NavigationStart) {
-        find(TREE_DATA, data.url);
-      }
-    });
+    find(TREE_DATA, this.router.url);
   }
 
   ngAfterViewInit() {
@@ -104,5 +98,11 @@ export class NavComponent implements OnInit, AfterViewInit {
       this.currenNodeName = node.name;
       this.router.navigateByUrl(node.path);
     }
+  }
+
+
+  logout() {
+    localStorage.removeItem('dr_user');
+    this.router.navigateByUrl('/login');
   }
 }

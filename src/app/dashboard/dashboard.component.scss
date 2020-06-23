@@ -1,0 +1,100 @@
+@import 'color';
+
+main {
+  height: 100%;
+  padding: 10px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 150px calc(100% - 150px);
+  box-sizing: border-box;
+  grid-row-gap: 10px;
+}
+
+.income-expense {
+  grid-column: span 12;
+  grid-row: span 1;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  display: grid;
+
+  .month-item {
+    border-radius: 6px 6px 0 0;
+    border-top-width: 6px;
+    border-top-style: solid;
+  }
+}
+
+.month-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    // flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 1.4em;
+    font-weight: 500;
+  }
+}
+
+.month-expense,
+.month-income {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    // flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+
+    &:last-of-type {
+      font-size: 1.4em;
+      font-weight: 500;
+    }
+  }
+}
+
+.month-expense {
+  border-top-color: $expense;
+
+  p {
+    &:last-of-type {
+      color: $expense;
+    }
+  }
+}
+
+.month-income {
+  border-top-color: $income;
+
+  p {
+    &:last-of-type {
+      color: $income;
+    }
+  }
+}
+
+
+.calendar-category {
+  grid-column: span 12;
+  grid-row: span 1;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  column-gap: 20px;
+
+  .calendar {
+    grid-column: span 17;
+  }
+
+  .category {
+    grid-column: span 7;
+    overflow-y: auto;
+  }
+}

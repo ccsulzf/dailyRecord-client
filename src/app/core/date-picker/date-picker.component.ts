@@ -37,7 +37,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
 
   writeValue(data: any): void {
     this.dateFormControl.setValidators(Validators.required);
-    this.dateFormControl.setValue(data);
+    this.dateFormControl.patchValue(moment(data).format('YYYY-MM-DD'));
   }
 
   registerOnChange(fn: any): void {

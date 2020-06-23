@@ -1,14 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as income from 'src/app/reducers/income.reducer';
+import { Subscription } from 'rxjs';
 import * as moment from 'moment';
-
-import { addBaseData } from '../../../../actions/baseData.action';
-import { addIncomeDetail, editIncomeDetail, delIncomeDetail, resetIncomeDetail } from '../../../../actions/income.action';
-import { MessageService } from '../../../../message.service';
+import { MessageService } from '../../../../services/message.service';
+import { IncomeService } from '../../services';
 @Component({
   selector: 'app-income',
   templateUrl: './income.component.html',
@@ -18,92 +14,90 @@ export class IncomeComponent implements OnInit, OnDestroy {
   private user = JSON.parse(localStorage.getItem('dr_user'));
 
   isAdd = true;
-  getIncomeDetail$: Observable<any>;
+  getIncomeDetailSub: Subscription;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private store: Store<any>,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public incomeService: IncomeService
   ) {
-    this.getIncomeDetail$ = store.select(income.getIncomeDetail);
+
   }
 
   incomeForm = this.fb.group({
     id: [''],
     userId: [this.user.id],
-    incomeDate: [new Date()],
+    incomeDate: [moment(new Date()).format('YYYY-MM-DD')],
     address: [''],
     incomeCategory: [''],
     incomeStore: [''],
     content: [''],
     account: [''],
     amount: [''],
-    peoples: [[]],
-    labels: [[]],
+    people: [[]],
+    label: [[]],
     memo: ['']
   });
 
   ngOnInit() {
-    this.getIncomeDetail$.subscribe((value) => {
-      if (value) {
-        this.isAdd = false;
-        this.incomeForm.patchValue({
-          id: value.id,
-          incomeDate: value.incomeDate,
-          amount: value.amount,
-          content: value.content,
-          memo: value.memo,
-          address: value.address,
-          incomeStore: value.incomeStore,
-          incomeCategory: value.incomeCategory,
-          account: value.account,
-          labels: value.labels,
-          peoples: value.peoples
-        });
-      }
+    this.getIncomeDetailSub = this.incomeService.getDetail().subscribe((value: any) => {
+      this.isAdd = false;
+      this.incomeForm.patchValue({
+        id: value.id,
+        incomeDate: value.incomeDate,
+        amount: value.amount / 100,
+        content: value.content,
+        memo: value.memo,
+        address: value.address,
+        incomeStore: value.incomeStore,
+        incomeCategory: value.incomeCategory,
+        account: value.account,
+        label: value.label,
+        people: value.people
+      });
     });
+
   }
 
   onSubmit() {
-    const body = this.incomeForm.value;
-    body.incomeDate = moment(body.incomeDate).format('YYYY-MM-DD');
-    this.http.post('/income/add', body).toPromise().then((data: any) => {
-      this.messageService.success('Add Income Succes!');
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(addIncomeDetail(data.incomeDetail));
+    this.incomeService.add(this.incomeForm.value).then((data: any) => {
+      this.messageService.success('新增成功!');
       this.incomeForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
       });
       this.incomeForm.markAsPristine();
     }).catch((error) => {
-      this.messageService.success('Add Income Failed!');
+      this.messageService.error('新增失败');
     });
   }
 
   editIncome() {
-    this.http.post('/income/edit', this.incomeForm.value).toPromise().then((data: any) => {
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(editIncomeDetail({
-        oldId: this.incomeForm.value.id,
-        incomeDetail: data.incomeDetail
-      }));
-      this.cancel();
+    this.incomeService.edit(this.incomeForm.value).then((data: any) => {
+      this.messageService.success('编辑成功!');
+      this.incomeForm.patchValue({
+        people: [],
+        label: [],
+        memo: '',
+        amount: '',
+        content: ''
+      });
+      this.incomeForm.markAsPristine();
     }).catch((error) => {
-      console.log(error);
+      this.messageService.error('编辑失败');
     });
   }
 
   onReset() {
     this.incomeForm.patchValue({
-      incomeDate: new Date(),
+      incomeDate: moment(new Date()).format('YYYY-MM-DD'),
       incomeStore: '',
       account: '',
-      peoples: [],
-      labels: [],
+      people: [],
+      label: [],
       memo: '',
       amount: '',
       content: ''
@@ -112,13 +106,11 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   deleteIncome() {
-    this.http.get(`/income/del?userId=${this.user.id}&id=${this.incomeForm.value.id}`).toPromise()
-      .then((data) => {
-        this.store.dispatch(delIncomeDetail({ id: this.incomeForm.value.id }));
-        this.cancel();
-      }).catch((error) => {
-        console.log(error);
-      })
+    this.incomeService.del(this.incomeForm.value.id).then((data: any) => {
+      this.cancel();
+    }).catch((error) => {
+      this.messageService.error('删除失败');
+    });
   }
 
   cancel() {
@@ -127,7 +119,9 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(resetIncomeDetail(null));
+    if (this.getIncomeDetailSub) {
+      this.getIncomeDetailSub.unsubscribe();
+    }
   }
 
 }

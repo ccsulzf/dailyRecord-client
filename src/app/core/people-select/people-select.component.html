@@ -1,5 +1,5 @@
 <mat-form-field class="full-width">
-  <mat-label>Pick Person</mat-label>
+  <mat-label>参与人</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip *ngFor="let people of selectedPeoples" [selectable]="selectable" [removable]="removable" (removed)="remove(people.name)">
       <mat-icon>person_outline</mat-icon>
@@ -10,7 +10,7 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-hint *ngIf="selectedPeoples && selectedPeoples.length" align="end">total {{selectedPeoples?.length}} people selected</mat-hint>
+  <mat-hint *ngIf="selectedPeoples && selectedPeoples.length" align="end">已选{{selectedPeoples?.length}}参与人</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let people of filteredPeolple | async" [value]="people">

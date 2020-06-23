@@ -7,25 +7,25 @@
         </div>
 
         <div class="address item">
-          <app-item-select [name]="'Address'" [model]="'address'" formControlName="address"></app-item-select>
+          <app-item-select [name]="'地点'" [model]="'address'" formControlName="address"></app-item-select>
         </div>
 
         <div class="category item">
-          <app-item-select [name]="'Category'" [model]="'incomeCategory'" formControlName="incomeCategory">
+          <app-item-select [name]="'类别'" [model]="'incomeCategory'" formControlName="incomeCategory">
           </app-item-select>
         </div>
 
         <div class="store item">
-          <app-item-select [name]="'Store'" [model]="'incomeStore'" formControlName="incomeStore"></app-item-select>
+          <app-item-select [name]="'来源'" [model]="'incomeStore'" formControlName="incomeStore"></app-item-select>
         </div>
 
         <div class="content">
-          <app-content-input formControlName="content"></app-content-input>
+          <app-content-input [name]="'收入'" formControlName="content"></app-content-input>
         </div>
 
         <div class="moeny">
           <div class="money-select">
-            <app-item-select [name]="'Account'" [model]="'account'" formControlName="account"></app-item-select>
+            <app-item-select [name]="'账户'" [model]="'account'" formControlName="account"></app-item-select>
           </div>
           <div class="moent-input">
             <app-money-input formControlName="amount"></app-money-input>
@@ -33,11 +33,11 @@
         </div>
 
         <div class="person">
-          <app-people-select formControlName="peoples"></app-people-select>
+          <app-people-select formControlName="people"></app-people-select>
         </div>
 
         <div class="label">
-          <app-label-select formControlName="labels"></app-label-select>
+          <app-label-select formControlName="label"></app-label-select>
         </div>
 
         <div class="memo">
@@ -45,13 +45,13 @@
         </div>
       </div>
       <div class="btn-group" *ngIf="isAdd">
-        <button mat-raised-button type="submit" color="primary">Add Income</button>
-        <button mat-raised-button color="accent">Reset</button>
+        <button mat-raised-button type="submit" color="primary">新 增 收 入</button>
+        <button mat-raised-button color="accent">重 置</button>
       </div>
       <div class="btn-group" *ngIf="!isAdd">
         <div>
-          <button mat-raised-button type="button" color="primary" (click)="editIncome()">Edit Income</button>
-          <button mat-raised-button color="accent" type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button type="button" color="primary" (click)="editIncome()">编 辑</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancel()">取 消</button>
         </div>
         <button mat-icon-button type="button" (click)="deleteIncome()" color="warn">
           <mat-icon>delete</mat-icon>

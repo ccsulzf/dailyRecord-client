@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import {
   MatSliderModule, MatButtonModule, MatSnackBarModule, MatFormFieldModule,
-  MatInputModule, MatDividerModule, MatIconModule
+  MatInputModule, MatDividerModule, MatIconModule, MatListModule
 } from '@angular/material';
 import { ShareModule } from './share/share.module';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -12,18 +12,33 @@ import { LayoutComponent } from './layout/layout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { expenseReducer, baseDataReducer, incomeReducer } from './reducers';
 
+import { CdkTreeModule, CdkTreeNodeDef } from '@angular/cdk/tree';
 
 import { httpInterceptorProviders } from './http-interceptors';
-import { MessageService } from './message.service';
+import { MessageService } from './services/message.service';
 import { LoginComponent } from './password/login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MonthCalendarComponent } from './dashboard/month-calendar/month-calendar.component';
+
+import { DashboardService } from './services';
+import { MonthCategoryExpenseComponent } from './dashboard/month-category-expense/month-category-expense.component';
+import { MonthCategoryIncomeComponent } from './dashboard/month-category-income/month-category-income.component';
+import { VerifyEmailComponent } from './password/verify-email/verify-email.component';
+import { RegisterComponent } from './password/register/register.component';
+import { DailyRecordAdComponent } from './password/daily-record-ad/daily-record-ad.component';
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    MonthCalendarComponent,
+    MonthCategoryExpenseComponent,
+    MonthCategoryIncomeComponent,
+    VerifyEmailComponent,
+    RegisterComponent,
+    DailyRecordAdComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +56,11 @@ import { LoginComponent } from './password/login/login.component';
     MatInputModule,
     MatDividerModule,
     MatIconModule,
-    StoreModule.forRoot({ expense: expenseReducer, baseData: baseDataReducer, income: incomeReducer })
+    CdkTreeModule,
+    MatListModule
   ],
-  providers: [httpInterceptorProviders, MessageService],
+  exports: [DailyRecordAdComponent],
+  providers: [httpInterceptorProviders, MessageService, CdkTreeNodeDef, DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

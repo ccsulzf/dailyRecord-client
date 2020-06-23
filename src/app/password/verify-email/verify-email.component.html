@@ -1,0 +1,10 @@
+<div class="verify-success" *ngIf="verifyEmailType === 1">
+  <p><span>邮箱验证成功！</span><span (click)="returnLogin()">返回登录</span></p>
+  <img src="../../../assets/active_success.svg">
+</div>
+
+<div class="verify-fail" *ngIf="verifyEmailType === 2">
+  <p>oh~邮箱验证失败</p>
+  <p>请检查邮箱地址是否正确</p>
+  <img src="../../../assets/active_notfind.svg">
+</div>

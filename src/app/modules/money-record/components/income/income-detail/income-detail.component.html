@@ -1,34 +1,35 @@
 <div class="detail-content">
   <div class="detail-header">
     <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
-    <input matInput [matDatepicker]="picker" disabled [formControl]="date">
+    <input matInput [matDatepicker]="picker" name="incomeDetailDate" disabled [(ngModel)]="incomeService.incomeDetailDate">
     <mat-datepicker #picker startView="year" disabled="false" (monthSelected)="chosenMonthHandler($event, picker)">
     </mat-datepicker>
   </div>
   <div class="detail-list">
-    <mat-list class="incomeDetail-list" *ngIf="list && list.length">
-      <ng-container *ngFor="let item of list">
+    <mat-list class="incomeDetail-list" *ngIf="incomeService?.list && incomeService?.list.length; else noList">
+      <ng-container *ngFor="let item of incomeService?.list">
         <h3 mat-subheader>{{item.incomeDate}}</h3>
         <mat-list-item *ngFor="let incomeDetail of item['incomeDetailList']" (click)="select(incomeDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{incomeDetail.content}}</span>
-            <span class="detail-number">+{{incomeDetail.amount}} RMB</span>
+            <span class="detail-number">+{{incomeDetail.amount / 100}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
-
-    <div class="no-data" *ngIf="!(list && list.length)">
-      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>No Income</p>
-    </div>
+    <ng-template #noList>
+      <div class="no-data" >
+        <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+        <p>暂无收入数据</p>
+      </div>
+    </ng-template>
   </div>
 
   <mat-divider></mat-divider>
-  <div class="month-income" *ngIf="list && list.length">
-    <span>Month of the income:</span>
+  <div class="month-income" *ngIf="incomeService?.list && incomeService?.list.length">
+    <span>本月收入:</span>
     <p>
-      +{{totalAmount}}RMB
+      +{{incomeService?.totalAmount / 100}}元
     </p>
   </div>
 </div>

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './password/login/login.component';
+import { RegisterComponent } from './password/register/register.component';
+import { VerifyEmailComponent } from './password/verify-email/verify-email.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { SelectivePreloadingStrategyService } from './selective-preloading-strategy';
 import { AuthGuard } from '../auth/auth.guard';
@@ -13,7 +16,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/dashboard/dashboard.module').then(mod => mod.DashboardModule)
+        component: DashboardComponent
       },
       {
         path: 'record',
@@ -34,7 +37,18 @@ const routes: Routes = [
     ]
   }, {
     path: 'login',
-    // canActivate: [AuthGuard],
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'verify-email/:code',
+    component: VerifyEmailComponent
+  },
+  {
+    path: '**',
     component: LoginComponent
   }
 ];

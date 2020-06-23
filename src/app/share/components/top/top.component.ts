@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top.component.scss']
 })
 export class TopComponent implements OnInit {
-
+  public user = JSON.parse(localStorage.getItem('dr_user'));
   constructor() { }
 
   ngOnInit() {

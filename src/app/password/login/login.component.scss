@@ -1,60 +1,27 @@
+@import "color";
+
 main {
-  width: 950px;
-  height: 700px;
+  width: 930px;
+  height: 680px;
   background: #fff;
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 10px;
+  border-radius: 4px;
 }
 
 
 section {
   grid-column: span 7;
-  background: #673ab7;
+  background: $primary;
   box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  position: relative;
-  padding-top: 40px;
-
-  .title {
-    position: absolute;
-    font-size: 1.8em;
-    padding: 10px 0 10px 20px;
-    width: 100%;
-    color: #fff;
-    display: flex;
-    align-items: baseline;
-
-    span {
-      font-size: .6em;
-      margin-left: 10px;
-    }
-  }
 }
 
-.dailyRecord-ad {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #efefef;
-
-  &:last-of-type {
-    border-bottom: none;
-  }
-
-  .info {
-    font-size: 1.2em;
-    color: #efefef;
-    margin: 0 10px;
-    width: 50%;
-  }
-
-  img {
-    width: 50%;
-    height: 100%;
-  }
+mat-error {
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: .9em;
 }
 
 aside {
@@ -83,7 +50,7 @@ aside {
 
   .welcome {
     font-size: 2em;
-    color: #673ab7;
+    color: $primary;
 
     p {
       margin: 10px 0;
@@ -103,6 +70,18 @@ aside {
       top: -9px;
       background: #fff;
       color: rgba(0, 0, 0, .12);
+    }
+  }
+
+  .register-success {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+    img {
+      width: 200px;
+      height: 200px;
     }
   }
 
@@ -133,6 +112,21 @@ aside {
   }
 }
 
+.goto-register {
+  margin-top: 20px;
+  text-align: center;
+
+  span {
+    color: #ccc;
+  }
+
+  a {
+    margin-left: 5px;
+    color: $primary;
+    cursor: pointer;
+  }
+}
+
 input::-webkit-input-placeholder {
-  font-size: .6em;
+  font-size: .9em;
 }

@@ -37,12 +37,12 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
     const item = _.find(this.filterOption, { field: 'incomeDate' });
     this.reportIncomeService.setDefaultDate(item);
     this.columnDefs = [
-      { headerName: 'Date', field: 'incomeDate' },
-      { headerName: 'IncomeContent', field: 'content', },
+      { headerName: '日期', field: 'incomeDate' },
+      { headerName: '收入', field: 'content', },
       {
-        headerName: 'Amount', field: 'amount',
+        headerName: '金额', field: 'amount',
         cellRenderer: (params) => {
-          return params.value ? `+ ${params.value}` : '';
+          return params.value ? `+ ${params.value / 100}` : '';
         },
         cellStyle: { color: '#f44336' },
         comparator: function (valueA, valueB) {
@@ -50,38 +50,38 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       },
       {
-        headerName: 'Address', field: 'address',
+        headerName: '地点', field: 'address',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
-        headerName: 'IncomeCategory', field: 'incomeCategory',
+        headerName: '类别', field: 'incomeCategory',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
-        headerName: 'Account', field: 'account',
+        headerName: '账户', field: 'account',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
-        headerName: 'IncomeStore', field: 'incomeStore',
+        headerName: '来源', field: 'incomeStore',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
-        headerName: 'Peoples', field: 'peoples',
+        headerName: 'Peoples', field: 'people',
         cellRenderer: 'labelPeopleRenderer',
       },
       {
-        headerName: 'Labels', field: 'labels',
+        headerName: '参与人', field: 'label',
         cellRenderer: 'labelPeopleRenderer',
       },
-      { headerName: 'Memo', field: 'memo', tooltipField: 'memo', },
+      { headerName: '标签', field: 'memo', tooltipField: 'memo', },
     ];
     this.frameworkComponents = {
       customTooltip: CustomTooltip,
@@ -91,14 +91,14 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
     this.overlayLoadingTemplate =
       `<div>
       <img style="height:160px" src="../../../../assets/images/loading.svg">
-      <p>Please wait while your rows are loading</p>
+      <p>数据加载中...</p>
     </div>
   `;
 
     this.overlayNoRowsTemplate =
       `<div>
       <img style="height:160px" src="../../../../assets/images/empty.svg">
-      <p>No Income Rows</p>
+      <p>当前查询没有数据</p>
     </div>
     `;
 

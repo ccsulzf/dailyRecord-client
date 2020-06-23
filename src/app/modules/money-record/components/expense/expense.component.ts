@@ -1,15 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subscription } from 'rxjs';
+import { MessageService, BaseDataService } from '../../../../services';
+import { ExpenseService } from '../../services';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as expense from 'src/app/reducers/expense.reducer';
-
-import { addBaseData } from '../../../../actions/baseData.action';
-import { addExpenseDetail, editExpenseDetail, delExpenseDetail, resetExpenseDetail } from '../../../../actions/expense.action';
-
-import { MessageService } from '../../../../message.service';
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
@@ -19,123 +13,119 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   private user = JSON.parse(localStorage.getItem('dr_user'));
 
   isAdd = true;
-  getExpenseDetail$: Observable<any>;
+  getExpenseDetailSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private store: Store<any>,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private expenseService: ExpenseService,
+    private baseDataService: BaseDataService
   ) {
-    this.getExpenseDetail$ = store.select(expense.getExpenseDetail);
+
   }
 
   expenseForm = this.fb.group({
     id: [''],
     userId: [this.user.id],
     expenseBook: [''],
-    expenseDate: [new Date()],
+    expenseDate: [moment(new Date()).format('YYYY-MM-DD')],
     address: [''],
     expenseCategory: [''],
     expenseStore: [''],
     content: [''],
     account: [''],
     amount: [''],
-    peoples: [[]],
-    labels: [[]],
+    people: [[]],
+    label: [[]],
     memo: ['']
   });
 
 
   ngOnInit() {
-    this.getExpenseDetail$.subscribe((value) => {
+    this.getExpenseDetailSub = this.expenseService.getDetail().subscribe((value: any) => {
       if (value) {
         this.isAdd = false;
         this.expenseForm.patchValue({
           id: value.id,
           expenseBook: value.expenseBook,
           expenseDate: value.expenseDate,
-          amount: value.amount,
+          amount: value.amount / 100,
           content: value.content,
           memo: value.memo,
           address: value.address,
           expenseStore: value.expenseStore,
           expenseCategory: value.expenseCategory,
           account: value.account,
-          labels: value.labels,
-          peoples: value.peoples
+          label: value.label,
+          people: value.people
         });
       }
     });
   }
 
-  onSubmit() {
-    const body = this.expenseForm.value;
-    body.expenseDate = moment(body.expenseDate).format('YYYY-MM-DD');
-<<<<<<< HEAD
+  /**
+   * 总是发现账本和类别的对应不上
+   */
+  debugExpense() {
+    const expenseBook = this.expenseForm.value['expenseBook'];
+    const expenseCategory = this.expenseForm.value['expenseCategory'];
 
-=======
-    
->>>>>>> e5de03a4730059181a2df8d05c8df2047ee52a8f
-    this.http.post('/expense/add', body).toPromise().then((data: any) => {
-      this.messageService.success('Add Expense Succes!');
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(addExpenseDetail(data.expenseDetail));
+    if(expenseBook.id !== expenseCategory['expenseBook'].id){
+      alert('出现BUG,请到控制台查看输出');
+      console.log(this.expenseForm.value);
+    }
+  }
+
+  onSubmit() {
+   this.debugExpense();
+    this.expenseService.add(this.expenseForm.value).then((data: any) => {
+      this.messageService.success('新增成功!');
       this.expenseForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
       });
       this.expenseForm.markAsPristine();
     }).catch((error) => {
-      this.messageService.error('Add Expense Failed!');
+      this.messageService.error('新增失败');
     });
   }
 
   editExpense() {
-    this.http.post('/expense/edit', this.expenseForm.value).toPromise().then((data: any) => {
-      this.store.dispatch(addBaseData(data.baseData));
-      this.store.dispatch(editExpenseDetail({
-        oldId: this.expenseForm.value.id,
-        expenseDetail: data.expenseDetail
-      }));
-      this.cancel();
+    this.debugExpense();
+    this.expenseService.edit(this.expenseForm.value).then((data: any) => {
+      this.messageService.success('编辑成功!');
       this.expenseForm.patchValue({
-        peoples: [],
-        labels: [],
+        people: [],
+        label: [],
         memo: '',
         amount: '',
         content: ''
       });
       this.expenseForm.markAsPristine();
+      this.isAdd = true;
     }).catch((error) => {
-      console.log(error);
+      this.messageService.error('编辑失败');
     });
   }
 
   deleteExpense() {
-    const query = {
-      id: this.expenseForm.value.id,
-      userId: this.user.id
-    };
-    this.http.get(`/expense/del?userId=${this.user.id}&id=${this.expenseForm.value.id}`).toPromise()
-      .then((data) => {
-        this.store.dispatch(delExpenseDetail({ id: this.expenseForm.value.id }));
-        this.cancel();
-      }).catch((error) => {
-        console.log(error);
-      })
+    this.expenseService.del(this.expenseForm.value.id).then((data: any) => {
+      this.cancel();
+    }).catch((error) => {
+      this.messageService.error('删除失败');
+    });
   }
 
   onReset() {
     this.expenseForm.patchValue({
-      expenseDate: new Date(),
+      expenseDate: moment(new Date()).format('YYYY-MM-DD'),
       expenseStore: '',
       account: '',
-      peoples: [],
-      labels: [],
+      people: [],
+      label: [],
       memo: '',
       amount: '',
       content: ''
@@ -150,6 +140,8 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(resetExpenseDetail(null));
+    if (this.getExpenseDetailSub) {
+      this.getExpenseDetailSub.unsubscribe();
+    }
   }
 }

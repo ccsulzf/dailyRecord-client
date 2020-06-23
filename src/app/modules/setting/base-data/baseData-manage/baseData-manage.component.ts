@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BaseDataService } from '../../services';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { BaseDataService } from '../../../../services';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 @Component({
     selector: 'baseData-manage',
     templateUrl: './baseData-manage.component.html',
@@ -19,17 +20,19 @@ export class BaseDataManageComponent implements OnInit {
 
     }
 
-    update(item) {
+    update(item, index) {
         item.name = this.name;
         this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
             data.isEdit = false;
+            this.baseDataService.baseData[this.model].splice(index, 1, data);
         });
     }
 
-    hide(item) {
+    hide(item, index) {
         item.isHide = !item.isHide;
         this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
             data.isEdit = false;
+            this.baseDataService.baseData[this.model].splice(index, 1, data);
         }, (error) => {
             item.isHide = !item.isHide;
         });
@@ -37,10 +40,9 @@ export class BaseDataManageComponent implements OnInit {
     }
 
     del(item, index) {
-        item.deletedAt = moment().format('YYYY-MM-DD HH:mm:ss');
-
+        item.deletedAt = moment().format('YYYY/MM/DD HH:mm:ss');
         this.baseDataService.updateBaseData(item, this.model).then((data: any) => {
-            this.baseDataService.baseDataList.splice(index, 1);
+            this.baseDataService.baseData[this.model].splice(index, 1);
         }, (error) => {
             item.deletedAt = null;
         });

@@ -5,7 +5,7 @@ import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { BaseDataService } from '../services/baseData.service';
+import { BaseDataService } from '../../services';
 
 export const LABEL_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -44,24 +44,22 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
 
 
   ngOnInit() {
-    this.getList();
-  }
+    this.baseDataService.getBaseData('label').then((data: any) => {
+      this.allLabels = data;
+      this.filteredLabel = this.labelCtrl.valueChanges.pipe(
+        startWith(null),
+        map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+    });
 
-  getList() {
-    const strObj: any = {};
-    const user = JSON.parse(localStorage.getItem('dr_user'));
-    strObj.userId = user.id;
-    strObj.deletedAt = null;
-    strObj.isHide = false;
-    this.baseDataService.getBaseData('label', JSON.stringify(strObj)).then((data: any) => {
-      if (data) {
-        this.allLabels = data;
-        this.filteredLabel = this.labelCtrl.valueChanges.pipe(
-          startWith(null),
-          map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+    this.baseDataService.getAddBaseData().subscribe((data: any) => {
+      for (let key in data) {
+        if (key === 'label') {
+          this.allLabels = [...this.allLabels, ...data[key]];
+        }
       }
     });
   }
+
 
   propagateChange = (temp: any) => { };
 
@@ -88,7 +86,8 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
       if ((value || '').trim()) {
         this.selectedLabels.push({
           id: '',
-          name: value.trim()
+          name: value.trim(),
+          isHide: false
         });
       }
 

@@ -1,0 +1,55 @@
+<main>
+  <!-- 宣传部分 -->
+  <section>
+    <dailyRecord-ad></dailyRecord-ad>
+  </section>
+  <aside>
+    <div class="welcome" *ngIf="!isRegisterSuccess">
+      <p>记账，</p>
+      <p>从现在开始。</p>
+    </div>
+    <form [style.display]="isRegisterSuccess ? 'none':'flex'" [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>昵称</mat-label>
+        <input type="text" autocomplete="off" maxlength="30" required formControlName="name" placeholder="请输入昵称"
+          matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>邮箱</mat-label>
+        <input type="email" autocomplete="off" required formControlName="email" placeholder="请输入邮箱" matInput>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>密码</mat-label>
+        <input type="password" autocomplete="off" minlength="6" maxlength="20" required formControlName="password"
+          placeholder="请输入你的密码" matInput>
+        <mat-error *ngIf="registerForm.get('password').errors && registerForm.get('password').errors.minlength">
+          密码不少于6位
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
+        <mat-label>确认密码</mat-label>
+        <input type="password" autocomplete="off" required formControlName="confirmPWD" placeholder="请再次输入你的密码"
+          matInput>
+        <mat-error
+          *ngIf="registerForm.get('confirmPWD').errors && registerForm.get('confirmPWD').errors.notEquivalent ">
+          两次密码不相同
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary">注 册</button>
+    </form>
+
+    <div class="register-success" *ngIf="isRegisterSuccess">
+      <div class="welcome">
+        <p>注册成功!</p>
+        <p>请去邮箱激活后登录。</p>
+      </div>
+    </div>
+
+    <p class="goto-register" *ngIf="!isRegisterSuccess">
+      <span>已有账号?</span>
+      <a (click)="gotoLogin()">立即登录</a>
+    </p>
+
+  </aside>
+</main>

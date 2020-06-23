@@ -1,0 +1,62 @@
+@import 'color';
+
+.category-main {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+
+  .category-content {
+    height: calc(100% - 28px);
+    overflow-y: auto;
+  }
+}
+
+.category-choice {
+  display: flex;
+  height: 28px;
+  background: $expense;
+  justify-content: space-between;
+  padding: 0 5px;
+  align-items: center;
+
+  p {
+    display: flex;
+    align-items: center;
+    letter-spacing: 2px;
+    justify-content: center;
+    color: #ececec;
+    cursor: pointer;
+    font-size: .8em;
+    position: relative;
+
+  }
+
+}
+
+
+.tree-node {
+  display: flex;
+  align-items: center;
+}
+
+.node-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 10px 5px 10px 0;
+
+  .node-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+
+    p {
+      &:last-of-type {
+        color: $expense
+      }
+    }
+
+  }
+}

@@ -28,6 +28,7 @@ export class MoneyInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.moenyInputControl.valueChanges.subscribe((data) => {
+      console.log(this.moenyInputControl);
       this.propagateChange(data);
     });
   }
@@ -35,7 +36,7 @@ export class MoneyInputComponent implements OnInit, ControlValueAccessor {
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    this.moenyInputControl.setValidators(Validators.required);
+    this.moenyInputControl.setValidators([Validators.required, Validators.pattern('^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$')]);
     this.moenyInputControl.setValue(data);
     this.moenyInputControl.markAsPristine();
     this.moenyInputControl.markAsUntouched();

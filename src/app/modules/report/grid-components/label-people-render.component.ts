@@ -28,11 +28,13 @@ export class LabelPeopleRenderer implements ICellRendererAngularComp {
   public value;
   public field;
   public tooltip;
+  public headerName;
   agInit(params: any): void {
     this.params = params;
     this.field = params.colDef.field;
+    this.headerName = params.colDef.headerName;
     if (this.params.value.length) {
-      this.value = this.params.value.length > 1 ? `${this.params.value.length} ${this.field}` : this.params.value[0].name;
+      this.value = this.params.value.length > 1 ? `${this.headerName} * ${this.params.value.length}` : this.params.value[0].name;
     }
 
     if (this.params.value.length > 1) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { BaseDataService } from '../../services';
+import { BaseDataService } from '../../../../services';
 @Component({
   selector: 'base-data-nav',
   templateUrl: './base-data-nav.component.html',
@@ -10,41 +10,41 @@ export class BaseDataNavComponent implements OnInit {
   currenBaseData = null
   public baseDataModelList = [
     {
-      group: 'Expense',
+      group: '支出',
       list: [
         {
-          name: 'ExpenseBook & Category',
+          name: '账本-类别',
           model: 'expenseBook'
         }, {
-          name: 'ExpenseStore',
+          name: '收款方',
           model: 'expenseStore'
         }
       ]
     }, {
-      group: 'Income',
+      group: '收入',
       list: [
         {
-          name: 'IncomeCategory',
+          name: '类别',
           model: 'incomeCategory'
         }, {
-          name: 'IncomeStore',
+          name: '来源',
           model: 'incomeStore'
         }
       ]
     }, {
-      group: 'Base Data',
+      group: '基础数据',
       list: [
         {
-          name: 'Address',
+          name: '地点',
           model: 'address'
         }, {
-          name: 'Account',
+          name: '账户',
           model: 'account'
         }, {
-          name: 'Peoples',
+          name: '参与人',
           model: 'people'
         }, {
-          name: 'Labels',
+          name: '标签',
           model: 'label'
         }
       ]
@@ -57,7 +57,7 @@ export class BaseDataNavComponent implements OnInit {
   select(item) {
     this.currenBaseData = item;
     this.selectBaseData.emit(item);
-    this.baseDataService.getBaseData(item.model);
+    this.baseDataService.getBaseData(item.model, false);
   }
 
   ngOnInit() {

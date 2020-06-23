@@ -1,0 +1,40 @@
+<div class="category-main">
+  <div class="category-choice">
+    <p>
+      <mat-icon>equalizer</mat-icon>
+      <span>支出</span>
+    </p>
+    <mat-icon (click)="isHide = !isHide" style="color: #ececec;">{{ isHide? 'visibility_off':'visibility'}}</mat-icon>
+  </div>
+  <div class="category-content">
+    <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+        [style.display]="shouldRender(node) ? 'flex' : 'none'" class="tree-node">
+        <div class="node-item">
+          <!-- <button mat-icon-button disabled></button> -->
+          <div class="node-content" style="font-size: .8em;">
+            <p>{{node.name}}</p>
+            <p [hidden]="isHide">{{node.amount / 100 }}</p>
+          </div>
+        </div>
+      </cdk-tree-node>
+
+      <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+        [style.display]="shouldRender(node) ? 'flex' : 'none'" class="tree-node">
+        <div class="node-item">
+          <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+            (click)="node.isExpanded = !node.isExpanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <div class="node-content" style="font-size: 1em;">
+            <p>{{node.name}}</p>
+            <p [hidden]="isHide">{{node.amount / 100}}</p>
+          </div>
+        </div>
+      </cdk-tree-node>
+    </cdk-tree>
+  </div>
+
+</div>

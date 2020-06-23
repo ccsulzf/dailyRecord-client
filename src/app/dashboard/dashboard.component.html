@@ -1,0 +1,39 @@
+<main>
+  <!-- 当月支出和收入信息 -->
+  <div class="income-expense">
+    <div class="month-date">
+      <p>{{year}}年</p>
+      <p>{{month}}月</p>
+    </div>
+
+    <div class="month-item month-expense shadow">
+      <p>
+        支出
+      </p>
+      <p *ngIf="dashboardService?.monthTotalExpense">
+        - {{dashboardService?.monthTotalExpense / 100}}
+      </p>
+    </div>
+
+    <div class="month-item month-income shadow">
+      <p>
+        收入
+      </p>
+      <p *ngIf="dashboardService?.monthTotalIncome">
+        + {{dashboardService?.monthTotalIncome / 100 }}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- 日历和分类 -->
+  <div class="calendar-category">
+    <div class="calendar">
+      <app-month-calendar></app-month-calendar>
+    </div>
+    <div class="category">
+      <app-month-category-expense></app-month-category-expense>
+      <app-month-category-income></app-month-category-income>
+    </div>
+  </div>
+</main>

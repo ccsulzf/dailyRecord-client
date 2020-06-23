@@ -2,41 +2,43 @@
   <!-- date & total amount-->
   <div class="detail-header">
     <mat-datepicker-toggle tabindex="-1" matPrefix [for]="picker"></mat-datepicker-toggle>
-    <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="date">
+    <input matInput [matDatepicker]="picker" #dateInputEle (dateChange)="dateSelect($event)" disabled [value]="expenseService.expenseDetailDate">
     <mat-datepicker #picker disabled="false"></mat-datepicker>
   </div>
 
   <!--expense list -->
   <div class="detail-list">
-    <mat-list *ngIf="list && list.length">
-      <ng-container *ngFor="let item of list">
+    <mat-list *ngIf="expenseService?.list && expenseService?.list.length;else noList">
+      <ng-container *ngFor="let item of expenseService?.list">
         <div mat-subheader class="detail-header">
           <span>
             {{item.expenseBookName}}
           </span>
           <span>
-            -{{item.subTotal}}RMB
+            -{{item.subTotal / 100 }}元
           </span>
         </div>
         <mat-divider></mat-divider>
         <mat-list-item *ngFor="let expenseDetail of item['expenseDetailList']" (click)="select(expenseDetail)">
           <div class="detail-item" mat-line>
             <span class="text-ellipsis">{{expenseDetail.content}}</span>
-            <span class="detail-number">-{{expenseDetail.amount}} RMB</span>
+            <span class="detail-number">-{{expenseDetail.amount / 100}} 元</span>
           </div>
         </mat-list-item>
       </ng-container>
     </mat-list>
-    <div class="no-data" *ngIf="!(list && list.length)">
-      <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
-      <p>No Expense</p>
-    </div>
+    <ng-template #noList>
+      <div class="no-data">
+        <img style="height:180px" src="../../../../../../assets/images/no_data.svg">
+        <p>暂无支出数据</p>
+      </div>
+    </ng-template>
   </div>
   <mat-divider></mat-divider>
-  <div class="day-expense" *ngIf="list && list.length">
-    <span>Day of the expense:</span>
+  <div class="day-expense" *ngIf="expenseService?.list && expenseService?.list.length">
+    <span>今日支出:</span>
     <p>
-      -{{totalAmount}}RMB
+      -{{expenseService?.totalAmount / 100}}元
     </p>
   </div>
 </div>

@@ -38,12 +38,12 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.reportExpenseService.setDefaultDate(item);
 
     this.columnDefs = [
-      { headerName: 'Date', field: 'expenseDate', sortable: true },
-      { headerName: 'ExpenseContent', field: 'content', sortable: false },
+      { headerName: '日期', field: 'expenseDate', sortable: true },
+      { headerName: '支出', field: 'content', sortable: false },
       {
-        headerName: 'Amount', field: 'amount',
+        headerName: '金额', field: 'amount',
         cellRenderer: (params) => {
-          return params.value ? `- ${params.value}` : '';
+          return params.value ? `- ${params.value / 100}` : '';
         },
         cellStyle: { color: '#673ab7' },
         sortable: true,
@@ -52,28 +52,28 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       },
       {
-        headerName: 'Address', field: 'address',
+        headerName: '地点', field: 'address',
         cellRenderer: (params) => {
           return params.value.name;
         },
         sortable: false
       },
       {
-        headerName: 'ExpenseBook', field: 'expenseBook',
+        headerName: '账本', field: 'expenseBook',
         cellRenderer: (params) => {
           return params.value.name;
         },
         sortable: false
       },
       {
-        headerName: 'ExpenseCategory', field: 'expenseCategory',
+        headerName: '类别', field: 'expenseCategory',
         cellRenderer: (params) => {
           return params.value.name;
         },
         sortable: false
       },
       {
-        headerName: 'Account',
+        headerName: '账户',
         sortable: false,
         field: 'account',
         cellRenderer: (params) => {
@@ -81,21 +81,21 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
         },
       },
       {
-        headerName: 'ExpenseStore', field: 'expenseStore',
+        headerName: '收款方', field: 'expenseStore',
         cellRenderer: (params) => {
           return params.value.name;
         },
       },
       {
-        headerName: 'Peoples', field: 'peoples',
+        headerName: '参与人', field: 'people',
         cellRenderer: 'labelPeopleRenderer',
       },
       {
-        headerName: 'Labels', field: 'labels',
+        headerName: '标签', field: 'label',
         cellRenderer: 'labelPeopleRenderer',
       },
       {
-        headerName: 'Memo', field: 'memo',
+        headerName: '备注', field: 'memo',
         tooltipField: 'memo',
       },
     ];
@@ -115,14 +115,14 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.overlayLoadingTemplate =
       `<div>
         <img style="height:160px" src="../../../../assets/images/loading.svg">
-        <p>Please wait while your rows are loading</p>
+        <p>数据加载中...</p>
       </div>
     `;
 
     this.overlayNoRowsTemplate =
       `<div>
         <img style="height:160px" src="../../../../assets/images/empty.svg">
-        <p>No Expense Rows</p>
+        <p>当前查询没有数据</p>
       </div>
       `;
 

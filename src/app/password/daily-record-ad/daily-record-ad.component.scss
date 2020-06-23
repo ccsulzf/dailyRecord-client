@@ -1,0 +1,44 @@
+.ad-content {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  position: relative;
+  padding-top: 40px;
+  height: 100%;
+}
+
+.title {
+  position: absolute;
+  font-size: 1.8em;
+  padding: 10px 0 10px 20px;
+  color: #fff;
+  display: flex;
+  align-items: baseline;
+
+  span {
+    font-size: .6em;
+    margin-left: 10px;
+  }
+}
+
+.dailyRecord-ad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #efefef;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .info {
+    font-size: 1.2em;
+    color: #efefef;
+    margin: 0 10px;
+    width: 50%;
+  }
+
+  img {
+    width: 50%;
+    height: 100%;
+  }
+}

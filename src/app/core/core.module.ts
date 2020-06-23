@@ -19,18 +19,14 @@ import { MemoInputComponent } from './memo-input/memo-input.component';
 import { ContentInputComponent } from './content-input/content-input.component';
 import { LabelSelectComponent } from './label-select/label-select.component';
 import { PeopleSelectComponent } from './people-select/people-select.component';
-import { ExpenseCategorySelectComponent } from './expenseCatgeory-select';
-import { BaseDataService } from './services';
 
-import { httpInterceptorProviders } from '../http-interceptors';
 @NgModule({
   declarations: [
     DatePickerComponent,
     ItemSelectComponent, MoneyInputComponent,
     MemoInputComponent, ContentInputComponent,
     LabelSelectComponent,
-    PeopleSelectComponent,
-    ExpenseCategorySelectComponent],
+    PeopleSelectComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -54,13 +50,10 @@ import { httpInterceptorProviders } from '../http-interceptors';
     MemoInputComponent,
     ContentInputComponent,
     PeopleSelectComponent,
-    LabelSelectComponent,
-    ExpenseCategorySelectComponent
+    LabelSelectComponent
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
-    BaseDataService,
-    httpInterceptorProviders
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' }
   ]
 })
 export class CoreModule { }

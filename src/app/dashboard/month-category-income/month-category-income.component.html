@@ -1,0 +1,21 @@
+<div class="category-main">
+  <div class="category-choice">
+    <p>
+      <mat-icon>equalizer</mat-icon>
+      <span>收入</span>
+    </p>
+    <mat-icon (click)="isHide = !isHide" style="color: #ececec;">{{ isHide? 'visibility_off':'visibility'}}</mat-icon>
+  </div>
+  <div class="category-content">
+    <mat-list role="list">
+      <mat-list-item *ngFor="let item of list" role="listitem">
+        <div mat-line>
+          <div class="item-content">
+            <p>{{item.incomeCategoryName}}</p>
+            <p [hidden]="isHide">{{item.amount / 100 }}</p>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

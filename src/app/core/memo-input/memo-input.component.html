@@ -1,7 +1,7 @@
 <mat-form-field class="full-width" appearance="outline">
-  <mat-label>Please input your memo about</mat-label>
+  <mat-label>备注</mat-label>
   <!-- <input matInput #input placeholder="Placeholder"> -->
-  <textarea rows="3" #input matInput placeholder="Leave a comment" [formControl]="memoInputControl"></textarea>
+  <textarea rows="3" #input matInput placeholder="请输入备注..." [formControl]="memoInputControl"></textarea>
   <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
   <mat-hint align="end">{{input.value?.length || 0}}/500</mat-hint>
 </mat-form-field>

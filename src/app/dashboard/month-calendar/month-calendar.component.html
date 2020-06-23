@@ -1,0 +1,35 @@
+<table>
+  <thead>
+    <tr>
+      <td>一</td>
+      <td>二</td>
+      <td>三</td>
+      <td>四</td>
+      <td>五</td>
+      <td>六</td>
+      <td>日</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <ng-container *ngFor="let trItem of tableList">
+      <tr>
+        <td *ngFor="let tdItem of trItem">
+          <div class="td-item" [class.today]="tdItem.isToday" *ngIf="tdItem?.isInMonth">
+            <p>
+              {{tdItem.day}}
+            </p>
+            <div class="td-expense">
+              <span></span>
+              <span>{{tdItem.expenseAmount / 100}}</span>
+            </div>
+            <div class="td-income">
+              <span></span>
+              <span>{{tdItem.incomeAmount / 100}}</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

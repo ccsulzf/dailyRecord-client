@@ -1,5 +1,5 @@
 <mat-form-field class="full-width">
-  <mat-label>Pick Label</mat-label>
+  <mat-label>标签</mat-label>
   <mat-chip-list #chipList aria-label="Fruit selection">
     <mat-chip *ngFor="let label of selectedLabels" [selectable]="selectable" [removable]="removable" (removed)="remove(label.name)">
       <mat-icon>label_outline</mat-icon>
@@ -10,7 +10,7 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-hint *ngIf="selectedLabels && selectedLabels.length" align="end">total {{selectedLabels?.length}} label selected</mat-hint>
+  <mat-hint *ngIf="selectedLabels && selectedLabels.length" align="end">已选{{selectedLabels?.length}}个标签</mat-hint>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let label of filteredLabel | async" [value]="label">
