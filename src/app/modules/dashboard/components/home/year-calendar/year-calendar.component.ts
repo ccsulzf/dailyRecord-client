@@ -112,17 +112,17 @@ export class YearCalendarComponent implements OnInit {
 
     for (let time = start; time < end; time += dayTime) {
       const findItem = _.find(list, (item) => {
-        return item.expenseDate === moment(new Date(time)).format('YYYY/MM/DD');
+        return item.expenseDate === moment(new Date(time)).format('YYYY-MM-DD');
       });
 
       if (findItem) {
         data.push([
-          moment(new Date(time)).format('YYYY/MM/DD'),
+          moment(new Date(time)).format('YYYY-MM-DD'),
           findItem.amount
         ]);
       } else {
         data.push([
-          moment(new Date(time)).format('YYYY/MM/DD'),
+          moment(new Date(time)).format('YYYY-MM-DD'),
           0
         ]);
       }

@@ -17,8 +17,8 @@ export class CurrentMonthComponent implements OnInit {
 
   type = 'expense';
 
-  private monthStart = moment().startOf('month').format('YYYY/MM/DD');
-  private monthEnd = moment().endOf('month').format('YYYYMM/DD');
+  private monthStart = moment().startOf('month').format('YYYY-MM-DD');
+  private monthEnd = moment().endOf('month').format('YYYY-MM-DD');
 
   public list = [];
 
@@ -138,17 +138,17 @@ export class CurrentMonthComponent implements OnInit {
 
     for (let time = start; time <= end; time += dayTime) {
       const findItem = _.find(list, (item) => {
-        return item.date === moment(new Date(time)).format('YYYY/MM/DD');
+        return item.date === moment(new Date(time)).format('YYYY-MM-DD');
       });
 
       if (findItem) {
         data.push([
-          moment(new Date(time)).format('YYYY/MM/DD'),
+          moment(new Date(time)).format('YYYY-MM-DD'),
           findItem.amount
         ]);
       } else {
         data.push([
-          moment(new Date(time)).format('YYYY/MM/DD'),
+          moment(new Date(time)).format('YYYY-MM-DD'),
           0
         ]);
       }

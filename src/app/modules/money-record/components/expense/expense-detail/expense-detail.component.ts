@@ -93,7 +93,7 @@ export class ExpenseDetailComponent implements OnInit {
             });
           }
         } else {
-          this.dateInputEle.nativeElement.value = moment(expenseDetail.expenseDate).format('YYYY/MM/DD');
+          this.dateInputEle.nativeElement.value = moment(expenseDetail.expenseDate).format('YYYY-MM-DD');
           this.getExpenseDetailList(expenseDetail.expenseDate);
         }
       }
@@ -119,7 +119,7 @@ export class ExpenseDetailComponent implements OnInit {
             });
           }
         } else {
-          this.dateInputEle.nativeElement.value = moment(expenseDetail.expenseDate).format('YYYY/MM/DD');
+          this.dateInputEle.nativeElement.value = moment(expenseDetail.expenseDate).format('YYYY-MM-DD');
           this.getExpenseDetailList(expenseDetail.expenseDate);
         }
       }
@@ -128,7 +128,7 @@ export class ExpenseDetailComponent implements OnInit {
   }
 
   getExpenseDetailList(date) {
-    date = moment(date).format('YYYY/MM/DD');
+    date = moment(date).format('YYYY-MM-DD');
     this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${date}`).toPromise().then((data) => {
       if (data) {
         this.list = this.composeData(data);
@@ -141,7 +141,7 @@ export class ExpenseDetailComponent implements OnInit {
   }
 
   dateSelect(event: MatDatepickerInputEvent<Date>) {
-    this.getExpenseDetailList(moment(event.value).format('YYYY/MM/DD'));
+    this.getExpenseDetailList(moment(event.value).format('YYYY-MM-DD'));
   }
 
   // 数据格式

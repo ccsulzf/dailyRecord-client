@@ -66,7 +66,7 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const body = this.incomeForm.value;
-    body.incomeDate = moment(body.incomeDate).format('YYYY/MM/DD');
+    body.incomeDate = moment(body.incomeDate).format('YYYY-MM-DD');
     this.http.post('/income/add', body).toPromise().then((data: any) => {
       this.messageService.success('Add Income Succes!');
       this.store.dispatch(addBaseData(data.baseData));

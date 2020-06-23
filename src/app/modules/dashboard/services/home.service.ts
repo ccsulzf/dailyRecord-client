@@ -27,7 +27,7 @@ export class HomeService {
             map((list: any) => {
                 for (const item of list) {
                     if (!isExpenseBook) {
-                        item.date = moment(item.expenseDate).format('YYYY/MM/DD');
+                        item.date = moment(item.expenseDate).format('YYYY-MM-DD');
                     }
                     item.amount = Number(item.amount);
                 }
@@ -46,7 +46,7 @@ export class HomeService {
             map((list: any) => {
                 for (const item of list) {
                     if (!isIncomeCategory) {
-                        item.date = moment(item.expenseDate).format('YYYY/MM/DD');
+                        item.date = moment(item.expenseDate).format('YYYY-MM-DD');
                     }
                     item.amount = Number(item.amount);
                 }

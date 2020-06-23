@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "analyz": "ng build --prod --stats-json && npx webpack-bundle-analyzer dist/stats-es2015.json"
+    "analyz": "ng build --prod -c=prod --stats-json && npx webpack-bundle-analyzer dist/stats-es2015.json"
   },
   "private": true,
   "dependencies": {
