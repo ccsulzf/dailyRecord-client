@@ -23,6 +23,7 @@ const TREE_DATA: FoodNode[] = [
     children: [
       { name: '支出报表', path: '/report/expense' },
       { name: '收入报表', path: '/report/income' },
+      { name: '收支图表', path: '/chart/list' },
     ]
   },
   {
@@ -73,6 +74,7 @@ export class NavComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(this.router.url);
     const find = function (arr: Array<any>, path) {
       arr.forEach(element => {
         if (element.path && (element.path === path)) {

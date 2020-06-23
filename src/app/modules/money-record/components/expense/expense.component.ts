@@ -70,14 +70,14 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     const expenseBook = this.expenseForm.value['expenseBook'];
     const expenseCategory = this.expenseForm.value['expenseCategory'];
 
-    if(expenseBook.id !== expenseCategory['expenseBook'].id){
+    if (expenseBook.id !== expenseCategory['expenseBookId']) {
       alert('出现BUG,请到控制台查看输出');
       console.log(this.expenseForm.value);
     }
   }
 
   onSubmit() {
-   this.debugExpense();
+    this.debugExpense();
     this.expenseService.add(this.expenseForm.value).then((data: any) => {
       this.messageService.success('新增成功!');
       this.expenseForm.patchValue({

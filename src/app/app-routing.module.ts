@@ -33,6 +33,11 @@ const routes: Routes = [
         path: 'setting',
         canActivate: [AuthGuard],
         loadChildren: () => import('./modules/setting/setting.module').then(mod => mod.SettingModule)
+      },
+      {
+        path: 'chart',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./modules/chart/chart.module').then(mod => mod.ChartModule)
       }
     ]
   }, {
