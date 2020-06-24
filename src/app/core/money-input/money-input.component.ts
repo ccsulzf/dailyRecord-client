@@ -28,7 +28,6 @@ export class MoneyInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.moenyInputControl.valueChanges.subscribe((data) => {
-      console.log(this.moenyInputControl);
       this.propagateChange(data);
     });
   }

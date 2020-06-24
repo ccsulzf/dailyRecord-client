@@ -38,8 +38,6 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
 
   matcher = new ExpenseCategorySelectErrorStateMatcher();
 
-  expenseBookId = '';
-
   baseDataSub: Subscription;
   expenseBookSub: Subscription;
 
@@ -58,7 +56,6 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
   async ngOnInit() {
     this.expenseBookSub = this.expenseService.getBook().subscribe((temp: any) => {
       if (temp) {
-        this.expenseBookId = temp.id;
         this.filterByExpenseBook();
       }
     });
@@ -102,7 +99,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
   async filterByExpenseBook() {
     this.allExpenseCategoryList = await this.baseDataService.getBaseData('expenseCategory');
     this.expenseBookCategoryList = this.allExpenseCategoryList.filter((item) => {
-      return item.expenseBookId === this.expenseBookId;
+      return item.expenseBookId === this.expenseService.currenBook.id;
     });
     if (this.expenseBookCategoryList && this.expenseBookCategoryList.length) {
       const item = this.expenseBookCategoryList[0];
@@ -142,7 +139,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
         id: '',
         name: value,
         userId: this.user.id,
-        expenseBookId: this.expenseBookId,
+        expenseBookId: this.expenseService.currenBook.id,
         isHide: false
       });
     }

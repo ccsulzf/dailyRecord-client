@@ -16,7 +16,7 @@ export const EXPENSEBOOK_ACCESSOR: any = {
 })
 export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   list = [];
-  currenBook;
+
   private user = JSON.parse(localStorage.getItem('dr_user'));
   showAddExpenseBook = false;
 
@@ -27,7 +27,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   constructor(
     private http: HttpClient,
     private baseDataService: BaseDataService,
-    private expenseService: ExpenseService
+    public expenseService: ExpenseService
   ) {
   }
 
@@ -39,15 +39,15 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
     this.baseDataService.getBaseData('expenseBook').then((data: Array<any>) => {
       if (data && data.length) {
         this.list = data;
-        this.currenBook = this.list[0];
-        this.propagateChange(this.currenBook);
-        this.expenseService.selectBook(this.currenBook);
+        this.expenseService.currenBook = this.list[0];
+        this.propagateChange(this.list[0]);
+        this.expenseService.selectBook(this.list[0]);
       }
     });
   }
 
   changeBook(item) {
-    this.currenBook = item;
+    this.expenseService.currenBook = item;
     this.expenseService.selectBook(item);
     this.propagateChange(item);
   }
@@ -62,7 +62,7 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
         expenseBook: data
       });
       this.showAddExpenseBook = false;
-      this.currenBook = data;
+      this.expenseService.currenBook = data;
       this.list.push(data);
       this.propagateChange(data);
       this.expenseService.selectBook(data);
@@ -74,7 +74,8 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
 
   writeValue(data: any): void {
     if (data) {
-      this.currenBook = data;
+      console.log(data);
+      this.expenseService.currenBook = data;
     }
   }
 

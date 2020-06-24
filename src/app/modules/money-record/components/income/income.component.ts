@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
@@ -27,13 +27,13 @@ export class IncomeComponent implements OnInit, OnDestroy {
   incomeForm = this.fb.group({
     id: [''],
     userId: [this.user.id],
-    incomeDate: [moment(new Date()).format('YYYY-MM-DD')],
-    address: [''],
-    incomeCategory: [''],
-    incomeStore: [''],
-    content: [''],
-    account: [''],
-    amount: [''],
+    incomeDate: [moment(new Date()).format('YYYY-MM-DD'), Validators.required],
+    address: ['', Validators.required],
+    incomeCategory: ['', Validators.required],
+    incomeStore: ['', Validators.required],
+    content: ['', Validators.required],
+    account: ['', Validators.required],
+    amount: ['', Validators.required],
     people: [[]],
     label: [[]],
     memo: ['']
@@ -60,35 +60,40 @@ export class IncomeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.incomeService.add(this.incomeForm.value).then((data: any) => {
-      this.messageService.success('新增成功!');
-      this.incomeForm.patchValue({
-        people: [],
-        label: [],
-        memo: '',
-        amount: '',
-        content: ''
+    if (this.incomeForm.valid) {
+      this.incomeService.add(this.incomeForm.value).then((data: any) => {
+        this.messageService.success('新增成功!');
+        this.incomeForm.patchValue({
+          people: [],
+          label: [],
+          memo: '',
+          amount: '',
+          content: ''
+        });
+        this.incomeForm.markAsPristine();
+      }).catch((error) => {
+        this.messageService.error('新增失败');
       });
-      this.incomeForm.markAsPristine();
-    }).catch((error) => {
-      this.messageService.error('新增失败');
-    });
+    }
   }
 
   editIncome() {
-    this.incomeService.edit(this.incomeForm.value).then((data: any) => {
-      this.messageService.success('编辑成功!');
-      this.incomeForm.patchValue({
-        people: [],
-        label: [],
-        memo: '',
-        amount: '',
-        content: ''
+    if (this.incomeForm.valid) {
+      this.incomeService.edit(this.incomeForm.value).then((data: any) => {
+        this.messageService.success('编辑成功!');
+        this.incomeForm.patchValue({
+          people: [],
+          label: [],
+          memo: '',
+          amount: '',
+          content: ''
+        });
+        this.incomeForm.markAsPristine();
+      }).catch((error) => {
+        this.messageService.error('编辑失败');
       });
-      this.incomeForm.markAsPristine();
-    }).catch((error) => {
-      this.messageService.error('编辑失败');
-    });
+    }
+
   }
 
   onReset() {

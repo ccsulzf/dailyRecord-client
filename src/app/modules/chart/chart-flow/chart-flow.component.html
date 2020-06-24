@@ -7,12 +7,10 @@
     <p>
       支出收入流向图
     </p>
-    <!-- <button mat-icon-button>
-      <mat-icon>cached</mat-icon>
-    </button> -->
+    <button mat-raised-button (click)="start()" type="button" color="primary">Start</button>
   </div>
 
   <div class="flow-content">
-
+    <svg id="sankey" width="760" height="560"></svg>
   </div>
 </div>

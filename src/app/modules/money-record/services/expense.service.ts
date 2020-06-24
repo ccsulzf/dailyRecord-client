@@ -17,6 +17,8 @@ export class ExpenseService {
     public totalAmount = 0;
 
     public expenseDetailDate = moment(new Date()).format('YYYY-MM-DD');
+
+    public currenBook;
     constructor(
         private http: HttpClient,
         private baseDataService: BaseDataService

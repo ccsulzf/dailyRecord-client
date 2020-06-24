@@ -92,7 +92,7 @@ export class IncomeService {
     composeData() {
         const dataList = [];
         this.totalAmount = 0;
-        const list = _.sortBy(this.originIncomeDetailList,[function(o) { return o.incomeDetailDate; }]);
+        const list = _.reverse(_.sortBy(this.originIncomeDetailList, [function (o) { return o.incomeDate; }]));
         for (const item of list) {
             this.totalAmount += item.amount;
             const hasIncomeDate = _.find(dataList, (temp) => {

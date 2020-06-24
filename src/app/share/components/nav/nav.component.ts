@@ -74,10 +74,9 @@ export class NavComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.router.url);
     const find = function (arr: Array<any>, path) {
       arr.forEach(element => {
-        if (element.path && (element.path === path)) {
+        if (element.path && (this.isPath(path, element.path))) {
           this.currenNodeName = element.name;
           return;
         } else if (element.children && element.children.length) {
@@ -87,6 +86,19 @@ export class NavComponent implements OnInit, AfterViewInit {
     }.bind(this);
 
     find(TREE_DATA, this.router.url);
+  }
+
+  isPath(url, path) {
+    if (url === path) {
+      return true;
+    } else {
+      // 对chart做特殊处理
+      const urlList = url.split('/');
+      const pathList = path.split('/');
+      if ((urlList[1] === pathList[1]) && (pathList[1] === 'chart')) {
+        return true;
+      }
+    }
   }
 
   ngAfterViewInit() {

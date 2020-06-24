@@ -1,7 +1,7 @@
 <div class="bookLits-content">
   <ul *ngIf="list && list.length">
     <li *ngFor="let item of list;let i= index" (click)="changeBook(item)"
-      [class.selected]="currenBook.name===item.name">
+      [class.selected]="expenseService?.currenBook.name===item.name">
       {{item.name}}
     </li>
   </ul>

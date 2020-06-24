@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { MessageService, BaseDataService } from '../../../../services';
 import { ExpenseService } from '../../services';
@@ -27,14 +27,14 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   expenseForm = this.fb.group({
     id: [''],
     userId: [this.user.id],
-    expenseBook: [''],
-    expenseDate: [moment(new Date()).format('YYYY-MM-DD')],
-    address: [''],
-    expenseCategory: [''],
-    expenseStore: [''],
-    content: [''],
-    account: [''],
-    amount: [''],
+    expenseBook: ['', Validators.required],
+    expenseDate: [moment(new Date()).format('YYYY-MM-DD'), Validators.required],
+    address: ['', Validators.required],
+    expenseCategory: ['', Validators.required],
+    expenseStore: ['', Validators.required],
+    content: ['', Validators.required],
+    account: ['', Validators.required],
+    amount: ['', Validators.required],
     people: [[]],
     label: [[]],
     memo: ['']
@@ -73,42 +73,47 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     if (expenseBook.id !== expenseCategory['expenseBookId']) {
       alert('出现BUG,请到控制台查看输出');
       console.log(this.expenseForm.value);
+      return false;
     }
+    return true;
   }
 
   onSubmit() {
-    this.debugExpense();
-    this.expenseService.add(this.expenseForm.value).then((data: any) => {
-      this.messageService.success('新增成功!');
-      this.expenseForm.patchValue({
-        people: [],
-        label: [],
-        memo: '',
-        amount: '',
-        content: ''
+    if (this.debugExpense() && this.expenseForm.valid) {
+      this.expenseService.add(this.expenseForm.value).then((data: any) => {
+        this.messageService.success('新增成功!');
+        this.expenseForm.patchValue({
+          people: [],
+          label: [],
+          memo: '',
+          amount: '',
+          content: ''
+        });
+        this.expenseForm.markAsPristine();
+      }).catch((error) => {
+        this.messageService.error('新增失败');
       });
-      this.expenseForm.markAsPristine();
-    }).catch((error) => {
-      this.messageService.error('新增失败');
-    });
+    }
+
   }
 
   editExpense() {
-    this.debugExpense();
-    this.expenseService.edit(this.expenseForm.value).then((data: any) => {
-      this.messageService.success('编辑成功!');
-      this.expenseForm.patchValue({
-        people: [],
-        label: [],
-        memo: '',
-        amount: '',
-        content: ''
+    if (this.debugExpense() && this.expenseForm.valid) {
+      this.expenseService.edit(this.expenseForm.value).then((data: any) => {
+        this.messageService.success('编辑成功!');
+        this.expenseForm.patchValue({
+          people: [],
+          label: [],
+          memo: '',
+          amount: '',
+          content: ''
+        });
+        this.expenseForm.markAsPristine();
+        this.isAdd = true;
+      }).catch((error) => {
+        this.messageService.error('编辑失败');
       });
-      this.expenseForm.markAsPristine();
-      this.isAdd = true;
-    }).catch((error) => {
-      this.messageService.error('编辑失败');
-    });
+    }
   }
 
   deleteExpense() {
