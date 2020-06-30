@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartFlaowService } from '../services';
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
 @Component({
@@ -12,11 +13,73 @@ export class ChartFlowComponent implements OnInit {
   height = 560;
 
   count = 0;
-  constructor() { }
+  constructor(
+    private chartFlaowService: ChartFlaowService
+  ) { }
 
   ngOnInit() {
     console.log(location.href);
   }
+
+  // start() {
+  //   const svg = d3.select('#sankey');
+  //   const formatNumber = d3.format(',.0f');
+  //   const format = (d: any) => { return formatNumber(d) + ' series'; };
+  //   const color = d3.scaleOrdinal(d3.schemeCategory10);
+  //   const sankey = d3Sankey.sankey()
+  //     .nodeWidth(4)
+  //     .nodePadding(20)
+  //     .extent([[0, 5], [this.width, this.height - 5]])
+  //   this.chartFlaowService.getData().then((data: any) => {
+  //     this.chartFlaowService.getKey(data);
+  //     this.chartFlaowService.testIncome(data.income);
+  //     this.chartFlaowService.testExpense(data.expense);
+
+  //     const { nodes, links } = sankey({
+  //       nodes: this.chartFlaowService.nodes.map(d => Object.assign({}, d)),
+  //       links: this.chartFlaowService.links.map(d => Object.assign({}, d))
+  //     });
+
+  //     svg.append('g')
+  //       .selectAll('rect')
+  //       .data(nodes)
+  //       .join('rect')
+  //       .attr('x', d => d.x0)
+  //       .attr('y', d => d.y0)
+  //       .attr('height', d => d.y1 - d.y0)
+  //       .attr('width', d => d.x1 - d.x0)
+  //       .append('title')
+  //       .text(d => `${d.name}\n${d.value.toLocaleString()}`);
+
+  //     svg.append('g')
+  //       .attr('fill', 'none')
+  //       .selectAll('g')
+  //       .data(links)
+  //       .join('path')
+  //       .attr('d', d3Sankey.sankeyLinkHorizontal())
+  //       .attr('stroke', d => color(d.names[0]))
+  //       .attr('stroke-width', d => d.width)
+  //       .style('mix-blend-mode', 'multiply')
+  //       .append('title')
+  //       .text(d => `${d.names.join(' → ')}\n${d.value.toLocaleString()}`);
+
+  //     svg.append('g')
+  //       .style('font', '10px sans-serif')
+  //       .selectAll('text')
+  //       .data(nodes)
+  //       .join('text')
+  //       .attr('x', d => d.x0 < this.width / 2 ? d.x1 + 6 : d.x0 - 6)
+  //       .attr('y', d => (d.y1 + d.y0) / 2)
+  //       .attr('dy', '0.35em')
+  //       .attr('text-anchor', d => d.x0 < this.width / 2 ? 'start' : 'end')
+  //       .text(d => d.name)
+  //       .append('tspan')
+  //       .attr('fill-opacity', 0.7)
+  //       .text(d => ` ${d.value.toLocaleString()}`);
+  //   })
+
+
+  // }
 
   start() {
     const svg = d3.select('#sankey');
@@ -26,15 +89,17 @@ export class ChartFlowComponent implements OnInit {
     const color = d3.scaleOrdinal(d3.schemeCategory10);
     const sankey = d3Sankey.sankey()
       .nodeId((d: any) => d.name)
-      // .nodeAlign(d3[`sankey${align[0].toUpperCase()}${align.slice(1)}`])
+      .nodeAlign(d3Sankey['sankeyRight'])
       .nodeWidth(15)
       .nodePadding(10)
       .extent([[1, 5], [this.width - 1, this.height - 5]]);
 
-    d3.json('../../../../assets/chart-data/flow.json').then((data: any) => {
+    this.chartFlaowService.getData().then((data: any) => {
+      this.chartFlaowService.handleIncome(data.income);
+      this.chartFlaowService.handleExpense(data.expense);
       const { nodes, links } = sankey({
-        nodes: data.nodes.map(d => Object.assign({}, d)),
-        links: data.links.map(d => Object.assign({}, d))
+        nodes: this.chartFlaowService.nodes.map(d => Object.assign({}, d)),
+        links: this.chartFlaowService.links.map(d => Object.assign({}, d))
       });
 
       svg.append('g')
@@ -111,14 +176,16 @@ export class ChartFlowComponent implements OnInit {
   }
 
   color(item) {
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
     console.log(item);
-    console.log(Math.random() * 10);
+    if (item.category === 'income') {
+      return '#f44336'
+    } else {
+      return '#673ab7'
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+      return d3.schemeCategory10[Math.floor(Math.random() * 10)];
+    }
 
-    // console.log(color(item.category === undefined ? item.name : item.category));
-    // return color(Math.random() * 10);
-    return d3.schemeCategory10[Math.floor(Math.random() * 10)];
   }
 
   sankey() {

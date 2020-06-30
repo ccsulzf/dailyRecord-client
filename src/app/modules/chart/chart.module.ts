@@ -10,6 +10,8 @@ import { ChartComponent } from './chart.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartFlowComponent } from './chart-flow/chart-flow.component';
 
+import { ChartFlaowService } from './services';
+
 const MATERIAL_MODULE = [MatToolbarModule, MatCardModule, MatIconModule, MatButtonModule];
 
 @NgModule({
@@ -18,6 +20,9 @@ const MATERIAL_MODULE = [MatToolbarModule, MatCardModule, MatIconModule, MatButt
     CommonModule,
     ChartRoutingModule,
     ...MATERIAL_MODULE
+  ],
+  providers: [
+    ChartFlaowService
   ]
 })
 export class ChartModule { }
