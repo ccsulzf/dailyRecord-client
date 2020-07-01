@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChartComponent } from './chart.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartFlowComponent } from './chart-flow/chart-flow.component';
+import { ChartCompareComponent } from './chart-compare/chart-compare.component';
 const routes: Routes = [
   {
     path: '',
@@ -15,6 +16,7 @@ const routes: Routes = [
       },
       { path: 'list', component: ChartListComponent },
       { path: 'flow', component: ChartFlowComponent },
+      { path: 'compare', component: ChartCompareComponent }
     ]
   }
 ];

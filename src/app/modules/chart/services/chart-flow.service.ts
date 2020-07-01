@@ -36,7 +36,7 @@ export class ChartFlaowService {
             links.push({
                 source: item.incomeCategoryName,
                 target: item.accountName,
-                value: item.amount / 100
+                value: item.amount 
             });
         }
 
@@ -66,14 +66,14 @@ export class ChartFlaowService {
             links.push({
                 source: item.expenseBookName,
                 target: item.expenseCategoryName,
-                value: item.amount / 100
+                value: item.amount 
             });
 
             // 对expenseBook要单独处理，expenseBook要进行累加
             links.push({
                 source: item.accountName,
                 target: item.expenseBookName,
-                value: item.amount / 100
+                value: item.amount 
             });
         }
         this.nodes = _.unionWith(this.nodes, nodes, _.isEqual);
@@ -103,7 +103,7 @@ export class ChartFlaowService {
                 names: [item.incomeCategoryName, item.accountName],
                 source: _.findIndex(this.nodes, temp => temp.name === item.incomeCategoryName),
                 target: _.findIndex(this.nodes, temp => temp.name === item.accountName),
-                value: item.amount / 100
+                value: item.amount 
             })
         }
         this.links = _.concat(this.links, links);
@@ -116,7 +116,7 @@ export class ChartFlaowService {
                 names: [item.accountName, item.expenseBookName],
                 source: _.findIndex(this.nodes, temp => temp.name === item.accountName),
                 target: _.findIndex(this.nodes, temp => temp.name === item.expenseBookName),
-                value: item.amount / 100
+                value: item.amount 
             });
 
             // expenseBook->expenseCategory
@@ -124,7 +124,7 @@ export class ChartFlaowService {
                 names: [item.accountName, item.expenseBookName, item.expenseCategoryName],
                 source: _.findIndex(this.nodes, temp => temp.name === item.expenseBookName),
                 target: _.findIndex(this.nodes, temp => temp.name === item.expenseCategoryName),
-                value: item.amount / 100
+                value: item.amount 
             });
         }
         this.links = _.concat(this.links, links);

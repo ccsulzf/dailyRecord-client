@@ -12,7 +12,13 @@ export class ChartListComponent implements OnInit {
     subTitle: '钱从哪里来，到哪里去',
     thumbnail: 'url(../../../../assets/images/flow-chart.jpg)',
     route: '/chart/flow'
+  }, {
+    title: '支出收入同比图',
+    subTitle: '什么少了，什么多了',
+    thumbnail: 'url(../../../../assets/images/compare-chart.png)',
+    route: '/chart/compare'
   }];
+
   constructor(
     private router: Router
   ) { }

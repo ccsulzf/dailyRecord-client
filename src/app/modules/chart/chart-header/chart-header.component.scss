@@ -1,0 +1,10 @@
+.chart-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    font-size: 1.4em;
+  }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChartFlaowService } from '../services';
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
@@ -14,11 +15,11 @@ export class ChartFlowComponent implements OnInit {
 
   count = 0;
   constructor(
-    private chartFlaowService: ChartFlaowService
+    private chartFlaowService: ChartFlaowService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    console.log(location.href);
   }
 
   // start() {
@@ -81,11 +82,11 @@ export class ChartFlowComponent implements OnInit {
 
   // }
 
-  start() {
+  onStart() {
     const svg = d3.select('#sankey');
 
     const formatNumber = d3.format(',.0f');
-    const format = (d: any) => { return formatNumber(d) + ' series'; };
+    const format = (d: any) => { return (d / 100) + ' 元'; };
     const color = d3.scaleOrdinal(d3.schemeCategory10);
     const sankey = d3Sankey.sankey()
       .nodeId((d: any) => d.name)
@@ -121,6 +122,7 @@ export class ChartFlowComponent implements OnInit {
         .selectAll('g')
         .data(links)
         .join('g')
+        // .attr('stroke', d => this.color(d.source))
         .style('mix-blend-mode', 'multiply');
 
 
@@ -161,6 +163,8 @@ export class ChartFlowComponent implements OnInit {
     });
   }
 
+
+
   // 这个是D3自己维护了一个库里面的
   // 库地址 https://github.com/observablehq/stdlib
   uid(name) {
@@ -176,16 +180,17 @@ export class ChartFlowComponent implements OnInit {
   }
 
   color(item) {
-    console.log(item);
-    if (item.category === 'income') {
-      return '#f44336'
-    } else {
-      return '#673ab7'
-      const color = d3.scaleOrdinal(d3.schemeCategory10);
+    // if (item.category === 'income') {
+    //   return '#f44336'
+    // } else {
+    //   if (item.category === 'expenseBook') {
+    //     return '#3700B3';
+    //   } else {
+    //     return '#cccc';
+    //   }
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-      return d3.schemeCategory10[Math.floor(Math.random() * 10)];
-    }
-
+    return d3.schemeCategory10[Math.floor(Math.random() * 10)];
   }
 
   sankey() {
