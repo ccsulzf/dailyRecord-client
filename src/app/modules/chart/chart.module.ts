@@ -10,7 +10,7 @@ import { ChartComponent } from './chart.component';
 import { ChartListComponent } from './chart-list/chart-list.component';
 import { ChartFlowComponent } from './chart-flow/chart-flow.component';
 
-import { ChartFlaowService } from './services';
+import { ChartFlaowService, ChartCompareService } from './services';
 import { ChartCompareComponent } from './chart-compare/chart-compare.component';
 import { ChartHeaderComponent } from './chart-header/chart-header.component';
 
@@ -24,7 +24,8 @@ const MATERIAL_MODULE = [MatToolbarModule, MatCardModule, MatIconModule, MatButt
     ...MATERIAL_MODULE
   ],
   providers: [
-    ChartFlaowService
+    ChartFlaowService,
+    ChartCompareService
   ]
 })
 export class ChartModule { }
