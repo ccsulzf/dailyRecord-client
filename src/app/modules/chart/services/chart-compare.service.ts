@@ -12,7 +12,7 @@ export class ChartCompareService {
 
   expenseBookList = [];
 
-  maxPrev;
+  minPrev;
   maxNext;
   constructor(
     public http: HttpClient
@@ -36,13 +36,14 @@ export class ChartCompareService {
       (`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=2020-06-01&endDate=2020-06-30`)
       .toPromise();
 
-    this.hanleExpenseList(this.prevExpenseData, this.prevComposeExpenseData);
-    this.hanleExpenseList(this.nextExpenseData, this.nextComposeExpenseData);
+    this.hanleExpenseList(this.prevExpenseData, this.prevComposeExpenseData, 'prev');
+    this.hanleExpenseList(this.nextExpenseData, this.nextComposeExpenseData, 'next');
 
     this.expenseBookList = _.uniqBy(this.expenseBookList, 'expenseBookId');
 
-    this.maxPrev = _.maxBy(this.prevComposeExpenseData, 'amount');
+    this.minPrev = _.minBy(this.prevComposeExpenseData, 'amount');
     this.maxNext = _.maxBy(this.nextComposeExpenseData, 'amount');
+
 
     this.supplyExpenseData();
 
@@ -62,10 +63,13 @@ export class ChartCompareService {
 
     this.prevComposeExpenseData = tempPrevList;
     this.nextComposeExpenseData = tempNextList;
+
+    console.log(this.prevComposeExpenseData);
+    console.log(this.nextComposeExpenseData);
   }
 
   // 处理账本和分类的数据
-  hanleExpenseList(data, composeData) {
+  hanleExpenseList(data, composeData, symbol) {
     for (let item of data) {
       this.expenseBookList.push({
         expenseBookId: item.expenseBookId,
@@ -73,22 +77,27 @@ export class ChartCompareService {
       });
       const hasExpenseBook = _.find(composeData, temp => temp.expenseBookId === item.expenseBookId);
       if (hasExpenseBook) {
-        hasExpenseBook.amount += (+item.amount);
+        if (symbol === 'next') {
+          hasExpenseBook.amount += (+item.amount);
+        } else {
+          hasExpenseBook.amount -= (-(+item.amount));
+        }
+
         hasExpenseBook.expenseCategoryList.push({
           expenseCategoryId: item.expenseCategoryId,
           expenseCategoryName: item.expenseCategoryName,
-          amount: +item.amount
+          amount: (symbol === 'next') ? +item.amount : -(+item.amount)
         });
       } else {
         const temp = {
           expenseBookId: item.expenseBookId,
           expenseBookName: item.expenseBookName,
-          amount: +item.amount,
+          amount: (symbol === 'next') ? +item.amount : -(+item.amount),
           expenseCategoryList: [
             {
               expenseCategoryId: item.expenseCategoryId,
               expenseCategoryName: item.expenseCategoryName,
-              amount: +item.amount
+              amount: (symbol === 'next') ? +item.amount : -(+item.amount),
             }
           ]
         };
