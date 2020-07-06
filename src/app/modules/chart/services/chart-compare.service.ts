@@ -52,7 +52,6 @@ export class ChartCompareService {
 
     for (let item of this.expenseBookList) {
       const find = _.find(this.prevComposeExpenseData, temp => temp.expenseBookId === item.expenseBookId);
-
       tempPrevList.push(find);
     }
 
@@ -69,7 +68,7 @@ export class ChartCompareService {
   }
 
   // 处理账本和分类的数据
-  hanleExpenseList(data, composeData, symbol) {
+  hanleExpenseList(data, composeData, sign) {
     for (let item of data) {
       this.expenseBookList.push({
         expenseBookId: item.expenseBookId,
@@ -77,33 +76,38 @@ export class ChartCompareService {
       });
       const hasExpenseBook = _.find(composeData, temp => temp.expenseBookId === item.expenseBookId);
       if (hasExpenseBook) {
-        if (symbol === 'next') {
-          hasExpenseBook.amount += (+item.amount);
-        } else {
-          hasExpenseBook.amount -= (-(+item.amount));
-        }
-
+        hasExpenseBook.amount += (+item.amount);
         hasExpenseBook.expenseCategoryList.push({
           expenseCategoryId: item.expenseCategoryId,
           expenseCategoryName: item.expenseCategoryName,
-          amount: (symbol === 'next') ? +item.amount : -(+item.amount)
+          amount: +item.amount
         });
       } else {
         const temp = {
           expenseBookId: item.expenseBookId,
           expenseBookName: item.expenseBookName,
-          amount: (symbol === 'next') ? +item.amount : -(+item.amount),
+          amount: +item.amount,
           expenseCategoryList: [
             {
               expenseCategoryId: item.expenseCategoryId,
               expenseCategoryName: item.expenseCategoryName,
-              amount: (symbol === 'next') ? +item.amount : -(+item.amount),
+              amount: +item.amount,
             }
           ]
         };
         composeData.push(temp);
       }
     }
+
+    if (sign === 'prev') {
+      for(let item of composeData){
+        item.amount = -item.amount;
+        for(let temp of item.expenseCategoryList){
+          temp.amount = -temp.amount;
+        }
+      }
+    }
+
   }
 
   // 补充没有的账本
@@ -121,7 +125,7 @@ export class ChartCompareService {
         this.prevComposeExpenseData.push({
           expenseBookId: item.expenseBookId,
           expenseBookName: item.expenseBookName,
-          anmount: 0,
+          amount: 0,
           expenseCategoryList: expenseCategoryList
         });
       }
@@ -134,7 +138,7 @@ export class ChartCompareService {
         this.nextComposeExpenseData.push({
           expenseBookId: item.expenseBookId,
           expenseBookName: item.expenseBookName,
-          anmount: 0,
+          amount: 0,
           expenseCategoryList: expenseCategoryList
         });
       }

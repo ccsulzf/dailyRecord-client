@@ -28,30 +28,35 @@ export class ChartCompareComponent implements OnInit {
 
     const x = d3.scaleLinear()
       .domain([(this.chartCompareService.minPrev.amount / 100), (this.chartCompareService.maxNext.amount / 100)])
-      .rangeRound([0, this.width])
+      .rangeRound([50, this.width])
 
-    console.log(x(0) + '--' + x(1500) + '--' + x(-1500));
+    console.log(x(0) + '--' + x(1500) + '--' + x(-15));
     console.log(x(this.chartCompareService.maxNext.amount / 100));
     console.log(x(this.chartCompareService.minPrev.amount / 100));
 
-    // svg.append('g')
-    //   .attr('fill', 'steelblue')
-    //   .selectAll('rect')
-    //   .data(this.chartCompareService.nextComposeExpenseData)
-    //   .join('rect')
-    //   .attr('x', (d) => x(0))
-    //   .attr('y', (d, i) => y(i) + y.bandwidth() + 10)
-    //   .attr('width', d => x(d.amount / 100) - x(0))
-    //   .attr('height', y.bandwidth());
+    svg.append('g')
+      .attr('fill', 'red')
+      .selectAll('rect')
+      .data(this.chartCompareService.nextComposeExpenseData)
+      .join('rect')
+      .attr('x', (d) => x(0))
+      .attr('y', (d, i) => y(i) + y.bandwidth() + 10)
+      .attr('width', d => x(d.amount / 100) - x(0))
+      .attr('height', y.bandwidth());
 
+    console.log(this.chartCompareService.prevComposeExpenseData);
     svg.append('g')
       .attr('fill', 'steelblue')
       .selectAll('rect')
       .data(this.chartCompareService.prevComposeExpenseData)
       .join('rect')
-      .attr('x', d => x(d.amount / 100) + 50)
+      .attr('x', d => { console.log(d.amount / 100); console.log(x(d.amount / 100)); return x(d.amount / 100);})
       .attr('y', (d, i) => { return y(i) + y.bandwidth() + 10; })
-      .attr('width', d => x(0) - x(d.amount / 100))
+      .attr('width', d => {
+        console.log(x(0) + '--' + x(d.amount / 100));
+        const n = x(0) - x(d.amount / 100);
+        return n ;
+      })
       .attr('height', y.bandwidth());
 
 
