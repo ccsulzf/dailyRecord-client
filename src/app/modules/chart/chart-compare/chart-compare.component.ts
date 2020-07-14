@@ -30,9 +30,6 @@ export class ChartCompareComponent implements OnInit {
       .domain([(this.chartCompareService.minPrev.amount / 100), (this.chartCompareService.maxNext.amount / 100)])
       .rangeRound([50, this.width])
 
-    console.log(x(0) + '--' + x(1500) + '--' + x(-15));
-    console.log(x(this.chartCompareService.maxNext.amount / 100));
-    console.log(x(this.chartCompareService.minPrev.amount / 100));
 
     svg.append('g')
       .attr('fill', 'red')
@@ -44,7 +41,6 @@ export class ChartCompareComponent implements OnInit {
       .attr('width', d => x(d.amount / 100) - x(0))
       .attr('height', y.bandwidth());
 
-    console.log(this.chartCompareService.prevComposeExpenseData);
     svg.append('g')
       .attr('fill', 'steelblue')
       .selectAll('rect')
@@ -59,19 +55,6 @@ export class ChartCompareComponent implements OnInit {
       })
       .attr('height', y.bandwidth());
 
-
-    // svg.append('g')
-    //   .selectAll('g')
-    //   .data(series)
-    //   .join('g')
-    //   // .attr('fill', d => color(d.key))
-    //   .selectAll('rect')
-    //   .data(d => { console.log(d.map(v => Object.assign(v, { key: d.key }))); return d.map(v => Object.assign(v, { key: d.key })); })
-    //   .join('rect')
-    //   .attr('x', d => { console.log(x(d[0])); return x(d[0]) })
-    //   .attr('y', ({ data: [name] }) => y(name))
-    //   .attr('width', d => x(d[1]) - x(d[0]))
-    //   .attr('height', 28)
 
     svg.append('g')
       .call(g => this.yAxis(g, y));

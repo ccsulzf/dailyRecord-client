@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http.post('/login', this.loginForm.value).toPromise().then((data) => {
+    this.http.post('/auth/login', this.loginForm.value).toPromise().then((data) => {
       console.log(data);
       if (data) {
-        localStorage.setItem('dr_user', JSON.stringify(data));
+        localStorage.setItem('', JSON.stringify(data));
         this.router.navigateByUrl('/dashboard');
         this.isLoginError = false;
       } else {
