@@ -10,8 +10,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const user = JSON.parse(localStorage.getItem('dr_user'));
-    if (user) {
+    const token = localStorage.getItem('access_token');
+    if (token) {
       return true;
     } else {
       this.router.navigate(['/login']);
@@ -23,10 +23,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const user = JSON.parse(localStorage.getItem('dr_user'));
-    console.log(user);
-    console.log(state.url);
-    if (user) {
+    const token = localStorage.getItem('access_token');
+    if (token) {
       this.router.navigateByUrl(state.url);
       return true;
     } else {

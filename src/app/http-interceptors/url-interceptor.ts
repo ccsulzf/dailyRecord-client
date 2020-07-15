@@ -12,9 +12,11 @@ export class UrlHttpInterceptor implements HttpInterceptor {
     constructor() { }
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
+        const token = localStorage.getItem('access_token');
+
         const selfReq = req.clone({
             url: environment.url + req.url,
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+            headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }),
         });
 
         return next.handle(selfReq).pipe(

@@ -7,8 +7,6 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 @Injectable()
 export class ExpenseService {
-    public user = JSON.parse(localStorage.getItem('dr_user'));
-
     private selectDetail$ = new Subject<object>();
     private selectBook$ = new Subject<object>();
 
@@ -58,7 +56,7 @@ export class ExpenseService {
     }
 
     del(id) {
-        return this.http.get(`/expense/del?userId=${this.user.id}&id=${id}`).pipe(
+        return this.http.get(`/expense/del?id=${id}`).pipe(
             map((data: any) => {
                 _.remove(this.originExpenseDetailList, item => item.id === id);
                 this.list = this.composeData();
@@ -84,7 +82,7 @@ export class ExpenseService {
     }
 
     getList() {
-        this.http.get(`/expense/getList?userId=${this.user.id}&expenseDate=${this.expenseDetailDate}`).toPromise().then((data) => {
+        this.http.get(`/expense/getList?expenseDate=${this.expenseDetailDate}`).toPromise().then((data) => {
             if (data) {
                 this.originExpenseDetailList = data;
                 this.list = this.composeData();

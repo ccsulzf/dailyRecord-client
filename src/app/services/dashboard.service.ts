@@ -20,7 +20,7 @@ export class DashboardService {
     public monthTotalExpense;
     public monthTotalIncome;
 
-    private user = JSON.parse(localStorage.getItem('dr_user'));
+    // private user = JSON.parse(localStorage.getItem('dr_user'));
     private startDate = moment().startOf('month').format('YYYY-MM-DD');
     private endDate = moment().endOf('month').format('YYYY-MM-DD');
     constructor(
@@ -29,9 +29,9 @@ export class DashboardService {
     }
 
     async getExpenseBookANDCategory() {
-        const expenseBookList = await this.http.get(`/expenseBook?s={"userId":${this.user.id},"deletedAt":null}`)
+        const expenseBookList = await this.http.get(`/expenseBook?s={"deletedAt":null}`)
             .toPromise();
-        const expenseCatgeoryList = await this.http.get(`/expenseCategory?s={"userId":${this.user.id},"deletedAt":null}`)
+        const expenseCatgeoryList = await this.http.get(`/expenseCategory?s={"deletedAt":null}`)
             .toPromise();
         return this.composeBookAndCategory(expenseBookList, expenseCatgeoryList);
     }
@@ -61,7 +61,7 @@ export class DashboardService {
     }
 
     async getMonthDateData() {
-        const monthData: any = await this.http.get(`/dashboard/getMonthDateData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`)
+        const monthData: any = await this.http.get(`/dashboard/getMonthDateData?startDate=${this.startDate}&endDate=${this.endDate}`)
             .toPromise();
         if (monthData && monthData.length) {
             this.monthTotalExpense = monthData.reduce((prev, item) => {
@@ -75,7 +75,7 @@ export class DashboardService {
     }
 
     async getMonthExpenseCategroyData() {
-        const monthCategoryData: any = await this.http.get(`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`)
+        const monthCategoryData: any = await this.http.get(`/dashboard/getMonthExpenseCategroyData?startDate=${this.startDate}&endDate=${this.endDate}`)
             .toPromise();
 
         let list = [];
@@ -130,7 +130,7 @@ export class DashboardService {
     }
 
     getIncomeMonthCategoryData() {
-        return this.http.get(`/dashboard/getIncomeMonthCategoryData?userId=${this.user.id}&startDate=${this.startDate}&endDate=${this.endDate}`).toPromise();
+        return this.http.get(`/dashboard/getIncomeMonthCategoryData?startDate=${this.startDate}&endDate=${this.endDate}`).toPromise();
     }
 
 }

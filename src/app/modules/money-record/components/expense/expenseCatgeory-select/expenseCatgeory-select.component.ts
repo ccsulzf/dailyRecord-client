@@ -33,7 +33,6 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
   @Input() name;
   @Input() model;
 
-  private user = JSON.parse(localStorage.getItem('dr_user'));
   itemSelectControl = new FormControl();
 
   matcher = new ExpenseCategorySelectErrorStateMatcher();
@@ -88,7 +87,7 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    data = data || { id: '', name: '', userId: this.user.id, isHide: false };
+    data = data || { id: '', name: '', isHide: false };
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
     this.itemSelectControl.markAsPristine();
@@ -138,7 +137,6 @@ export class ExpenseCategorySelectComponent implements OnInit, ControlValueAcces
       this.propagateChange({
         id: '',
         name: value,
-        userId: this.user.id,
         expenseBookId: this.expenseService.currenBook.id,
         isHide: false
       });

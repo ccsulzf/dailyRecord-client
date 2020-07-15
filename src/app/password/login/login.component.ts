@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   loginForm = this.fb.group({
-    nameOrEmail: ['', Validators.required],
+    username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
@@ -26,17 +26,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http.post('/auth/login', this.loginForm.value).toPromise().then((data) => {
+    console.log(this.loginForm.value);
+    this.http.post('/auth/login', this.loginForm.value).toPromise().then((data: any) => {
       console.log(data);
       if (data) {
-        localStorage.setItem('', JSON.stringify(data));
+        localStorage.setItem('access_token', data.access_token);
         this.router.navigateByUrl('/dashboard');
         this.isLoginError = false;
       } else {
         this.isLoginError = true;
       }
     }, (error) => {
-
+      this.isLoginError = false;
     });
   }
 

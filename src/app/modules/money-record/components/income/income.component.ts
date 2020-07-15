@@ -11,8 +11,6 @@ import { IncomeService } from '../../services';
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit, OnDestroy {
-  private user = JSON.parse(localStorage.getItem('dr_user'));
-
   isAdd = true;
   getIncomeDetailSub: Subscription;
   constructor(
@@ -26,7 +24,6 @@ export class IncomeComponent implements OnInit, OnDestroy {
 
   incomeForm = this.fb.group({
     id: [''],
-    userId: [this.user.id],
     incomeDate: [moment(new Date()).format('YYYY-MM-DD'), Validators.required],
     address: ['', Validators.required],
     incomeCategory: ['', Validators.required],

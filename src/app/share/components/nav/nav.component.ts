@@ -116,7 +116,7 @@ export class NavComponent implements OnInit, AfterViewInit {
 
 
   logout() {
-    localStorage.removeItem('dr_user');
+    localStorage.removeItem('access_token');
     this.router.navigateByUrl('/login');
   }
 }

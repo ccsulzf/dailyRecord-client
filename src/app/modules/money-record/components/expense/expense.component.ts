@@ -10,8 +10,6 @@ import * as moment from 'moment';
   styleUrls: ['./expense.component.scss']
 })
 export class ExpenseComponent implements OnInit, OnDestroy {
-  private user = JSON.parse(localStorage.getItem('dr_user'));
-
   isAdd = true;
   getExpenseDetailSub: Subscription;
 
@@ -26,7 +24,6 @@ export class ExpenseComponent implements OnInit, OnDestroy {
 
   expenseForm = this.fb.group({
     id: [''],
-    userId: [this.user.id],
     expenseBook: ['', Validators.required],
     expenseDate: [moment(new Date()).format('YYYY-MM-DD'), Validators.required],
     address: ['', Validators.required],

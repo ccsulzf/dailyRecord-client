@@ -8,7 +8,6 @@ import * as _ from 'lodash';
 })
 
 export class BaseDataService {
-    private user = JSON.parse(localStorage.getItem('dr_user'));
     public baseData = {};
     private addBaseData$ = new Subject<object>();
     public currenBaseDataList = [];
@@ -31,7 +30,7 @@ export class BaseDataService {
 
             });
         } else {
-            return this.http.get(`/${modelName}?s={"userId":${this.user.id},"deletedAt":null}`).pipe(
+            return this.http.get(`/${modelName}?s={"deletedAt":null}`).pipe(
                 map((list: any) => {
                     this.baseData[modelName] = list;
                     if (filterHide) {

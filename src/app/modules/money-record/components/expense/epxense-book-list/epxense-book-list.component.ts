@@ -17,7 +17,6 @@ export const EXPENSEBOOK_ACCESSOR: any = {
 export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
   list = [];
 
-  private user = JSON.parse(localStorage.getItem('dr_user'));
   showAddExpenseBook = false;
 
   ngOnInit() {
@@ -54,7 +53,6 @@ export class EpxenseBookListComponent implements OnInit, ControlValueAccessor {
 
   addBook(value) {
     const expenseBook = {
-      userId: this.user.id,
       name: value
     };
     this.http.post('/expenseBook', expenseBook).toPromise().then((data) => {

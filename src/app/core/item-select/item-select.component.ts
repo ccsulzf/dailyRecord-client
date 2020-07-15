@@ -30,7 +30,6 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
   @Input() name;
   @Input() model;
   matcher = new ItemSelectErrorStateMatcher();
-  private user = JSON.parse(localStorage.getItem('dr_user'));
 
   baseData$: Observable<any>;
   baseDataSub: Subscription;
@@ -83,7 +82,7 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
   propagateChange = (temp: any) => { };
 
   writeValue(data: any): void {
-    data = data || { id: '', name: '', userId: this.user.id, isHide: false };
+    data = data || { id: '', name: '', isHide: false };
     this.itemSelectControl.setValidators(Validators.required);
     this.itemSelectControl.setValue(data.name);
     this.propagateChange(data);
@@ -125,7 +124,6 @@ export class ItemSelectComponent implements OnInit, ControlValueAccessor, OnDest
       this.propagateChange({
         id: '',
         name: value,
-        userId: this.user.id,
         isHide: false
       });
     }
