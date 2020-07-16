@@ -9,7 +9,9 @@ import { tap, mergeMap, catchError, last, takeLast } from 'rxjs/operators';
 @Injectable()
 export class UrlHttpInterceptor implements HttpInterceptor {
 
-    constructor() { }
+    constructor(
+        private router: Router
+    ) { }
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
         const token = localStorage.getItem('access_token');
@@ -28,6 +30,9 @@ export class UrlHttpInterceptor implements HttpInterceptor {
                 return of(event);
             }),
             catchError((err: HttpErrorResponse) => {
+                if (err.status === 401) {
+                    this.router.navigateByUrl('/login');
+                }
                 return of(err);
             }),
         );

@@ -20,7 +20,6 @@ export class DashboardService {
     public monthTotalExpense;
     public monthTotalIncome;
 
-    // private user = JSON.parse(localStorage.getItem('dr_user'));
     private startDate = moment().startOf('month').format('YYYY-MM-DD');
     private endDate = moment().endOf('month').format('YYYY-MM-DD');
     constructor(

@@ -24,7 +24,7 @@ export class ReportIncomeService {
     }
 
     getTotal(data): Promise<any> {
-        return this.http.post('/report/incomeTotal', _.pick(data, ['userId', 'conditionList'])).toPromise();
+        return this.http.post('/report/incomeTotal', _.pick(data, ['conditionList'])).toPromise();
     }
 
 }

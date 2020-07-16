@@ -24,7 +24,7 @@ export class ReportExpenseService {
     }
 
     getTotal(data): Promise<any> {
-        return this.http.post('/report/expenseTotal', _.pick(data, ['userId', 'conditionList'])).toPromise();
+        return this.http.post('/report/expenseTotal', _.pick(data, ['conditionList'])).toPromise();
     }
 
 }

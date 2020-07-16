@@ -65,7 +65,7 @@ export class MonthCalendarComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log(this.tableList);
+    // console.log(this.tableList);
   }
 
   ngOnDestroy() {

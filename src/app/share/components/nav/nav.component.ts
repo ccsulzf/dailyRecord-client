@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { BaseDataService } from '../../../services/base.data.service';
 import { Router } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -68,7 +69,8 @@ export class NavComponent implements OnInit, AfterViewInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private router: Router
+    private router: Router,
+    private baseDataService: BaseDataService
   ) {
     this.dataSource.data = TREE_DATA;
   }
@@ -117,6 +119,8 @@ export class NavComponent implements OnInit, AfterViewInit {
 
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('userInfo');
+    this.baseDataService.baseData = {};
     this.router.navigateByUrl('/login');
   }
 }

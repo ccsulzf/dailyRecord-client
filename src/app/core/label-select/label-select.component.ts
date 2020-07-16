@@ -6,7 +6,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BaseDataService } from '../../services';
-
+import * as _ from 'lodash';
 export const LABEL_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => LabelSelectComponent),
@@ -105,13 +105,20 @@ export class LabelSelectComponent implements OnInit, ControlValueAccessor {
     const index = this.selectedLabels.findIndex(item => item.name === name);
 
     if (index >= 0) {
-      this.selectedLabels.splice(index, 1);
+      const item = this.selectedLabels.splice(index, 1);
+      if (item && item[0].id) {
+        this.allLabels.push(item[0]);
+        this.filteredLabel = this.labelCtrl.valueChanges.pipe(
+          startWith(null),
+          map((value: string | null) => value ? this._filter(value) : this.allLabels.slice()));
+      }
     }
     this.propagateChange(this.selectedLabels);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.selectedLabels.push(event.option.value);
+    this.allLabels = _.filter(this.allLabels, temp => temp.id !== event.option.value.id);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
     this.propagateChange(this.selectedLabels);

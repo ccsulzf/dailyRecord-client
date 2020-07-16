@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 
 import { BaseDataService } from '../../services';
 
+import * as _ from 'lodash';
 export const PEOPLE_SELECT_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => PeopleSelectComponent),
@@ -85,12 +86,11 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
       const input = event.input;
       const value = event.value;
 
-      // Add our fruit
       if ((value || '').trim()) {
         this.selectedPeoples.push({
           id: '',
           name: value.trim(),
-          isHide:false
+          isHide: false
         });
       }
 
@@ -108,7 +108,13 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
     const index = this.selectedPeoples.findIndex(item => item.name === name);
 
     if (index >= 0) {
-      this.selectedPeoples.splice(index, 1);
+      const item = this.selectedPeoples.splice(index, 1);
+      if (item && item[0].id) {
+        this.allPeoples.push(item[0]);
+        this.filteredPeolple = this.peopleCtrl.valueChanges.pipe(
+          startWith(null),
+          map((value: string | null) => value ? this._filter(value) : this.allPeoples.slice()));
+      }
     }
     this.propagateChange(this.selectedPeoples);
   }
@@ -116,6 +122,7 @@ export class PeopleSelectComponent implements OnInit, ControlValueAccessor {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.selectedPeoples.push(event.option.value);
+    this.allPeoples = _.filter(this.allPeoples, temp => temp.id !== event.option.value.id);
     this.peopleInput.nativeElement.value = '';
     this.peopleCtrl.setValue(null);
     this.propagateChange(this.selectedPeoples);

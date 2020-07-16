@@ -35,7 +35,6 @@ export class ReportFilterService {
 
     compose(value) {
         return {
-            userId: JSON.parse(localStorage.getItem('dr_user')).id,
             conditionList: this.pickValidCondition(value[0]),
             page: value[1]
         };

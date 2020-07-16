@@ -32,6 +32,7 @@ export class PageComponent implements OnInit {
   }
 
   select(data) {
+    this.pageIndex = data.pageIndex;
     this.pageFilter = {
       skip: data.pageIndex * data.pageSize,
       take: (data.pageIndex + 1) * data.pageSize

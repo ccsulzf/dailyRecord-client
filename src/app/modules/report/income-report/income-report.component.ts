@@ -7,6 +7,7 @@ import { MatDrawer } from '@angular/material';
 import * as _ from 'lodash';
 import { LabelPeopleRenderer } from '../grid-components';
 import { GridOptions } from 'ag-grid-community';
+import { BaseDataService } from '../../../services';
 @Component({
   selector: 'app-income-report',
   templateUrl: './income-report.component.html',
@@ -32,7 +33,8 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
   private overlayNoRowsTemplate;
   constructor(
     private reportFilterService: ReportFilterService,
-    private reportIncomeService: ReportIncomeService
+    private reportIncomeService: ReportIncomeService,
+    private baseDataService: BaseDataService
   ) {
     const item = _.find(this.filterOption, { field: 'incomeDate' });
     this.reportIncomeService.setDefaultDate(item);
@@ -113,6 +115,7 @@ export class IncomeReportComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.baseDataService.clearItemSelected();
     this.getFilter = this.reportFilterService.getFilter().subscribe((data) => {
       if (this.drawer) {
         this.drawer.close();

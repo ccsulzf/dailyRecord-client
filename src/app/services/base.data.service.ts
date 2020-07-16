@@ -99,6 +99,15 @@ export class BaseDataService {
         return list;
     }
 
+    // 报表那边要用，暂时先用这种方式吧
+    clearItemSelected() {
+        _.forIn(this.baseData, (value, key) => {
+            for (const item of value) {
+                item.selected = false;
+            }
+        });
+    }
+
     hideExpenseBook(expenseBook, expenseCategoryList) {
         return this.http.post(`/baseData/hideExpenseBook`, { expenseBook, expenseCategoryList })
             .toPromise();

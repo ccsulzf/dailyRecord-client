@@ -6,6 +6,7 @@ import { CustomTooltip, LabelPeopleRenderer } from '../grid-components';
 import { MatDrawer } from '@angular/material';
 import * as  _ from 'lodash';
 import { GridOptions } from 'ag-grid-community';
+import { BaseDataService } from '../../../services';
 @Component({
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'app-expense-report',
@@ -32,7 +33,8 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
 
   constructor(
     private reportFilterService: ReportFilterService,
-    private reportExpenseService: ReportExpenseService
+    private reportExpenseService: ReportExpenseService,
+    private baseDataService: BaseDataService
   ) {
     const item = _.find(this.filterOption, { field: 'expenseDate' });
     this.reportExpenseService.setDefaultDate(item);
@@ -137,6 +139,7 @@ export class ExpenseReportComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnInit() {
+    this.baseDataService.clearItemSelected();
     this.getFilter = this.reportFilterService.getFilter().subscribe((data) => {
       if (this.drawer) {
         this.drawer.close();

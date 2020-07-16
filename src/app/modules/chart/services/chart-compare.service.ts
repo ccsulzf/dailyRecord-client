@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 @Injectable()
 export class ChartCompareService {
-  private user = JSON.parse(localStorage.getItem('dr_user'));
   prevExpenseData;
   nextExpenseData;
 
@@ -28,12 +27,12 @@ export class ChartCompareService {
     this.expenseBookList = [];
 
     this.prevExpenseData = await this.http.get
-      (`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=2020-05-01&endDate=2020-05-31`)
+      (`/dashboard/getMonthExpenseCategroyData?startDate=2020-05-01&endDate=2020-05-31`)
       .toPromise();
 
 
     this.nextExpenseData = await this.http.get
-      (`/dashboard/getMonthExpenseCategroyData?userId=${this.user.id}&startDate=2020-06-01&endDate=2020-06-30`)
+      (`/dashboard/getMonthExpenseCategroyData?startDate=2020-06-01&endDate=2020-06-30`)
       .toPromise();
 
     this.hanleExpenseList(this.prevExpenseData, this.prevComposeExpenseData, 'prev');
