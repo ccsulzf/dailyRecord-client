@@ -9,7 +9,6 @@ p {
 
 form {
   width: 320px;
-  padding: 5px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,6 +19,7 @@ form {
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    padding:10px;
   }
 
   .btn-group {

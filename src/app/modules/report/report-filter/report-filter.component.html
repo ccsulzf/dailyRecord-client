@@ -1,12 +1,12 @@
 <form>
   <div class="filter-content">
+
     <ng-container *ngFor="let item of filterOption">
       <ng-container [ngSwitch]="item?.component">
         <app-date *ngSwitchCase="'date'" [item]="item"></app-date>
         <app-select *ngSwitchCase="'select'" [item]="item"></app-select>
         <app-input *ngSwitchCase="'input'" [item]="item"></app-input>
         <app-range *ngSwitchCase="'range'" [item]="item"></app-range>
-        <app-lable-people *ngSwitchCase="'label-people'" [item]="item"></app-lable-people>
       </ng-container>
     </ng-container>
   </div>

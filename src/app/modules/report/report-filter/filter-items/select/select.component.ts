@@ -1,10 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
-import { ReportFilterService } from '../../../services';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BaseDataService } from '../../../../../services';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { map, startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -12,16 +11,20 @@ import * as _ from 'lodash';
 })
 export class SelectComponent implements OnInit {
   @Input() item;
-  list$: Promise<any>;
-
+  list: any;
+  filterList: any;
+  hasSelectedList = false;
+  inputCtrl = new FormControl();
+  filteredList: Observable<any[]>;
   constructor(
-    private reportFilterService: ReportFilterService,
-    private baseDataService: BaseDataService,
-    private http: HttpClient
+    private baseDataService: BaseDataService
   ) { }
 
-  ngOnInit() {
-    this.list$ = this.baseDataService.getBaseData(this.item.model);
+  async ngOnInit() {
+    this.list = await this.baseDataService.getBaseData(this.item.model);
+    this.filteredList = this.inputCtrl.valueChanges.pipe(
+      startWith(null),
+      map((value: string | null) => value ? this._filter(value) : this.list.slice()));
   }
 
   select(item) {
@@ -35,4 +38,8 @@ export class SelectComponent implements OnInit {
     }
   }
 
+
+  private _filter(value: string): string[] {
+    return this.list.filter(item => item.name.indexOf(value) === 0);
+  }
 }

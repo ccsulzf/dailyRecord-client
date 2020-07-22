@@ -1,9 +1,29 @@
-<div class="report-select">
-  <p>{{item?.name}}:</p>
-  <div class="select-content">
-    <ng-container *ngFor="let item of list$ | async">
-      <button (click)="select(item)" mat-stroked-button type="button" color="primary"
-        [class.btn-selected]="item.selected" class="btn-selected ">{{item.name}}</button>
-    </ng-container>
-  </div>
-</div>
+<mat-accordion class="select-content">
+  <!-- (opened)="panelOpenState = true" -->
+  <mat-expansion-panel (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{item?.name}}
+      </mat-panel-title>
+      <mat-panel-description *ngIf="item.value.length !== 0" class="select-num">
+        已选{{item?.value.length}}项
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field floatLabel="never" class="full-width">
+      <input [formControl]="inputCtrl" type="text" autocomplete="off" matInput placeholder="请输入..." matInput>
+      <!-- <span *ngIf="item.value.length !== 0" matSuffix>
+          <mat-checkbox [(ngModel)]="hasSelectedList">已选</mat-checkbox>
+        </span> -->
+    </mat-form-field>
+    <div class="list-content">
+      <div *ngFor="let item of filteredList | async" class="list-item" (click)="select(item)">
+        <p>
+          {{item.name}}
+        </p>
+        <button *ngIf="item.selected" mat-icon-button color="primary">
+          <mat-icon>done</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

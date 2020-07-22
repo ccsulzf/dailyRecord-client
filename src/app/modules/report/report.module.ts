@@ -20,7 +20,8 @@ import {
   MatSelectModule,
   MAT_DATE_LOCALE,
   MatListModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule
 } from '@angular/material';
 
 import { ReportRoutingModule } from './report-routing.module';
@@ -28,17 +29,17 @@ import { ReportComponent } from './report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { ReportFilterComponent } from './report-filter/report-filter.component';
 import { DateComponent } from './report-filter/filter-items/date/date.component';
-import { SelectComponent } from './report-filter/filter-items/select/select.component';
 import { InputComponent } from './report-filter/filter-items/input/input.component';
 import { RangeComponent } from './report-filter/filter-items/range/range.component';
 import { GroupComponent } from './report-filter/filter-items/group/group.component';
-import { LabelPeopleComponent } from './report-filter/filter-items/label-people/label-people.component';
+
 
 import { ReportFilterService, ReportExpenseService, ReportIncomeService } from './services';
 import { PageComponent } from './report-filter/filter-items/page/page.component';
 
 import { CustomTooltip, LabelPeopleRenderer } from './grid-components';
 import { IncomeReportComponent } from './income-report/income-report.component';
+import { SelectComponent } from './report-filter/filter-items/select/select.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -62,7 +63,8 @@ import { IncomeReportComponent } from './income-report/income-report.component';
     MatCheckboxModule,
     MatSelectModule,
     MatListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule
   ],
   declarations: [
     ReportComponent,
@@ -73,7 +75,6 @@ import { IncomeReportComponent } from './income-report/income-report.component';
     InputComponent,
     RangeComponent,
     GroupComponent,
-    LabelPeopleComponent,
     PageComponent,
     CustomTooltip,
     IncomeReportComponent,

@@ -49,14 +49,14 @@ export const filterOption = [{
     value: [],
     field: 'peopleId',
     model: 'people',
-    component: 'label-people',
+    component: 'select',
     name: '参与人'
 }, {
     type: 'In',
     value: [],
     field: 'lableId',
     model: 'label',
-    component: 'label-people',
+    component: 'select',
     name: '标签'
 }, {
     type: 'Like',
