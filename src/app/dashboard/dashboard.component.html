@@ -2,8 +2,12 @@
   <!-- 当月支出和收入信息 -->
   <div class="income-expense">
     <div class="month-date">
-      <p>{{year}}年</p>
-      <p>{{month}}月</p>
+      <mat-icon (click)="prevMonth()">keyboard_arrow_left</mat-icon>
+      <div>
+        <p>{{year}}年</p>
+        <p>{{month}}月</p>
+      </div>
+      <mat-icon (click)="nextMonth()">keyboard_arrow_right</mat-icon>
     </div>
 
     <div class="month-item month-expense shadow">

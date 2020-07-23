@@ -1,0 +1,30 @@
+<div mat-dialog-title>
+  <p style="font-size: .8em;">您的每一次反馈，都是对我们的肯定！</p>
+</div>
+<div mat-dialog-content>
+
+  <form [formGroup]="feedBackForm"  (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-select placeholder="请选择反馈类型" formControlName="feedBackTypeControl">
+        <mat-option *ngFor="let feedBackItem of feedBackTypeList" [value]="feedBackItem.id">
+          {{feedBackItem.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>备注</mat-label>
+      <!-- <input matInput #input placeholder="Placeholder"> -->
+      <textarea rows="3" #input formControlName="memoInputControl" matInput placeholder="请输入相关描述..."></textarea>
+      <mat-hint align="end">{{input.value?.length || 0}}/500</mat-hint>
+    </mat-form-field>
+
+    <div class="btn-group">
+      <button mat-raised-button [disabled]="!feedBackForm.valid" type="submit" color="primary">确 定</button>
+      <button mat-raised-button color="accent" type="button" (click)="onNoClick()">取 消</button>
+    </div>
+  </form>
+</div>
+<!-- <div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="300" cdkFocusInitial>Ok</button>
+</div> -->

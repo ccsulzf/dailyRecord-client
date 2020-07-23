@@ -18,5 +18,14 @@
     </mat-tree-node>
   </mat-tree>
 
-  <button style="width: 100%;" (click)="logout()" mat-button color="primary">退 出</button>
+  <div class="btn-group">
+    <button style="width: 100%;" (click)="logout()" title="退出" mat-button color="primary">
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+
+    <button style="width: 100%;" (click)="openFeedbackDialog()" title="意见反馈" mat-button color="primary">
+      <mat-icon>forum</mat-icon>
+    </button>
+  </div>
+
 </div>

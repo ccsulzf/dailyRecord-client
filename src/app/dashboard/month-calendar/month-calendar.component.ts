@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DashboardService } from '../../services';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-month-calendar',
   templateUrl: './month-calendar.component.html',
@@ -11,22 +12,31 @@ export class MonthCalendarComponent implements OnInit, OnDestroy {
   public tableList = [];
   public monthData;
   public today = moment().format('YYYY-MM-DD');
+  dateChange: Subscription;
   constructor(
     private dashboardService: DashboardService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.getList();
+    this.dateChange = this.dashboardService.dateChange().subscribe(() => {
+      this.getList();
+    });
+  }
+
+  async getList() {
+    this.tableList = [];
     this.monthData = await this.dashboardService.getMonthDateData();
-    this.generateDateList(moment().format('YYYY-MM'));
+    this.generateDateList(moment(this.dashboardService.startDate).format('YYYY-MM'));
   }
 
 
   generateDateList(date) {
     const monthDasys = moment(date).daysInMonth();
-    const startDayWeek = new Date(`${date}-01`).getDay() || 7
-    const endDayWeek = new Date(`${date}-${monthDasys}`).getDay() || 7
+    const startDayWeek = new Date(`${date}-01`).getDay() || 7;
+    const endDayWeek = new Date(`${date}-${monthDasys}`).getDay() || 7;
 
-    let dateList = [];
+    const dateList = [];
 
     for (let i = (startDayWeek); i >= 1; i--) {
       dateList.push({
@@ -70,6 +80,9 @@ export class MonthCalendarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tableList = [];
+    if (this.dateChange) {
+      this.dateChange.unsubscribe();
+    }
   }
 
 }

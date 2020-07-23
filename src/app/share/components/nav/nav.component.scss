@@ -47,3 +47,9 @@ mat-divider {
 .btn-logout {
   margin: 10px 20px;
 }
+
+.btn-group {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}

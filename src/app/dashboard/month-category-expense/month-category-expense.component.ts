@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DashboardService } from '../../services';
+import { Subscription } from 'rxjs';
 interface ExampleFlatNode {
   id: number;
   expandable: boolean;
@@ -15,7 +16,7 @@ interface ExampleFlatNode {
   templateUrl: './month-category-expense.component.html',
   styleUrls: ['./month-category-expense.component.scss']
 })
-export class MonthCategoryExpenseComponent implements OnInit {
+export class MonthCategoryExpenseComponent implements OnInit, OnDestroy {
   isHide = true;
   dataSource;
   list = [];
@@ -23,16 +24,21 @@ export class MonthCategoryExpenseComponent implements OnInit {
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-
+  dateChange: Subscription;
   constructor(
     private dashboardService: DashboardService
   ) { }
 
-  async ngOnInit() {
-    // this.list = await this.dashboardService.getExpenseBookANDCategory();
+  ngOnInit() {
+    this.getList();
+    this.dateChange = this.dashboardService.dateChange().subscribe(() => {
+      this.getList();
+    });
+  }
+
+  async getList() {
     this.list = await this.dashboardService.getMonthExpenseCategroyData();
     this.dataSource = new ArrayDataSource(this.list);
-
   }
 
   shouldRender(node: ExampleFlatNode) {
@@ -48,5 +54,11 @@ export class MonthCategoryExpenseComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  ngOnDestroy() {
+    if (this.dateChange) {
+      this.dateChange.unsubscribe();
+    }
   }
 }

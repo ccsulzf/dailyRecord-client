@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Subject, Observable, zip, combineLatest, race, AsyncSubject } from 'rxjs';
 import { map, startWith, debounceTime } from 'rxjs/operators';
@@ -6,8 +5,8 @@ import *  as _ from 'lodash';
 @Injectable()
 export class ReportFilterService {
     public conditionList = [];
-    private filterCondition$ = new Subject<Object>(); // 过滤条件改变
-    private composeFilter$ = new Subject<Object>(); // 组装最终的
+    private filterCondition$ = new Subject<object>(); // 过滤条件改变
+    private composeFilter$ = new Subject<object>(); // 组装最终的
 
     constructor() {
 
@@ -26,10 +25,10 @@ export class ReportFilterService {
         this.composeFilter$.next(this.compose([this.conditionList, value]));
     }
 
-    filterConditionChange(): Observable<Object> {
+    filterConditionChange(): Observable<object> {
         return this.filterCondition$;
     }
-    getFilter(): Observable<Object> {
+    getFilter(): Observable<object> {
         return this.composeFilter$;
     }
 

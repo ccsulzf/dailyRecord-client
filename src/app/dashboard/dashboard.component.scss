@@ -27,9 +27,12 @@ main {
 
 .month-date {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  mat-icon{
+    cursor: pointer;
+  }
   p {
     // flex: 1;
     align-items: center;

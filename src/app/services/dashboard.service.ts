@@ -1,10 +1,9 @@
 
 import { Injectable } from '@angular/core';
-
+import { Subject, Observable, zip, combineLatest, race, AsyncSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import *  as _ from 'lodash';
 import * as moment from 'moment';
-import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 interface Node {
     id: number;
@@ -16,17 +15,38 @@ interface Node {
 }
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
+    private dateChange$ = new Subject();
 
     public monthTotalExpense;
     public monthTotalIncome;
 
-    private startDate = moment().startOf('month').format('YYYY-MM-DD');
-    private endDate = moment().endOf('month').format('YYYY-MM-DD');
+    public startDate = moment().startOf('month').format('YYYY-MM-DD');
+    public endDate = moment().endOf('month').format('YYYY-MM-DD');
     constructor(
         private http: HttpClient
     ) {
     }
 
+    initDate() {
+        this.startDate = moment().startOf('month').format('YYYY-MM-DD');
+        this.endDate = moment().endOf('month').format('YYYY-MM-DD');
+    }
+
+    dateChange(): Observable<any> {
+        return this.dateChange$;
+    }
+
+    nextMonth() {
+        this.startDate = moment(this.startDate).add(1, 'month').startOf('month').format('YYYY-MM-DD');
+        this.endDate = moment(this.startDate).endOf('month').format('YYYY-MM-DD');
+        this.dateChange$.next();
+    }
+
+    prevMonth() {
+        this.startDate = moment(this.startDate).subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
+        this.endDate = moment(this.startDate).endOf('month').format('YYYY-MM-DD');
+        this.dateChange$.next();
+    }
     async getExpenseBookANDCategory() {
         const expenseBookList = await this.http.get(`/expenseBook?s={"deletedAt":null}`)
             .toPromise();
@@ -37,7 +57,7 @@ export class DashboardService {
 
     composeBookAndCategory(expenseBookList, expenseCategoryList) {
         const list: Node[] = [];
-        for (let item of expenseBookList) {
+        for (const item of expenseBookList) {
             item.expandable = true;
             item.level = 0;
             item.isEdit = false;
@@ -47,7 +67,7 @@ export class DashboardService {
                 return temp.expenseBookId === item.id;
             });
 
-            for (let categoryItem of filterList) {
+            for (const categoryItem of filterList) {
                 categoryItem.isEdit = false;
                 categoryItem.expandable = false;
                 categoryItem.level = 1;
@@ -118,13 +138,12 @@ export class DashboardService {
         let nodeList = [];
 
         list = _.reverse(_.sortBy(list, 'amount'));
-        for (let item of list) {
+        for (const item of list) {
             const child = item['child'];
             delete item.child;
             nodeList.push(item);
             nodeList = [...nodeList, ...child];
         }
-        console.log(nodeList);
         return nodeList;
     }
 

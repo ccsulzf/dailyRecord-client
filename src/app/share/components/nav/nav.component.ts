@@ -3,6 +3,8 @@ import { BaseDataService } from '../../../services/base.data.service';
 import { Router } from '@angular/router';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FeedBackComponent } from './feedBack/feedBack.component';
 interface FoodNode {
   name: string;
   path?: string;
@@ -70,7 +72,8 @@ export class NavComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private baseDataService: BaseDataService
+    private baseDataService: BaseDataService,
+    public dialog: MatDialog
   ) {
     this.dataSource.data = TREE_DATA;
   }
@@ -123,4 +126,12 @@ export class NavComponent implements OnInit, AfterViewInit {
     this.baseDataService.baseData = {};
     this.router.navigateByUrl('/login');
   }
+
+  openFeedbackDialog(): void {
+    const dialogRef = this.dialog.open(FeedBackComponent, {
+      width: '400px',
+    });
+
+  }
+
 }
