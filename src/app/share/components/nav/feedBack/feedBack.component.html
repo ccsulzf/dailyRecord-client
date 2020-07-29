@@ -5,7 +5,7 @@
 
   <form [formGroup]="feedBackForm"  (ngSubmit)="onSubmit()">
     <mat-form-field class="full-width" appearance="outline">
-      <mat-select placeholder="请选择反馈类型" formControlName="feedBackTypeControl">
+      <mat-select placeholder="请选择反馈类型" formControlName="type">
         <mat-option *ngFor="let feedBackItem of feedBackTypeList" [value]="feedBackItem.id">
           {{feedBackItem.value}}
         </mat-option>
@@ -14,7 +14,7 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>备注</mat-label>
       <!-- <input matInput #input placeholder="Placeholder"> -->
-      <textarea rows="3" #input formControlName="memoInputControl" matInput placeholder="请输入相关描述..."></textarea>
+      <textarea rows="3" #input formControlName="memo" matInput placeholder="请输入相关描述..."></textarea>
       <mat-hint align="end">{{input.value?.length || 0}}/500</mat-hint>
     </mat-form-field>
 

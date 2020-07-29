@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MessageService,BaseDataService } from '../../../../services';
 @Component({
     selector: 'app-feedBack',
     templateUrl: './feedBack.component.html',
@@ -17,11 +18,13 @@ export class FeedBackComponent implements OnInit {
         value: '系统建议'
     }];
     feedBackForm = new FormGroup({
-        feedBackTypeControl: new FormControl('', [Validators.required]),
-        memoInputControl: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+        type: new FormControl('', [Validators.required]),
+        memo: new FormControl('', [Validators.required, Validators.maxLength(500)]),
     });
     constructor(
-        public dialogRef: MatDialogRef<FeedBackComponent>
+        public dialogRef: MatDialogRef<FeedBackComponent>,
+        public messageService: MessageService,
+        public baseDataService:BaseDataService
     ) { }
 
     ngOnInit() {
@@ -33,6 +36,9 @@ export class FeedBackComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.feedBackForm.value);
+        this.baseDataService.addFeedBack(this.feedBackForm.value).then((data)=>{
+            this.messageService.success('反馈成功！');
+            this.dialogRef.close();
+        })
     }
 }

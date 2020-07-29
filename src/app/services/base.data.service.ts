@@ -108,6 +108,11 @@ export class BaseDataService {
         });
     }
 
+    addFeedBack(data){
+        return this.http.post(`/feedBack`, data)
+        .toPromise();
+    }
+
     hideExpenseBook(expenseBook, expenseCategoryList) {
         return this.http.post(`/baseData/hideExpenseBook`, { expenseBook, expenseCategoryList })
             .toPromise();
